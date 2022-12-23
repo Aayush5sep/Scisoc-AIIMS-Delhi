@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
     path('loginpage/',views.loginpage),
-    path('login/',views.login),
-    path('newaccnt/',views.signup),
+    path('login/',views.loginuser),
+    path('newaccnt/',views.signupuser),
     path('newaccntpage/',views.signuppage),
-    path('logout/',views.logout),
+    path('logout/',views.logoutuser),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
