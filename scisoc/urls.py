@@ -21,6 +21,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/',include('user.urls')),
     path('',views.homepage),
+    path('gallery/',views.gallery),
+    path('user/',include('user.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

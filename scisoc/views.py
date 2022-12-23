@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from user.models import PositionDetails
-from .models import Latest
+from .models import Latest,Gallery
 from datetime import date, timedelta
 
 def homepage(request):
@@ -12,3 +12,7 @@ def homepage(request):
     latest = Latest.objects.filter(upload_date__range=[startdate, enddate])
     params = {'team':team,'latest':latest}
     return render(request,'index.html',params)
+
+def gallery(request):
+    images = Gallery.objects.order_by('-preference')
+    return render(request,'gallery.html',{'images':images})
