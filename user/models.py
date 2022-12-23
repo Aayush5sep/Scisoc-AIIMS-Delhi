@@ -29,7 +29,7 @@ class PositionDetails(models.Model):
         super().delete()
 
     class Meta:
-        verbose_name_plural = "PositionDetails"
+        verbose_name_plural = "Positions"
 
 class Newsletter(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

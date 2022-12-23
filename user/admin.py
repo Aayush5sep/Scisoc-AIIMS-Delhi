@@ -9,6 +9,7 @@ class PositionAdmin(admin.StackedInline):
     model = PositionDetails
 
 class MyUserAdmin(admin.ModelAdmin):
+    readonly_fields = ('password')
     inlines = [UserDetailAdmin,PositionAdmin]
 
 admin.site.unregister(User)
