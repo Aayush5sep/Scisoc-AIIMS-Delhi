@@ -24,6 +24,10 @@ class PositionDetails(models.Model):
     def __str__(self):
         return self.user.username
 
+    def delete(self):
+        self.image.storage.delete(self.image.name)
+        super().delete()
+
     class Meta:
         ordering = ["-preference"]
         verbose_name_plural = "PositionDetails"
