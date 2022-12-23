@@ -19,7 +19,7 @@ class PositionDetails(models.Model):
     position = models.CharField(max_length=25,default="Visitor")
     description = models.TextField(max_length=100,blank=True,null=True)
     image = models.ImageField(upload_to='socheads/',default='socheads/emptyuser.png')
-    preference = models.IntegerField(default=0)
+    display_home = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -29,7 +29,6 @@ class PositionDetails(models.Model):
         super().delete()
 
     class Meta:
-        ordering = ["-preference"]
         verbose_name_plural = "PositionDetails"
 
 class Newsletter(models.Model):
