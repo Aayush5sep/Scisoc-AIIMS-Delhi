@@ -15,7 +15,7 @@ def contactpage(request):
     if request.user.is_authenticated:
         fname = request.user.first_name
         email = request.user.email
-    return render(request,'contactus.html',{'fname':fname,'email':email})
+    return render(request,'extras/contactus.html',{'fname':fname,'email':email})
 
 def contactreq(request):
     name = request.GET['fname']
@@ -29,11 +29,20 @@ def contactreq(request):
 
 @staff_member_required
 def replypage(request):
-    pass
+    probs = problem.objects.order_by('pdate')
+    return render(request,'extras/replypage.html',{'probs':probs})
 
 @staff_member_required
 def send_reply(request):
-    pass
+    qid = request.GET['id']
+    email = request.GET['email']
+    subject = "Reply To:" + request.GET['subject']
+    reply = request.GET['reply']
+    sender = settings.EMAIL_HOST_USER
+    send_mail(subject, reply, sender, [email])
+    messages.success(request,"Reply to the query has been sent.")
+    problem.objects.filter(id=qid).delete()
+    return redirect('/')
 
 def faqs(request):
     faq_list = faq.objects.order_by('order')
@@ -41,7 +50,7 @@ def faqs(request):
 
 def announcepage(request):
     if request.user.is_superuser:
-        return render(request,'announcement.html')
+        return render(request,'extras/announcement.html')
     else:
         return redirect("/")
 
@@ -54,7 +63,6 @@ def announce(request):
         for sub in subs:
             recipients.append(sub.user.email)
         email_from = settings.EMAIL_HOST_USER
-        print(recipients)
         send_mass_mail( ((subject, description, email_from, recipients),), fail_silently=False )
 
         return HttpResponse("Message sent successfully to all subscribed users.")

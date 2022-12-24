@@ -8,4 +8,6 @@ urlpatterns = [
     path('sendprob/',views.contactreq),
     path('faqs/',views.faqs),
     path('announcement/',views.announce),
+    path('allprobs',views.replypage),
+    path('reply',views.send_reply),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

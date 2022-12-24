@@ -15,6 +15,10 @@ class problem(models.Model):
     email = models.EmailField(null=False,blank=False)
     header = models.CharField(max_length=25)
     desc = models.TextField(max_length=400)
+    pdate = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "User Queries"
