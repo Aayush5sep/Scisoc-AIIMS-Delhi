@@ -24,7 +24,7 @@ def contactreq(request):
     desc = request.GET['desc']
     prob = problem(name=name,email=email,header=header,desc=desc)
     prob.save()
-    messages.success("Your problem has been shared with us....")
+    messages.success(request,"Your problem has been shared with us....")
     return redirect("/")
 
 @staff_member_required
