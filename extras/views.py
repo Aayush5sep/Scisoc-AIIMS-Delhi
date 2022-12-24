@@ -32,15 +32,18 @@ def replypage(request):
     pass
 
 @staff_member_required
-def replied(request):
+def send_reply(request):
     pass
 
 def faqs(request):
-    faq_list = faq.objects.order_by('-rating')
+    faq_list = faq.objects.order_by('order')
     return render(request,'extras/faqs.html',{'faqs':faq_list})
 
 def announcepage(request):
-    pass
+    if request.user.is_superuser:
+        return render(request,'announcement.html')
+    else:
+        return redirect("/")
 
 def announce(request):
     if request.user.is_superuser:

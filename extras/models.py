@@ -5,7 +5,7 @@ from django.db import models
 class faq(models.Model):
     question = models.CharField(max_length=200)
     answer = models.TextField(max_length=1000)
-    rating = models.IntegerField(default=1)
+    order = models.IntegerField(default=100,unique=True)
 
     def __str__(self):
         return self.question
