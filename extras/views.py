@@ -4,6 +4,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from user.models import Newsletter
 from .models import faq,problem
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail,send_mass_mail
 
 # Create your views here.
 
@@ -48,8 +50,10 @@ def announce(request):
         recipients = []
         for sub in subs:
             recipients.append(sub.user.email)
+        email_from = settings.EMAIL_HOST_USER
+        print(recipients)
+        send_mass_mail( ((subject, description, email_from, recipients),), fail_silently=False )
 
-        # SMTP Announcement for events, fests
-
+        return HttpResponse("Message sent successfully to all subscribed users.")
     else:
         return HttpResponse("You do not have access to this page")
