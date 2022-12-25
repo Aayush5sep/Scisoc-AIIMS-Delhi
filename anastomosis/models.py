@@ -10,13 +10,15 @@ class quiz(models.Model):
     desc = models.TextField(max_length=500)
     reg_open = models.BooleanField(default=False)
     on_web = models.BooleanField(default=True)
-    quiz_link = models.URLField(null=True,blank=True)
+    quiz_or_reg_link = models.URLField(null=True,blank=True)
     quiz_live = models.BooleanField(default=False)
-    is_free = models.BooleanField(default=True)
     reg_price = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name_plural = 'Quizzes'
 
 class registration(models.Model):
     reg_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
@@ -40,7 +42,9 @@ class registration(models.Model):
 class question(models.Model):
     qid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     quiz_model = models.ForeignKey(quiz,on_delete=models.CASCADE)
-    question_detail = models.CharField(max_length=200)
+    question_detail = models.CharField(max_length=250)
+    image = models.ImageField(upload_to='anastomosis/',null=True,blank=True)
+    answer = models.TextField(null=True,blank=True)
     marks = models.IntegerField(default=1)
     choices = models.BooleanField(default=False)
     short_answer = models.BooleanField(default=False)
