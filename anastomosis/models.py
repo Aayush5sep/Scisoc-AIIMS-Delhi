@@ -40,7 +40,7 @@ class registration(models.Model):
 
 
 class question(models.Model):
-    qid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    qid = models.AutoField(primary_key=True,editable=False)
     quiz_model = models.ForeignKey(quiz,on_delete=models.CASCADE)
     question_detail = models.CharField(max_length=250)
     image = models.ImageField(upload_to='anastomosis/',null=True,blank=True)

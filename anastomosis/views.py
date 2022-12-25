@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import quiz,registration
+from .models import quiz,registration,question,solution,choice
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
@@ -14,9 +14,9 @@ def frontpage(request):
 @login_required(login_url='user/login')
 def register_quiz(request,qid):
     qz = quiz.objects.get(id=qid)
-    regis =registration.objects.filter(quiz_model=qz,user=request.user)
+    regis =registration.objects.filter(quiz_model=qz,user=request.user,registered=True)
 
-    if len(list)>0:
+    if len(regis)>0:
         return HttpResponse("You have already registered for this quiz....")
 
     if not qz:
@@ -33,7 +33,21 @@ def register_quiz(request,qid):
 
 @login_required(login_url='user/login')
 def live_quiz(request,qid):
-    pass
+    qz = quiz.objects.get(id=qid)
+    regis =registration.objects.get(quiz_model=qz,user=request.user,registered=True)
+
+    if not qz:
+        return HttpResponse("No such quiz exists")
+
+    if not regis:
+        return HttpResponse(" You have not registered for this quiz :( ")
+    
+    questions = question.objects.filter(quiz_model=qz)
+    question_list = []
+    for qn in questions:
+        choices = choice.objects.filter(question_id=qn)
+        question_list.append({"question":qn,"choices":choices})
+    return render(request,'anastomosis/quiz.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'question_list':question_list})
 
 @login_required(login_url='user/login')
 def submit_quiz(request,qid):
