@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
+import datetime
 
 # Create your views here.
 
@@ -41,6 +42,9 @@ def live_quiz(request,qzid):
 
     if not regis:
         return HttpResponse(" You have not registered for this quiz :( ")
+
+    if regis.quiz_submitted_at is not None:
+        return HttpResponse(" You have already submitted your answers ")
     
     questions = question.objects.filter(quiz_model=qz)
     question_list = []
@@ -60,12 +64,18 @@ def submit_quiz(request,qzid):
 
     if not regis:
         return HttpResponse(" You have not registered for this quiz :( ")
+
+    if regis.quiz_submitted_at is not None:
+        return HttpResponse(" You have already submitted your answers ")
     
     questions = question.objects.filter(quiz_model=qz)
     for qn in questions:
         qnid = str(qn.qid)
         ans = request.POST[qnid]
         solution(reg = regis, quiz_id = qz, question_detail = qn, sol_by_participant = ans).save()
+    regis.exam_checked = True
+    regis.quiz_submitted_at = datetime.datetime.now()
+    regis.save()
     messages.success(request,"Your answers have been submitted successfully")
     return redirect("/")
 
