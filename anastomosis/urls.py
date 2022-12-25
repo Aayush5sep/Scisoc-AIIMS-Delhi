@@ -5,7 +5,8 @@ from . import views
 
 urlpatterns = [
     path('',views.frontpage),
-    path('register/<uuid:qid>',views.register_quiz),
-    path('livequiz/<uuid:qid>',views.live_quiz),
-    path('submit/<uuid:qid>',views.submit_quiz),
+    path('register/<uuid:qzid>',views.register_quiz),
+    path('livequiz/<uuid:qzid>',views.live_quiz),
+    path('submit/<uuid:qzid>',views.submit_quiz),
+    # path('mymarks/',views.view_marks),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

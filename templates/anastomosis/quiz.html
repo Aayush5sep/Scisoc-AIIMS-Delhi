@@ -1,28 +1,39 @@
-<form method="post" action="/anastomosis/submit/{{quiz_id}}">
+<html>
+<body>
+{{quiz_name}}<br>
+<form method="post" action="/anastomosis/submit/{{quiz_id}}"> {% csrf_token %}
     <input type="hidden" name="reg_id" value="{{reg_id}}">
 
     {% for qans in question_list %}
 
         Question:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}
             <image src="{{qns.question.image}}">
-
-        Answer:
+        <br>
+        Answer:<br>
         {% if qans.question.choices %}
             Select any one option
             {% for choice in qans.choices %}
-                <input type="select" name="{{qans.question.qid}}">{{choice}}
+                <input class="form-check-input" type="radio" name="{{qans.question.qid}}" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    {{choice.option}}
+                </label>
             {% endfor %}
 
         {% elif qans.question.short_answer %}
             Short answer
-            <input type="text" name="{{qans.question.qid}}">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{qans.question.qid}}"></textarea>
 
         {% elif qans.question.numerical %}
             Integer value
             <input type="Integer" name="{{qans.question.qid}}">
 
         {% endif %}
+        <br><br>
 
     {% endfor %}
+    <button class="btn btn-primary shadow d-block w-100" type="submit">Submit</button>
 
 </form>
+</body>
+</html>

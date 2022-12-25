@@ -5,7 +5,7 @@ import uuid
 # Create your models here.
 
 class quiz(models.Model):
-    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     title = models.CharField(max_length=50)
     desc = models.TextField(max_length=500)
     reg_open = models.BooleanField(default=False)
@@ -21,7 +21,7 @@ class quiz(models.Model):
         verbose_name_plural = 'Quizzes'
 
 class registration(models.Model):
-    reg_id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    reg_id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     quiz_model = models.ForeignKey(quiz,on_delete=models.CASCADE)
     registered = models.BooleanField(default=False)
@@ -36,11 +36,11 @@ class registration(models.Model):
         return total
 
     def __str__(self):
-        return self.user
+        return self.user.username+" : "+str(self.reg_id)
 
 
 class question(models.Model):
-    qid = models.AutoField(primary_key=True,editable=False)
+    qid = models.AutoField(primary_key=True)
     quiz_model = models.ForeignKey(quiz,on_delete=models.CASCADE)
     question_detail = models.CharField(max_length=250)
     image = models.ImageField(upload_to='anastomosis/',null=True,blank=True)
