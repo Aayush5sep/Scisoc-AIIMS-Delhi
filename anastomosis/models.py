@@ -38,7 +38,7 @@ class registration(models.Model):
         return total
 
     def __str__(self):
-        return self.user.username+" : "+str(self.reg_id)
+        return self.quiz_model.title + " : " + self.user.username
 
 
 class question(models.Model):

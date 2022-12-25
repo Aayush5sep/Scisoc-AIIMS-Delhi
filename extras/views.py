@@ -42,7 +42,7 @@ def send_reply(request):
     send_mail(subject, reply, sender, [email])
     messages.success(request,"Reply to the query has been sent.")
     problem.objects.filter(id=qid).delete()
-    return redirect('/')
+    return redirect('/extras/allprobs')
 
 def faqs(request):
     faq_list = faq.objects.order_by('order')

@@ -1,0 +1,16 @@
+<html>
+    <body>
+        Reply to user queries:  [Staff Access] <br><br>
+        {% for prob in probs %}
+            {{prob.id}}> {{prob.name}} : {{prob.email}} <br>
+            Problem : {{prob.header}}<br>{{prob.desc}}<br>
+            <form action="/extra/reply" method="get"> {% csrf_token %}
+                <input type="hidden" name="id" value="{{prob.id}}">
+                <input type="hidden" name="email" value="{{prob.email}}">
+                <input type="hidden" name="subject" value="{{prob.header}}">
+                <label>Reply here : </label><br><input type="text" name="reply" placeholder="Reply"><br>
+                <button type="submit"> Send Reply </button><br>
+            </form>
+        {% endfor %}
+    </body>
+</html>

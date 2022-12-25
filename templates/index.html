@@ -1,0 +1,31 @@
+<html>
+    <body>
+        Our Team <br>
+        {% for member in team %}
+            <image src="{{member.image}}"> <br>
+            Name : {{member.user.first_name}} {{member.user.last_name}} <br>
+            Position : {{member.position}} <br>
+            About : {{member.description}} <br>
+        {% endfor %}
+        <br>
+
+        Latest News <br>
+        {% for news in latest %}
+            {% if news.important %}
+                <div class="card-golden">
+                    <a href="{{news.link}}">Title : {{news.title}}</a> <br>
+                    Description : {{news.description}} <br>
+                    Date : {{news.upload_date}} <br>
+                    <image src="{{news.image}}"> <br>
+                </div>
+            {% else %}
+                <div class="card">
+                    <a href="{{news.link}}">Title : {{news.title}}</a> <br>
+                    Description : {{news.description}} <br>
+                    Date : {{news.upload_date}} <br>
+                    <image src="{{news.image}}"> <br>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </body>
+</html>

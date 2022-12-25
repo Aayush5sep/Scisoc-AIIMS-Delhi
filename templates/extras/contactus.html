@@ -1,0 +1,12 @@
+<html>
+    <body>
+        Contact Us for any query/problem <br><br>
+        <form action="/extra/sendprob" method="get"> {% csrf_token %}
+            <label>Your Name</label><br><input type="text" name="fname" value="{{fname}}" placeholder="Name"><br>
+            <label>Email Address</label><br><input type="email" name="email" value="{{email}}" placeholder="Email"><br>
+            <label>Subject</label><br><input type="text" name="header" placeholder="Subject"><br>
+            <label>Describe your Problem</label><br><input type="text" name="desc" placeholder="Query"><br>
+            <button type="submit"> Send </button>
+        </form>
+    </body>
+</html>
