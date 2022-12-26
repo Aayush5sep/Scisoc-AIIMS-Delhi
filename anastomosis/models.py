@@ -55,6 +55,10 @@ class question(models.Model):
     def __str__(self):
         return self.question_detail
 
+    def delete(self):
+        self.image.storage.delete(self.image.name)
+        super().delete()
+
 class choice(models.Model):
     question_id = models.ForeignKey(question,on_delete=models.CASCADE)
     option = models.CharField(max_length=50)

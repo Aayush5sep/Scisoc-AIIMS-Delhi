@@ -8,16 +8,20 @@ twcaos<br>
             About Twcaos : {{twcao.twcao.description}} <br>
             On : {{twcao.twcao.live_date}} <br>
 
-            Guests <br>
-            {% for guest in twcao.guests %}
-                Guest Name : {{guest.name}}
-                About Guest : {{guest.desc}}
-            {% endfor %}
+            {% if twcao.guests %}
+                Guests <br>
+                {% for guest in twcao.guests %}
+                    Guest Name : {{guest.name}} <br>
+                    About Guest : {{guest.desc}} <br>
+                {% endfor %}
+            {% endif %}
             
-            Links for Twcaos platform <br>
-            {% for link in twcao.links %}
-                <a href="{{link.link}}">{{link.site}}-></a> <br>
-            {% endfor %}
+            {% if twcao.links %}
+                Links for Twcaos platform <br>
+                {% for link in twcao.links %}
+                    <a href="{{link.link}}">{{link.site}}-></a> <br>
+                {% endfor %}
+            {% endif %}
         </section>
     {% endfor %}
 

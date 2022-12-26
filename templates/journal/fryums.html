@@ -10,10 +10,12 @@ Fryums<br>
             --by {{fryum.fryum.author}} <br>
             More about author : {{fryum.fryum.abt_author}} <br>
             
-            Links for fryum platform <br>
-            {% for link in fryum.links %}
-                <a href="{{link.link}}">{{link.site}}-></a> <br>
-            {% endfor %}
+            {% if fryum.links %}
+                Links for fryum platform <br>
+                {% for link in fryum.links %}
+                    <a href="{{link.link}}">{{link.site}}-></a> <br>
+                {% endfor %}
+            {% endif %}
         </section>
     {% endfor %}
 

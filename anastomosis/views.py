@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
-import datetime
+from django.utils import timezone
 
 # Create your views here.
 
@@ -74,7 +74,7 @@ def submit_quiz(request,qzid):
         ans = request.POST[qnid]
         solution(reg = regis, quiz_id = qz, question_detail = qn, sol_by_participant = ans).save()
     regis.exam_checked = True
-    regis.quiz_submitted_at = datetime.datetime.now()
+    regis.quiz_submitted_at = timezone.now()
     regis.save()
     messages.success(request,"Your answers have been submitted successfully")
     return redirect("/")

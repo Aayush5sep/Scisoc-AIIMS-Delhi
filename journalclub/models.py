@@ -14,6 +14,10 @@ class Curate(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self):
+        self.image.storage.delete(self.image.name)
+        super().delete()
+
 class Curate_Article(models.Model):
     curate = models.ForeignKey(Curate,on_delete=models.CASCADE)
     title = models.CharField("Article Title",max_length=50)
@@ -26,6 +30,10 @@ class Curate_Article(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self):
+        self.image.storage.delete(self.image.name)
+        super().delete()
+
 class TWCAOS(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4)
     title = models.CharField("Curate Title",max_length=50)
@@ -36,6 +44,10 @@ class TWCAOS(models.Model):
 
     def __str__(self):
         return self.title
+
+    def delete(self):
+        self.image.storage.delete(self.image.name)
+        super().delete()
 
 class TWCAOS_Guest(models.Model):
     twcaos = models.ForeignKey(TWCAOS,on_delete=models.CASCADE)
@@ -67,6 +79,10 @@ class FRYUMS(models.Model):
 
     def __str__(self):
         return self.title
+
+    def delete(self):
+        self.image.storage.delete(self.image.name)
+        super().delete()
 
 class FRYUMS_Link(models.Model):
     fryums = models.ForeignKey(FRYUMS,on_delete=models.CASCADE)
