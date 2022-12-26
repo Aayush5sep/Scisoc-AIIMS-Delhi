@@ -54,3 +54,25 @@ class TWCAOS_Link(models.Model):
 
     def __str__(self):
         return self.site
+
+class FRYUMS(models.Model):
+    uid = models.UUIDField(primary_key = True, default = uuid.uuid4)
+    title = models.CharField("Curate Title",max_length=50)
+    description = models.TextField("Description")
+    image = models.ImageField("Event Photo",upload_to='curates/',default='')
+    live_date = models.DateTimeField("Start Date And Time")
+    display = models.BooleanField("Display on website",default=False)
+    author = models.CharField("Guest Name",max_length=50)
+    abt_author = models.CharField("About Guest",max_length=100,null=True,blank=True)
+
+    def __str__(self):
+        return self.title
+
+class FRYUMS_Link(models.Model):
+    twcaos = models.ForeignKey(FRYUMS,on_delete=models.CASCADE)
+    site = models.CharField("Platform Name",max_length=20)
+    link = models.URLField("Platform Link")
+    online= models.BooleanField("Display link on website?",default=False)
+
+    def __str__(self):
+        return self.site
