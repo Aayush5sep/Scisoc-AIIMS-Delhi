@@ -79,6 +79,11 @@ def submit_quiz(request,qzid):
     messages.success(request,"Your answers have been submitted successfully")
     return redirect("/")
 
+# def check_quiz_submissions(request):
+#     pass
+# def checked_submission(request):
+#     pass
+
 # @login_required(login_url='user/login')
 # def view_marks(request):
 #     marks =registration.objects.get(user=request.user).get_marks()

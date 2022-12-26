@@ -30,7 +30,7 @@ class TWCAOS(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4)
     title = models.CharField("Curate Title",max_length=50)
     description = models.TextField("Description")
-    image = models.ImageField("Cover Photo",upload_to='curates/',default='')
+    image = models.ImageField("Cover Photo",upload_to='twcaos/',default='')
     live_date = models.DateTimeField("Start Date And Time")
     display = models.BooleanField("Display on website",default=False)
 
@@ -59,7 +59,7 @@ class FRYUMS(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4)
     title = models.CharField("Curate Title",max_length=50)
     description = models.TextField("Description")
-    image = models.ImageField("Event Photo",upload_to='curates/',default='')
+    image = models.ImageField("Event Photo",upload_to='fryums/',default='')
     live_date = models.DateTimeField("Start Date And Time")
     display = models.BooleanField("Display on website",default=False)
     author = models.CharField("Guest Name",max_length=50)
