@@ -69,7 +69,7 @@ class FRYUMS(models.Model):
         return self.title
 
 class FRYUMS_Link(models.Model):
-    twcaos = models.ForeignKey(FRYUMS,on_delete=models.CASCADE)
+    fryums = models.ForeignKey(FRYUMS,on_delete=models.CASCADE)
     site = models.CharField("Platform Name",max_length=20)
     link = models.URLField("Platform Link")
     online= models.BooleanField("Display link on website?",default=False)

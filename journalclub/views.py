@@ -14,4 +14,9 @@ def twcaos_list(request):
     pass
 
 def fryums_list(request):
-    pass
+    fryums = FRYUMS.objects.filter(display=True).order_by('-live_date')
+    fryum_list=[]
+    for fryum in fryums:
+        links = FRYUMS_Link.objects.filter(fryums=fryum,online=True)
+        fryum_list.append({"fryum":fryum,"links":links})
+    return render(request,'journal/fryums.html',{'fryums':fryum_list})
