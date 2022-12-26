@@ -1,0 +1,25 @@
+<html>
+<body>
+Curates<br>
+    {% for curate in curates %}
+        <section class="curate">
+            <image src="{{curate.curate.image}}"> <br>
+            Curate Name : {{curate.curate.title}} <br>
+            About Curate : {{curate.curate.description}} <br>
+            From : {{curate.curate.start_date}}  To : {{curate.curate.end_date}} <br>
+            
+            Articles Of the Curate <br>
+            {% for article in curate.articles %}
+                <div class="article">
+                    <image src="{{article.image}}"> <br>
+                    Article Title : {{article.title}} <br>
+                    Description : {{article.description}} <br>
+                    --by {{article.author}} <br>
+                    <a href="{{article.link}}">View Article -></a> <br>
+                </div> <br>
+            {% endfor %}
+        </section>
+    {% endfor %}
+
+</body>
+</html>

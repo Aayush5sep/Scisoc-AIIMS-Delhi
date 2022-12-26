@@ -6,7 +6,7 @@
 
     {% for qans in question_list %}
 
-        Question:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}
+        Question {{forloop.counter}}:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}
             <image src="{{qns.question.image}}">
         <br>
         Answer:<br>

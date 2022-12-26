@@ -16,6 +16,7 @@ class GuestAdmin(admin.StackedInline):
 
 class PlatformAdmin(admin.StackedInline):
     model = TWCAOS_Link
+    extra = 1
 
 class TWCAOSAdmin(admin.ModelAdmin):
     readonly_fields=('uid',)
@@ -23,6 +24,7 @@ class TWCAOSAdmin(admin.ModelAdmin):
 
 class LinkAdmin(admin.StackedInline):
     model = FRYUMS_Link
+    extra = 1
 
 class FRYUMSAdmin(admin.ModelAdmin):
     readonly_fields=('uid',)
