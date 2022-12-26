@@ -11,7 +11,13 @@ def curates_list(request):
     return render(request,'journal/curates.html',{'curates':curate_list})
 
 def twcaos_list(request):
-    pass
+    twcaos = TWCAOS.objects.filter(display=True).order_by('-live_date')
+    twcaos_list=[]
+    for twcao in twcaos:
+        guests = TWCAOS_Guest.objects.filter(twcaos=twcao).order_by('-preference')
+        links = TWCAOS_Link.objects.filter(twcaos=twcao,online=True)
+        twcaos_list.append({"twcao":twcao,"guests":guests,"links":links})
+    return render(request,'journal/twcaos.html',{'twcaos':twcaos_list})
 
 def fryums_list(request):
     fryums = FRYUMS.objects.filter(display=True).order_by('-live_date')

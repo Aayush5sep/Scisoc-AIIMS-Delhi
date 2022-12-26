@@ -1,0 +1,25 @@
+<html>
+<body>
+twcaos<br>
+    {% for twcao in twcaos %}
+        <section class="twcao">
+            <image src="{{twcao.twcao.image}}"> <br>
+            Twcaos Name : {{twcao.twcao.title}} <br>
+            About Twcaos : {{twcao.twcao.description}} <br>
+            On : {{twcao.twcao.live_date}} <br>
+
+            Guests <br>
+            {% for guest in twcao.guests %}
+                Guest Name : {{guest.name}}
+                About Guest : {{guest.desc}}
+            {% endfor %}
+            
+            Links for Twcaos platform <br>
+            {% for link in twcao.links %}
+                <a href="{{link.link}}">{{link.site}}-></a> <br>
+            {% endfor %}
+        </section>
+    {% endfor %}
+
+</body>
+</html>
