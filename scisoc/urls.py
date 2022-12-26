@@ -26,4 +26,5 @@ urlpatterns = [
     path('user/',include('user.urls')),
     path('extra/',include('extras.urls')),
     path('anastomosis/',include('anastomosis.urls')),
+    path('journal/',include('journalclub.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
