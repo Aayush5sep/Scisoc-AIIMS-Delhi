@@ -50,7 +50,7 @@ def live_quiz(request,qzid):
     question_list = []
     for qn in questions:
         choices = choice.objects.filter(question_id=qn)
-        question_list.append({"question":qn,"choices":choices})
+        question_list.append({"question":qn,"choices":choices,"iter":range(0,qn.num_match)})
     return render(request,'anastomosis/quiz.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
 
 @login_required(login_url='/user/loginpage')
@@ -73,8 +73,13 @@ def submit_quiz(request,qzid):
         qnid = str(qn.qid)
         ans=""
         if qn.choices:
-            var=request.POST.getlist(qnid)
-            ans=", ".join(var)
+            solns = request.POST.getlist(qnid)
+            ans="\n".join(solns)
+        elif qn.matchup:
+            solns = []
+            for iter in range(1,qn.num_match+1):
+                solns.append(str(iter)+"->"+request.POST[qnid+"_"+str(iter)])
+            ans = "\n".join(solns)
         else:
             ans = request.POST[qnid]
         solution(reg = regis, quiz_id = qz, question_detail = qn, sol_by_participant = ans).save()

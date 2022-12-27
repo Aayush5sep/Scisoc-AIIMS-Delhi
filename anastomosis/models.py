@@ -51,6 +51,8 @@ class question(models.Model):
     choices = models.BooleanField(default=False)
     short_answer = models.BooleanField(default=False)
     numerical = models.BooleanField(default=False)
+    matchup = models.BooleanField(default=False)
+    num_match = models.IntegerField(default=0)
 
     def __str__(self):
         return self.question_detail

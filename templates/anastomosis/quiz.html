@@ -6,8 +6,10 @@
 
     {% for qans in question_list %}
 
-        Question {{forloop.counter}}:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}
-            <image src="{{qns.question.image}}">
+        Question {{forloop.counter}}:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}<br>
+        {% if qans.question.image %}
+            <image src="/media/{{qans.question.image}}" style="max-width:250; max-height:250" >
+        {% endif %}
         <br>
         Answer:<br>
         {% if qans.question.choices %}
@@ -27,6 +29,12 @@
         {% elif qans.question.numerical %}
             Integer value
             <input type="Integer" name="{{qans.question.qid}}">
+
+        {% elif qans.question.matchup %}
+            Match The Following<br>Enter the corresponding value for the following<br>
+            {% for num in qans.iter %}
+                {{num|add:"1"}} -> <input type="text" name="{{qans.question.qid}}_{{num|add:"1"}}"> <br>
+            {% endfor %}
 
         {% endif %}
         <br><br>
