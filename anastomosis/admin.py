@@ -14,12 +14,12 @@ class ChoiceAdmin(admin.StackedInline):
     extra = 2
 
 class QuestionAdmin(admin.ModelAdmin):
-    readonly_fields = ('qid',)
+    readonly_fields = ('qid','qn_image')
     inlines = [ChoiceAdmin]
 
 class SolutionAdmin(admin.StackedInline):
     model = solution
-    readonly_fields = ['quiz_id','question_detail','sol_by_participant']
+    readonly_fields = ['quiz_id','question_detail','sol_by_participant','qn_image']
     extra = 0
 
 class RegisteredAdmin(admin.ModelAdmin):

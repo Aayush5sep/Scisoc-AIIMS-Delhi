@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
-
+from django.utils.html import mark_safe
 # Create your models here.
 
 class quiz(models.Model):
@@ -58,6 +58,11 @@ class question(models.Model):
     def delete(self):
         self.image.storage.delete(self.image.name)
         super().delete()
+    
+    def qn_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
+    qn_image.short_description = 'Image'
+
 
 class choice(models.Model):
     question_id = models.ForeignKey(question,on_delete=models.CASCADE)
@@ -73,3 +78,7 @@ class solution(models.Model):
     question_detail = models.ForeignKey(question,on_delete=models.CASCADE,verbose_name="Question")
     sol_by_participant = models.TextField("Solution By Participant",null=True,blank=True)
     is_correct = models.BooleanField("Mark Correct",default=False)
+
+    def qn_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.question_detail.image))
+    qn_image.short_description = 'Image'
