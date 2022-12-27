@@ -27,4 +27,5 @@ urlpatterns = [
     path('extra/',include('extras.urls')),
     path('anastomosis/',include('anastomosis.urls')),
     path('journal/',include('journalclub.urls')),
+    path('medquiz/',include('medquiz.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
