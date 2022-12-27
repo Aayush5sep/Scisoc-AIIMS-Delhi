@@ -12,7 +12,7 @@ def frontpage(request):
     quizzes = quiz.objects.filter(Q(reg_open = True) | Q(quiz_live = True))
     return render(request,'anastomosis/frontpage.html',{'quizzes':quizzes})
 
-@login_required(login_url='user/login')
+@login_required(login_url='/user/loginpage')
 def register_quiz(request,qzid):
     qz = quiz.objects.get(id=qzid)
     regis =registration.objects.filter(quiz_model=qz,user=request.user,registered=True)
@@ -32,7 +32,7 @@ def register_quiz(request,qzid):
         # registration(user = request.user, quiz_model = qz, registered = True).save()
         pass
 
-@login_required(login_url='user/login')
+@login_required(login_url='/user/loginpage')
 def live_quiz(request,qzid):
     qz = quiz.objects.get(id=qzid)
     regis =registration.objects.get(quiz_model=qz,user=request.user,registered=True)
@@ -53,7 +53,7 @@ def live_quiz(request,qzid):
         question_list.append({"question":qn,"choices":choices})
     return render(request,'anastomosis/quiz.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
 
-@login_required(login_url='user/login')
+@login_required(login_url='/user/loginpage')
 def submit_quiz(request,qzid):
     regid = request.POST['reg_id']
     qz = quiz.objects.get(id=qzid)
@@ -71,9 +71,13 @@ def submit_quiz(request,qzid):
     questions = question.objects.filter(quiz_model=qz)
     for qn in questions:
         qnid = str(qn.qid)
-        ans = request.POST[qnid]
+        ans=""
+        if qn.choices:
+            var=request.POST.getlist(qnid)
+            ans=", ".join(var)
+        else:
+            ans = request.POST[qnid]
         solution(reg = regis, quiz_id = qz, question_detail = qn, sol_by_participant = ans).save()
-    regis.exam_checked = True
     regis.quiz_submitted_at = timezone.now()
     regis.save()
     messages.success(request,"Your answers have been submitted successfully")

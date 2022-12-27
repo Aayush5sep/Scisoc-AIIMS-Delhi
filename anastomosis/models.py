@@ -26,7 +26,7 @@ class registration(models.Model):
     quiz_model = models.ForeignKey(quiz,on_delete=models.CASCADE)
     registered = models.BooleanField(default=False)
     payment_id = models.CharField(max_length=200,null=True,blank=True)
-    quiz_submitted_at = models.DateTimeField(default=None)
+    quiz_submitted_at = models.DateTimeField(default=None,null=True,blank=True)
     exam_checked = models.BooleanField(default=False)
 
     def get_marks(self):
@@ -69,7 +69,7 @@ class choice(models.Model):
 
 class solution(models.Model):
     reg = models.ForeignKey(registration,on_delete=models.CASCADE)
-    quiz_id = models.ForeignKey(quiz,on_delete=models.CASCADE)
-    question_detail = models.ForeignKey(question,on_delete=models.CASCADE)
-    sol_by_participant = models.TextField(null=True,blank=True)
-    is_correct = models.BooleanField(default=False)
+    quiz_id = models.ForeignKey(quiz,on_delete=models.CASCADE,verbose_name="Quiz Name")
+    question_detail = models.ForeignKey(question,on_delete=models.CASCADE,verbose_name="Question")
+    sol_by_participant = models.TextField("Solution By Participant",null=True,blank=True)
+    is_correct = models.BooleanField("Mark Correct",default=False)

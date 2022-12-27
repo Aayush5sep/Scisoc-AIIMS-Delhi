@@ -19,7 +19,8 @@ class QuestionAdmin(admin.ModelAdmin):
 
 class SolutionAdmin(admin.StackedInline):
     model = solution
-    extra = 1
+    readonly_fields = ['quiz_id','question_detail','sol_by_participant']
+    extra = 0
 
 class RegisteredAdmin(admin.ModelAdmin):
     readonly_fields = ('reg_id',)

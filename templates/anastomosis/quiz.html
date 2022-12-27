@@ -13,8 +13,8 @@
         {% if qans.question.choices %}
             Select any one option
             {% for choice in qans.choices %}
-                <input class="form-check-input" type="radio" name="{{qans.question.qid}}" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
+                <input class="form-check-input" type="checkbox" name="{{qans.question.qid}}" id="defaultCheck1" value="{{choice.option}}">
+                <label class="form-check-label" for="defaultCheck1">
                     {{choice.option}}
                 </label>
             {% endfor %}
