@@ -46,10 +46,10 @@ def live_quiz(request,qzid):
     if regis.quiz_submitted_at is not None:
         return HttpResponse(" You have already submitted your answers ")
     
-    questions = question.objects.filter(quiz_model=qz)
+    questions = question.objects.filter(quiz_model=qz).defer('answer')
     question_list = []
     for qn in questions:
-        choices = choice.objects.filter(question_id=qn)
+        choices = choice.objects.filter(question_id=qn).defer('is_correct')
         question_list.append({"question":qn,"choices":choices,"iter":range(0,qn.num_match)})
     return render(request,'anastomosis/quiz.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
 
