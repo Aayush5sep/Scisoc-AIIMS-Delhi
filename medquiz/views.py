@@ -52,7 +52,7 @@ def live_quiz(request,qzid):
     for qn in questions:
         choices = Choice.objects.filter(question_id=qn).defer('is_correct')
         question_list.append({"question":qn,"choices":choices,"iter":range(0,qn.num_match)})
-    return render(request,'anastomosis/quiz.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
+    return render(request,'medquiz/quizview.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
 
 @login_required(login_url='/user/loginpage')
 def submit_quiz(request,qzid):

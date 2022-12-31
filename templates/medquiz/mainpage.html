@@ -1,5 +1,35 @@
 <html>
     <body>
         Medquiz Society
+        {% for quiz in quizzes %}
+
+            {{quiz.title}}<br>
+            {{quiz.desc}}<br>
+            {% if quiz.poster %}{{quiz.poster}}<br>{% endif %}
+            {% if quiz.reg_price == 0 %}
+                Free !!
+            {% else %}
+                ₹{{quiz.reg_price}}
+            {% endif %}
+            <br>
+
+            {% if quiz.reg_open %}
+                Registrations are open !!
+            {% elif quiz.quiz_live %}
+                Quiz is now live. Hurry Up !!
+            {% endif %}
+            <br>
+
+            {% if quiz.on_web %}
+                {% if quiz.reg_open %}
+                    <a href="/medquiz/register/{{quiz.id}}"> Register Now -> </a>
+                {% elif quiz.quiz_live %}
+                    <a href="/medquiz/live/{{quiz.id}}"> Attempt Quiz -> </a>
+                {% endif %}
+            {% else %}
+                <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a>
+            {% endif %}
+
+        {% endfor %}
     </body>
 </html>
