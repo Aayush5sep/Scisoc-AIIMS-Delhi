@@ -4,7 +4,7 @@ from django.contrib import messages
 from user.models import PositionDetails
 from .models import Latest,Gallery
 from django.utils import timezone
-from datetime import timedelta
+from django.utils.timezone import timedelta
 
 def homepage(request):
     team = PositionDetails.objects.filter(display_home=True)
