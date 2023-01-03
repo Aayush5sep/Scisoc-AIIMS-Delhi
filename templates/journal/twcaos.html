@@ -1,29 +1,35 @@
-<html>
-<body>
-twcaos<br>
-    {% for twcao in twcaos %}
-        <section class="twcao">
-            <image src="{{twcao.twcao.image}}"> <br>
-            Twcaos Name : {{twcao.twcao.title}} <br>
-            About Twcaos : {{twcao.twcao.description}} <br>
-            On : {{twcao.twcao.live_date}} <br>
+{% extends 'common.html' %}
+    {% block title %} TWCAOS {% endblock %}
 
-            {% if twcao.guests %}
-                Guests <br>
-                {% for guest in twcao.guests %}
-                    Guest Name : {{guest.name}} <br>
-                    About Guest : {{guest.desc}} <br>
-                {% endfor %}
-            {% endif %}
-            
-            {% if twcao.links %}
-                Links for Twcaos platform <br>
-                {% for link in twcao.links %}
-                    <a href="{{link.link}}">{{link.site}}-></a> <br>
-                {% endfor %}
-            {% endif %}
-        </section>
-    {% endfor %}
+    {% block body %}
 
-</body>
-</html>
+
+        twcaos<br>
+            {% for twcao in twcaos %}
+                <section class="twcao">
+                    <image src="{{twcao.twcao.image}}"> <br>
+                    Twcaos Name : {{twcao.twcao.title}} <br>
+                    About Twcaos : {{twcao.twcao.description}} <br>
+                    On : {{twcao.twcao.live_date}} <br>
+
+                    {% if twcao.guests %}
+                        Guests <br>
+                        {% for guest in twcao.guests %}
+                            Guest Name : {{guest.name}} <br>
+                            About Guest : {{guest.desc}} <br>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if twcao.links %}
+                        Links for Twcaos platform <br>
+                        {% for link in twcao.links %}
+                            <a href="{{link.link}}">{{link.site}}-></a> <br>
+                        {% endfor %}
+                    {% endif %}
+                </section>
+            {% endfor %}
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

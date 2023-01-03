@@ -1,55 +1,62 @@
-<html>
-<body>
-{{quiz_name}}<br>
-<form method="post" action="/anastomosis/submit/{{quiz_id}}"> {% csrf_token %}
-    <input type="hidden" name="reg_id" value="{{reg_id}}">
+{% extends 'common.html' %}
+    {% block title %} Quiz View {% endblock %}
 
-    {% for qans in question_list %}
+    {% block body %}
 
-        Question {{forloop.counter}}:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}<br>
-        {% if qans.question.image %}
-            <image src="/media/{{qans.question.image}}" style="max-width:250; max-height:250" >
-        {% endif %}
-        <br>
-        Answer:<br>
-        {% if qans.question.choices %}
-            Select any one option
-            {% for choice in qans.choices %}
-                <input class="form-check-input" type="checkbox" name="{{qans.question.qid}}" id="defaultCheck1" value="{{choice.option}}">
-                <label class="form-check-label" for="defaultCheck1">
-                    {{choice.option}}
-                </label>
+
+        {{quiz_name}}<br>
+        <form method="post" action="/anastomosis/submit/{{quiz_id}}"> {% csrf_token %}
+            <input type="hidden" name="reg_id" value="{{reg_id}}">
+
+            {% for qans in question_list %}
+
+                Question {{forloop.counter}}:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}<br>
+                {% if qans.question.image %}
+                    <image src="/media/{{qans.question.image}}" style="max-width:250; max-height:250" >
+                {% endif %}
+                <br>
+                Answer:<br>
+                {% if qans.question.choices %}
+                    Select any one option
+                    {% for choice in qans.choices %}
+                        <input class="form-check-input" type="checkbox" name="{{qans.question.qid}}" id="defaultCheck1" value="{{choice.option}}">
+                        <label class="form-check-label" for="defaultCheck1">
+                            {{choice.option}}
+                        </label>
+                    {% endfor %}
+
+                {% elif qans.question.short_answer %}
+                    Short answer
+                    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{qans.question.qid}}"></textarea>
+
+                {% elif qans.question.numerical %}
+                    Integer value
+                    <input type="Integer" name="{{qans.question.qid}}">
+                
+                {% elif qans.question.true_false %}
+                    True Or False Question
+                    <select class="form-select" name="{{qans.question.qid}}" aria-label="Default select example">
+                        <option value="None" selected>Select True Or False</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+
+                {% elif qans.question.matchup %}
+                    Match The Following<br>Enter the corresponding value for the following<br>
+                    {% for num in qans.iter %}
+                        {{num|add:"1"}} -> <input type="text" name="{{qans.question.qid}}_{{num|add:"1"}}"> <br>
+                    {% endfor %}
+
+                {% endif %}
+                <br><br>
+
             {% endfor %}
+            <button class="btn btn-primary shadow d-block w-100" type="submit">Submit</button>
 
-        {% elif qans.question.short_answer %}
-            Short answer
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{qans.question.qid}}"></textarea>
+        </form>
 
-        {% elif qans.question.numerical %}
-            Integer value
-            <input type="Integer" name="{{qans.question.qid}}">
-        
-        {% elif qans.question.true_false %}
-            True Or False Question
-            <select class="form-select" name="{{qans.question.qid}}" aria-label="Default select example">
-                <option value="None" selected>Select True Or False</option>
-                <option value="True">True</option>
-                <option value="False">False</option>
-              </select>
 
-        {% elif qans.question.matchup %}
-            Match The Following<br>Enter the corresponding value for the following<br>
-            {% for num in qans.iter %}
-                {{num|add:"1"}} -> <input type="text" name="{{qans.question.qid}}_{{num|add:"1"}}"> <br>
-            {% endfor %}
+    {% endblock %}
 
-        {% endif %}
-        <br><br>
-
-    {% endfor %}
-    <button class="btn btn-primary shadow d-block w-100" type="submit">Submit</button>
-
-</form>
-</body>
-</html>
+    {% block js %}{% endblock %}

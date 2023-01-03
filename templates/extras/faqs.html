@@ -1,8 +1,15 @@
-<html>
-    <body>
+{% extends 'common.html' %}
+    {% block title %} FAQs {% endblock %}
+
+    {% block body %}
+
+
         {% for faq in faqs %}
             Question : {{faq.question}} <br>
             Answer : {{faq.answer}} <br>
         {% endfor %}
-    </body>
-</html>
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

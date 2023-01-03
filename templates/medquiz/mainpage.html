@@ -1,5 +1,9 @@
-<html>
-    <body>
+{% extends 'common.html' %}
+    {% block title %} MedQuiz Society {% endblock %}
+
+    {% block body %}
+
+
         Medquiz Society
         {% for quiz in quizzes %}
 
@@ -31,5 +35,8 @@
             {% endif %}
 
         {% endfor %}
-    </body>
-</html>
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

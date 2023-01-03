@@ -1,23 +1,29 @@
-<html>
-<body>
-Fryums<br>
-    {% for fryum in fryums %}
-        <section class="fryum">
-            <image src="{{fryum.fryum.image}}"> <br>
-            fryum Name : {{fryum.fryum.title}} <br>
-            About fryum : {{fryum.fryum.description}} <br>
-            On : {{fryum.fryum.live_date}} <br>
-            --by {{fryum.fryum.author}} <br>
-            More about author : {{fryum.fryum.abt_author}} <br>
-            
-            {% if fryum.links %}
-                Links for fryum platform <br>
-                {% for link in fryum.links %}
-                    <a href="{{link.link}}">{{link.site}}-></a> <br>
-                {% endfor %}
-            {% endif %}
-        </section>
-    {% endfor %}
+{% extends 'common.html' %}
+    {% block title %} Fryums {% endblock %}
 
-</body>
-</html>
+    {% block body %}
+
+
+        Fryums<br>
+            {% for fryum in fryums %}
+                <section class="fryum">
+                    <image src="{{fryum.fryum.image}}"> <br>
+                    fryum Name : {{fryum.fryum.title}} <br>
+                    About fryum : {{fryum.fryum.description}} <br>
+                    On : {{fryum.fryum.live_date}} <br>
+                    --by {{fryum.fryum.author}} <br>
+                    More about author : {{fryum.fryum.abt_author}} <br>
+                    
+                    {% if fryum.links %}
+                        Links for fryum platform <br>
+                        {% for link in fryum.links %}
+                            <a href="{{link.link}}">{{link.site}}-></a> <br>
+                        {% endfor %}
+                    {% endif %}
+                </section>
+            {% endfor %}
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

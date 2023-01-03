@@ -1,5 +1,9 @@
-<html>
-    <body>
+{% extends 'common.html' %}
+    {% block title %} Reply Page {% endblock %}
+
+    {% block body %}
+
+
         Reply to user queries:  [Staff Access] <br><br>
         {% for prob in probs %}
             {{prob.id}}> {{prob.name}} : {{prob.email}} <br>
@@ -12,5 +16,8 @@
                 <button type="submit"> Send Reply </button><br>
             </form>
         {% endfor %}
-    </body>
-</html>
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

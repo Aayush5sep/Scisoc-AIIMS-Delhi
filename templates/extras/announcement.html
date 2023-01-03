@@ -1,10 +1,17 @@
-<html>
-    <body>
+{% extends 'common.html' %}
+    {% block title %} Send Mails {% endblock %}
+
+    {% block body %}
+
+
         Announcement For Subscribed Users : [Superuser Option] <br><br>
         <form action="/extra/announcement" method="get"> {% csrf_token %}
             <label>Subject</label><br><input type="text" name="subject" placeholder="Subject"><br><br>
             <label>Description</label><br><input type="text" name="description" placeholder="Description"><br>
             <button type="submit"> Send </button>
         </form>
-    </body>
-</html>
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

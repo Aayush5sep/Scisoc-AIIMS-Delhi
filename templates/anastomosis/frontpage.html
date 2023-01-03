@@ -1,33 +1,40 @@
-<html>
-<body>
-{% for quiz in quizzes %}
+{% extends 'common.html' %}
+    {% block title %} Anastomosis {% endblock %}
 
-    {{quiz.title}}<br>
-    {{quiz.desc}}<br>
-    {% if quiz.reg_price == 0 %}
-        Free !!
-    {% else %}
-        ₹{{quiz.reg_price}}
-    {% endif %}
-    <br>
+    {% block body %}
 
-    {% if quiz.reg_open %}
-        Registrations are open !!
-    {% elif quiz.quiz_live %}
-        Quiz is now live. Hurry Up !!
-    {% endif %}
-    <br>
 
-    {% if quiz.on_web %}
-        {% if quiz.reg_open %}
-            <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a>
-        {% elif quiz.quiz_live %}
-            <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a>
-        {% endif %}
-    {% else %}
-        <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a>
-    {% endif %}
+        {% for quiz in quizzes %}
 
-{% endfor %}
-</body>
-</html>
+            {{quiz.title}}<br>
+            {{quiz.desc}}<br>
+            {% if quiz.reg_price == 0 %}
+                Free !!
+            {% else %}
+                ₹{{quiz.reg_price}}
+            {% endif %}
+            <br>
+
+            {% if quiz.reg_open %}
+                Registrations are open !!
+            {% elif quiz.quiz_live %}
+                Quiz is now live. Hurry Up !!
+            {% endif %}
+            <br>
+
+            {% if quiz.on_web %}
+                {% if quiz.reg_open %}
+                    <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a>
+                {% elif quiz.quiz_live %}
+                    <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a>
+                {% endif %}
+            {% else %}
+                <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a>
+            {% endif %}
+
+        {% endfor %}
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}

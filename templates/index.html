@@ -1,5 +1,9 @@
-<html>
-    <body>
+{% extends 'common.html' %}
+    {% block title %} Homepage {% endblock %}
+
+    {% block body %}
+
+
         Our Team <br>
         {% for member in team %}
             <image src="{{member.image}}"> <br>
@@ -27,5 +31,8 @@
                 </div>
             {% endif %}
         {% endfor %}
-    </body>
-</html>
+
+
+    {% endblock %}
+
+    {% block js %}{% endblock %}
