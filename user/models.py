@@ -6,7 +6,7 @@ class UserDetails(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     first_name=models.CharField(max_length=25)
     last_name=models.CharField(max_length=25)
-    phone=models.CharField(max_length=10,null=True)
+    phone=models.CharField(max_length=10,null=True,blank=True)
     age=models.IntegerField(null=True,blank=True)
     college = models.CharField(max_length=100,null=True,blank=True)
 

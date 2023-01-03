@@ -79,3 +79,22 @@ def logoutuser(request):
     logout(request)
     messages.success(request,'Logout Successful')
     return redirect("/")
+
+
+@login_required(login_url='user/login/')
+def profile(request):
+    return render(request,'user/profile.html')
+
+@login_required(login_url='user/login/')
+def profileupd(request):
+    if request.method=='POST':
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        phone = request.POST['phone']
+        age = request.POST['age']
+        college = request.POST['college']
+        UserDetails(first_name=fname,last_name=lname,phone=phone,age=age,college=college).save()
+        messages.success(request,'Profile Updated')
+    else:
+        messages.error(request,'Invalid Request')
+    return redirect("/")
