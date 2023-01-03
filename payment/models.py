@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 class Payment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=False, blank=False)
     amount = models.FloatField("Amount", null=False, blank=False)
+    modelname = models.CharField(max_length=50)
+    uid = models.UUIDField(null=False,blank=False)
     status = models.CharField("Payment Status",default=PaymentStatus.PENDING,max_length=275,null=False,blank=False)
     provider_order_id = models.CharField("Order ID", max_length=50, null=False, blank=False)
     payment_id = models.CharField("Payment ID", max_length=50, null=False, blank=False)
