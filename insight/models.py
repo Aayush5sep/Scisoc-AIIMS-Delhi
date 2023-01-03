@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from payment.models import Payment
 
 # Create your models here.
 
@@ -35,7 +36,8 @@ class RegisterWorkshop(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     workshops = models.ManyToManyField(Workshop)
-    payment_id = models.CharField(max_length=200,null=True,blank=True)
+    pay_id = models.CharField(max_length=200,null=True,blank=True)
+    payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Workshop_Payment")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -60,7 +62,8 @@ class RegisterEvent(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     workshops = models.ManyToManyField(Events)
-    payment_id = models.CharField(max_length=200,null=True,blank=True)
+    pay_id = models.CharField(max_length=200,null=True,blank=True)
+    payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Event_Payment")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name

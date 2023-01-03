@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from django.utils.html import mark_safe
+from payment.models import Payment
+
 # Create your models here.
 
 class quiz(models.Model):
@@ -25,7 +27,8 @@ class registration(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     quiz_model = models.ForeignKey(quiz,on_delete=models.CASCADE)
     registered = models.BooleanField(default=False)
-    payment_id = models.CharField(max_length=200,null=True,blank=True)
+    pay_id = models.CharField(max_length=200,null=True,blank=True)
+    payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Anastomosis_Payment")
     quiz_submitted_at = models.DateTimeField(default=None,null=True,blank=True)
     exam_checked = models.BooleanField(default=False)
 

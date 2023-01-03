@@ -1,9 +1,7 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 import uuid
 from django.contrib.auth.models import User
+from payment.models import Payment
 
 # Create your models here.
 
@@ -52,7 +50,8 @@ class Team_Members(models.Model):
 class Registration(models.Model):
     reg_id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     registered = models.BooleanField("Registration Valid?",default=False)
-    payment_id = models.CharField("Payment Details",max_length=200,null=True,blank=True)
+    pay_id = models.CharField("Payment Details",max_length=200,null=True,blank=True)
+    payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Hackathon_Payment")
     hack_model = models.ForeignKey(Hackathon,on_delete=models.CASCADE)
     team_name = models.CharField("Team Name",max_length=25)
     leader = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Hackathon_Team_Leader")
@@ -99,7 +98,8 @@ class RegisterWS(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     workshops = models.ForeignKey(BioWorkshop, on_delete=models.CASCADE)
-    payment_id = models.CharField(max_length=200,null=True,blank=True)
+    pay_id = models.CharField(max_length=200,null=True,blank=True)
+    payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="BioWorkshop_Payment")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
