@@ -41,6 +41,43 @@ def paypage(request,amount,modelname,uid):
 @csrf_exempt
 def callback(request):
 
+    def update_registration(payment_id):
+        payment = Payment.objects.get(payment_id=payment_id)
+        mname = payment.modelname
+        uid = payment.uid
+        if mname=="anastomosis":
+            reg = registration.objects.get(reg_id=uid)
+            reg.pay_id = payment_id
+            reg.payment = payment
+            reg.registered = True
+            reg.save()
+        elif mname=="hackathon":
+            reg = Registration.objects.get(reg_id=uid)
+            reg.pay_id = payment_id
+            reg.payment = payment
+            reg.save()
+        elif mname=="bioworkshop":
+            reg = RegisterWS.objects.get(reg_id=uid)
+            reg.pay_id = payment_id
+            reg.payment = payment
+            reg.save()
+        elif mname=="medquiz":
+            reg = models.Registration.objects.get(reg_id=uid)
+            reg.pay_id = payment_id
+            reg.payment = payment
+            reg.registered = True
+            reg.save()
+        elif mname=="event":
+            reg = RegisterEvent.objects.get(reg_id=uid)
+            reg.pay_id = payment_id
+            reg.payment = payment
+            reg.save()
+        elif mname=="workshop":
+            reg = RegisterWorkshop.objects.get(reg_id=uid)
+            reg.pay_id = payment_id
+            reg.payment = payment
+            reg.save()
+
     def verify_signature(response_data):
         client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
         return client.utility.verify_payment_signature(response_data)
@@ -56,7 +93,7 @@ def callback(request):
         if verify_signature(request.POST):
             order.status = PaymentStatus.SUCCESS
             order.save()
-            # update_registration(payment_id)
+            update_registration(payment_id)
             return render(request, "callback.html", {"status": order.status})
         else:
             order.status = PaymentStatus.FAILURE
