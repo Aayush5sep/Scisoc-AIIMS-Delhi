@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils import timezone
+from payment.views import paypage
 
 # Create your views here.
 
@@ -29,8 +30,10 @@ def register_quiz(request,qzid):
         return redirect('/anastomosis/')
     else:
         # Payment & then save in registration
-        # registration(user = request.user, quiz_model = qz, registered = True).save()
-        pass
+        reg = registration(user = request.user, quiz_model = qz)
+        reg.save()
+        paypage(request,qz.reg_price,"anastomosis",reg.reg_id)
+
 
 @login_required(login_url='/user/loginpage')
 def live_quiz(request,qzid):

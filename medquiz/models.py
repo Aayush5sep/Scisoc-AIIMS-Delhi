@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from django.utils.html import mark_safe
+from payment.models import Payment
+
 # Create your models here.
 
 class Quiz(models.Model):
@@ -31,7 +33,8 @@ class Team_Members(models.Model):
 class Registration(models.Model):
     reg_id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     registered = models.BooleanField("Registration Valid?",default=False)
-    payment_id = models.CharField("Payment Details",max_length=200,null=True,blank=True)
+    pay_id = models.CharField("Payment Details",max_length=200,null=True,blank=True)
+    payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Medquiz_Payment")
     quiz_model = models.ForeignKey(Quiz,on_delete=models.CASCADE)
     team_name = models.CharField("Team Name",max_length=25)
     leader = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Team_Leader")

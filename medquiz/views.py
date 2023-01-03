@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
+from payment.views import paypage
 
 # Create your views here.
 
@@ -30,8 +31,9 @@ def register_quiz(request,qzid):
         return redirect('/medquiz/')
     else:
         # Payment & then save in registration
-        # registration(user = request.user, quiz_model = qz, registered = True).save()
-        pass
+        reg = Registration(user = request.user, quiz_model = qz)
+        reg.save()
+        paypage(request,qz.reg_price,"medquiz",reg.reg_id)
 
 @login_required(login_url='/user/loginpage')
 def live_quiz(request,qzid):

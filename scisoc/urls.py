@@ -30,4 +30,5 @@ urlpatterns = [
     path('medquiz/',include('medquiz.urls')),
     path('edc/',include('edc.urls')),
     path('insight/',include('insight.urls')),
+    path('payment/',include('payment.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
