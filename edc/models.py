@@ -33,6 +33,7 @@ class Hackathon(models.Model):
     reg_price = models.IntegerField("Registration Cost(if any)",default=0)
     team_cnt = models.IntegerField("Max Members In 1 Team",default=1)
     reg_open = models.BooleanField("Registration Opened?",default=False)
+    show_topics = models.BooleanField("View Topics To All?",default=False)
     hack_live = models.BooleanField("Hackathon Started?",default=False)
     on_web = models.BooleanField("Conduct on SciSoc Website?",default=True)
     hack_or_reg_link = models.URLField("Link for Registration/Hackathon",null=True,blank=True)
@@ -78,3 +79,27 @@ class Result(models.Model):
 
     def __str__(self):
         return self.hack.name[:15] + " " + self.position + " " + self.submission.team.team_name[:15]
+
+
+class BioWorkshop(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    title = models.CharField("Bio-Workshop Title",max_length=50)
+    desc = models.TextField("More About The Workshop")
+    img = models.ImageField("Cover Photo",upload_to='insight/workshop/')
+    ws_time = models.DateTimeField("Workshop Date And Time")
+    link = models.URLField("Link If Conducted Online",null=True,blank=True)
+    preference = models.IntegerField("Preference",default=1)
+    price = models.IntegerField("Workshop Price",default=0)
+
+    def __str__(self):
+        return self.title
+
+
+class RegisterWS(models.Model):
+    reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    workshops = models.ForeignKey(BioWorkshop, on_delete=models.CASCADE)
+    payment_id = models.CharField(max_length=200,null=True,blank=True)
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
