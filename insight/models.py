@@ -1,0 +1,74 @@
+from django.db import models
+from django.contrib.auth.models import User
+import uuid
+
+# Create your models here.
+
+class Insight(models.Model):
+    title = models.CharField("Insight Title",max_length=50)
+    desc = models.TextField("About Insight")
+    fest_img = models.ImageField("Fest Image",upload_to='insight/images/')
+    brochure_img = models.ImageField("Brochure Image", upload_to='insight/images/')
+    start = models.DateField("Start Date Of Insight")
+    live = models.BooleanField("Full Mode Display?",default=False)
+
+    def __str__(self):
+        return self.title
+
+
+class Workshop(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    insight = models.ForeignKey(Insight,on_delete=models.CASCADE)
+    title = models.CharField("Workshop Title",max_length=50)
+    desc = models.TextField("More About The Workshop")
+    img = models.ImageField("Cover Photo",upload_to='insight/workshop/')
+    ws_time = models.DateTimeField("Workshop Date And Time")
+    link = models.URLField("Link If Conducted Online",null=True,blank=True)
+    preference = models.IntegerField("Preference",default=1)
+    price = models.IntegerField("Workshop Price",default=0)
+
+    def __str__(self):
+        return self.title
+
+
+class RegisterWorkshop(models.Model):
+    reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    workshops = models.ManyToManyField(Workshop)
+    payment_id = models.CharField(max_length=200,null=True,blank=True)
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
+
+
+class Events(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    insight = models.ForeignKey(Insight,on_delete=models.CASCADE)
+    title = models.CharField("Event Title",max_length=50)
+    desc = models.TextField("More About The Event")
+    img = models.ImageField("Cover Photo",upload_to='insight/event/')
+    event_time = models.DateTimeField("Event Date And Time")
+    link = models.URLField("Link (If Conducted Online)",null=True,blank=True)
+    preference = models.IntegerField("Preference",default=1)
+    price = models.IntegerField("Entry Price (if any)",default=0)
+    result = models.BooleanField("Display Result (if any)",default=False)
+
+    def __str__(self):
+        return self.title
+
+class RegisterEvent(models.Model):
+    reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    workshops = models.ManyToManyField(Events)
+    payment_id = models.CharField(max_length=200,null=True,blank=True)
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
+
+class InsightResult(models.Model):
+    event = models.ForeignKey(Events,on_delete=models.CASCADE)
+    position = models.CharField("Rank In Words OR Numeric",max_length=10)
+    reg = models.ForeignKey(RegisterEvent,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.event.title[:15] + " " + self.position + " " + self.reg.user.first_name[:15]
