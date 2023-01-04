@@ -1,0 +1,67 @@
+{% extends 'common.html' %}
+
+{% block title %}eDC AIIMS Delhi{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block body %}
+
+    Hackathons => <br>
+    {% for hack in hacks %}
+
+        {{hack.name}}<br>
+        {{hack.desc}}<br>
+        <img src="{{hack.poster}}"><br>
+        Registration Price : {{hack.reg_price}}<br>
+        Max Members : {{hack.team_cnt}}<br>
+
+        {% comment %} Topics can be shown in a div at the right side {% endcomment %}
+        {% if hack.show_topics %}
+            Topics : <br>
+            {% for topic in hack.topics.all %}
+                {{forloop.counter}} {{topic.title}}<br>
+            {% endfor %}
+        {% endif %}
+
+        {% if hack.hack_live %}
+            Hackathon Is Live. Hurry Up !!  
+            <br>
+            {% if hack.on_web %}
+                <a href=""> Visit -> </a>
+            {% else %}
+                <a href="{{hack.hack_or_reg_link}}"> Visit -> </a>
+            {% endif %}
+        {% endif %}
+
+        {% if hack.reg_open %}
+            Registrations Are Open !!  
+            {% if hack.on_web %}
+                <a href=""> Register -> </a>
+            {% else %}
+                <a href="{{hack.hack_or_reg_link}}"> Register -> </a>
+            {% endif %}
+            <br>
+        {% endif %}
+        <br>
+    {% endfor %}
+
+
+    BioDesign Workshops => <br>
+    {% for workshop in workshops %}
+        {{workshop.title}}<br>
+        {{workshop.desc}}<br>
+        <img src="{{workshop.img}}"><br>
+        DateTime : {{workshop.ws_time}}<br>
+        {% if workshop.price>0 %}
+            Price : {{workshop.price}}<br>
+        {% endif %}
+        {% if workshop.link %}
+            <a href="{{workshop.link}}"> Register -> </a><br>
+        {% endif %}
+        <br>
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block js %}{% endblock %}

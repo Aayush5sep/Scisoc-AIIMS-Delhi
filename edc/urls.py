@@ -4,5 +4,5 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path('',views.hackathon),
+    path('',views.edc),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

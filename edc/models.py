@@ -30,6 +30,7 @@ class Hackathon(models.Model):
     sponsors = models.ManyToManyField(Sponsors)
     reg_price = models.IntegerField("Registration Cost(if any)",default=0)
     team_cnt = models.IntegerField("Max Members In 1 Team",default=1)
+    display = models.BooleanField("Display On Web?", default=False)
     reg_open = models.BooleanField("Registration Opened?",default=False)
     show_topics = models.BooleanField("View Topics To All?",default=False)
     hack_live = models.BooleanField("Hackathon Started?",default=False)
@@ -86,7 +87,8 @@ class BioWorkshop(models.Model):
     desc = models.TextField("More About The Workshop")
     img = models.ImageField("Cover Photo",upload_to='insight/workshop/')
     ws_time = models.DateTimeField("Workshop Date And Time")
-    link = models.URLField("Link If Conducted Online",null=True,blank=True)
+    display = models.BooleanField("Display On Web?", default=False)
+    link = models.URLField("Link If Conducted Online(Add on start)",null=True,blank=True)
     preference = models.IntegerField("Preference",default=1)
     price = models.IntegerField("Workshop Price",default=0)
 
