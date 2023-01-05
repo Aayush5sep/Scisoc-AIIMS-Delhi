@@ -1,0 +1,52 @@
+{% extends 'common.html' %}
+{% block title %}Hackathon{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block body %}
+
+    Hackathon Details =><br>
+    Title : {{hack.name}}<br>
+    Description : {{hack.desc}}<br>
+    <img src="{{hack.poster}}"><br>
+    Registration Price : {{hack.reg_price}}<br>
+    Maximum Members : {{hack.team_cnt}}
+
+    {% if hack.reg_open %}
+        {% if on_web %}
+            <a href="/edc/hackathon/register/{{hack.id}}">Register Now -></a><br>
+        {% else %}
+            <a href="{{hack.hack_or_reg_link}}">Register Now -></a><br>
+        {% endif %}
+    {% endif %}
+
+    {% if hack.hack_live %}
+        {% if on_web %}
+            <form method="post" action="/edc/hackathon/submit/{{hack.id}}">{% csrf_token %}
+                <div>
+                    <label for="formFileLg" class="form-label">Zip File</label>
+                    <input class="form-control form-control-lg" id="formFileLg" type="file" name="files">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        {% else %}
+            <a href="{{hack.hack_or_reg_link}}">Submit -></a><br>
+        {% endif %}
+    {% endif %}
+
+    {% if show_topics %}
+        Topics :
+        {% for topic in hack.topics.all %}
+            {{topic.title}}<br>
+            {{topic.desc}}<br>
+        {% endfor %}
+    {% endif %}
+    {% if hack.sponsors %}
+        Sponsors : <br>
+    {% endif %}
+    {% for sponsor in hack.sponsors.all %}
+        {{sponsor.name}}<br>
+        <img src="{{sponsor.logo}}"><br>
+    {% endfor %}
+
+{% endblock %}

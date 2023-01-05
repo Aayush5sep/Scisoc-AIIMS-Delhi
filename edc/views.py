@@ -15,3 +15,9 @@ def edc(request):
     workshops = BioWorkshop.objects.filter(display=True)
     return render(request,'edc/edcpage.html',{'hacks':hacks,'workshops':workshops})
 
+
+def hackathon(request,uid):
+    hack = Hackathon.objects.get(id=uid,display=True)
+    if not hack.show_topics:
+        del hack["topics"]
+    return render(request,'edc/hackathon.html',{'hack':hack})

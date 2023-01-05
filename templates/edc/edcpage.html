@@ -23,20 +23,12 @@
             {% endfor %}
         {% endif %}
 
-        {% if hack.hack_live %}
-            Hackathon Is Live. Hurry Up !!  
-            <br>
-            {% if hack.on_web %}
-                <a href=""> Visit -> </a>
-            {% else %}
-                <a href="{{hack.hack_or_reg_link}}"> Visit -> </a>
-            {% endif %}
-        {% endif %}
+        <a href="/edc/hackathon/{{hack.id}}"> View More </a><br>
 
         {% if hack.reg_open %}
             Registrations Are Open !!  
             {% if hack.on_web %}
-                <a href=""> Register -> </a>
+                <a href="/edc/hackathon/register/{{hack.id}}"> Register -> </a>
             {% else %}
                 <a href="{{hack.hack_or_reg_link}}"> Register -> </a>
             {% endif %}
