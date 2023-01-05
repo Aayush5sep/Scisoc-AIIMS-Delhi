@@ -10,29 +10,7 @@
     Description : {{hack.desc}}<br>
     <img src="{{hack.poster}}"><br>
     Registration Price : {{hack.reg_price}}<br>
-    Maximum Members : {{hack.team_cnt}}
-
-    {% if hack.reg_open %}
-        {% if on_web %}
-            <a href="/edc/hackathon/register/{{hack.id}}">Register Now -></a><br>
-        {% else %}
-            <a href="{{hack.hack_or_reg_link}}">Register Now -></a><br>
-        {% endif %}
-    {% endif %}
-
-    {% if hack.hack_live %}
-        {% if on_web %}
-            <form method="post" action="/edc/hackathon/submit/{{hack.id}}">{% csrf_token %}
-                <div>
-                    <label for="formFileLg" class="form-label">Zip File</label>
-                    <input class="form-control form-control-lg" id="formFileLg" type="file" name="files">
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-        {% else %}
-            <a href="{{hack.hack_or_reg_link}}">Submit -></a><br>
-        {% endif %}
-    {% endif %}
+    Maximum Members : {{hack.team_cnt}}<br>
 
     {% if show_topics %}
         Topics :
@@ -48,5 +26,54 @@
         {{sponsor.name}}<br>
         <img src="{{sponsor.logo}}"><br>
     {% endfor %}
+
+    {% if hack.hack_live %}
+        {% if on_web %}
+            <form method="post" action="/edc/hackathon/submit/{{hack.id}}">{% csrf_token %}
+                <div>
+                    <label for="formFileLg" class="form-label">Zip File</label>
+                    <input class="form-control form-control-lg" id="formFileLg" type="file" name="files">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        {% else %}
+            <a href="{{hack.hack_or_reg_link}}">Submit -></a><br>
+        {% endif %}
+    {% endif %}
+
+    {% if hack.reg_open %}
+        Not Registered Yet?<br>
+        {% if on_web %}
+            {% if user.is_authenticated %}
+                <form method="post" action="/edc/hackathon/register/{{hack.id}}">{% csrf_token %}
+                    <label for="leadname" class="col-sm-2 col-form-label">Leader Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="leadname" value="{{user.first_name}} {{user.last_name}}">
+                    </div>
+                    <label for="leadmail" class="col-sm-2 col-form-label">Leader Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="leadmail" name="leadmail" value="{{user.email}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamname" class="form-label">Team Name</label>
+                        <input type="text" name="teamname" class="form-control" id="teamname" placeholder="Team_Name">
+                    </div>
+                    {% for i in members %}
+                        <div class="mb-3 row">
+                            <label for="member" class="col-sm-2 col-form-label">Member {{i|add:"1"}}</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" id="member" name="member">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+            {% else %}
+                Kindly Login To Register....<br> 
+            {% endif %}
+        {% else %}
+            <a href="{{hack.hack_or_reg_link}}">Register Now -></a><br>
+        {% endif %}
+    {% endif %}
+
 
 {% endblock %}

@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     path('',views.edc),
-    path('hackathon/<uid:uuid>',views.reg_hackathon),
-    path('register/hackathon.<uid:uuid>',views.reg_hack),
-    path('submit/hackathon.<uid:uuid>',views.submit_hack),
+    path('hackathon/<uid:uuid>',views.hackathon),
+    path('hackathon/register/<uid:uuid>',views.reg_hack),
+    path('hackathon/submit/<uid:uuid>',views.submit_hack),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Hackathon,Hack_Topics,Sponsors,Team_Members,Registration,Submission,Result,BioWorkshop,RegisterWS
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from payment.views import paypage
 
 # Create your views here.
 
@@ -20,14 +21,40 @@ def edc(request):
 
 def hackathon(request,uid):
     hack = Hackathon.objects.get(id=uid,display=True)
+    members = hack.team_cnt
     if not hack.show_topics:
         del hack["topics"]
-    return render(request,'edc/hackathon.html',{'hack':hack})
+    return render(request,'edc/hackathon.html',{'hack':hack,'members':range(members)})
 
 
 @login_required(login_url='/user/login/')
 def reg_hack(request,uid):
-    pass
+    if request.method=='POST':
+        hack = Hackathon.objects.get(id=uid)
+        if hack is None:
+            return HttpResponse("No Such Hackathon Exists")
+        userid = request.POST['leader']
+        teamname = request.POST['teamname']
+        members = request.POST.getlist('member')
+        leaduser = request.user
+        team=[]
+        for member in members:
+            meb = Team_Members(name=member)
+            meb.save()
+            team.append(meb)
+        reg = Registration.objects.get(hack_model=hack,leader=leaduser)
+        if reg is not None and reg.registered==True:
+            return HttpResponse("You have already registered for this hackathon")
+        if reg is None:
+            reg = Registration(hack_model=hack,team_name=teamname,leader=leaduser,members=team)
+        if hack.reg_price==0:
+            reg.registered=True
+            reg.save()
+        else:
+            reg.save()
+            paypage(request,hack.reg_price,"hackathon",reg.reg_id)
+    else:
+        return HttpResponse("Invalid Request")
 
 
 @login_required(login_url='/user/login/')
