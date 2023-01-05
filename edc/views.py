@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Hackathon,Hack_Topics,Sponsors,Team_Members,Registration,Submission,Result,BioWorkshop,RegisterWS
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 # Create your views here.
 
@@ -21,3 +23,21 @@ def hackathon(request,uid):
     if not hack.show_topics:
         del hack["topics"]
     return render(request,'edc/hackathon.html',{'hack':hack})
+
+
+@login_required(login_url='/user/login/')
+def reg_hack(request,uid):
+    pass
+
+
+@login_required(login_url='/user/login/')
+def submit_hack(request,uid):
+    hack = Hackathon.objects.get(id=uid)
+    reg = Registration.objects.get(registered=True,hack_model=hack,leader=request.user)
+    if reg is None:
+        return HttpResponse("You are not registered for any such hackathon")
+    files = request.POST['files']
+    reg.hack_submitted_at = timezone.now()
+    reg.save()
+    Submission(hack=hack,team=reg,content=files).save()
+    return HttpResponse("You Submission has been saves successfully")
