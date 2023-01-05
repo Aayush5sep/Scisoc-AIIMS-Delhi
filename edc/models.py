@@ -88,6 +88,7 @@ class BioWorkshop(models.Model):
     img = models.ImageField("Cover Photo",upload_to='insight/workshop/')
     ws_time = models.DateTimeField("Workshop Date And Time")
     display = models.BooleanField("Display On Web?", default=False)
+    reg_link = models.URLField("Add Registration Link For External Website",null=True,blank=True)
     link = models.URLField("Link If Conducted Online(Add on start)",null=True,blank=True)
     preference = models.IntegerField("Preference",default=1)
     price = models.IntegerField("Workshop Price",default=0)
@@ -100,6 +101,7 @@ class RegisterWS(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     workshops = models.ForeignKey(BioWorkshop, on_delete=models.CASCADE)
+    registered = models.BooleanField("Registrationn Valid ?", default=False)
     pay_id = models.CharField(max_length=200,null=True,blank=True)
     payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="BioWorkshop_Payment")
 

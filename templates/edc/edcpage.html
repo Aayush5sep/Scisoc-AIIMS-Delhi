@@ -46,9 +46,13 @@
         DateTime : {{workshop.ws_time}}<br>
         {% if workshop.price>0 %}
             Price : {{workshop.price}}<br>
+        {% else %}
+            Free Registration
         {% endif %}
-        {% if workshop.link %}
-            <a href="{{workshop.link}}"> Register -> </a><br>
+        {% if workshop.reg_link %}
+            <a href="{{workshop.reg_link}}"> Register -> </a><br>
+        {% else %}
+            <a href="/edc/bioworkshop/register/{{workshop.id}}"> Register -> </a><br>
         {% endif %}
         <br>
     {% endfor %}

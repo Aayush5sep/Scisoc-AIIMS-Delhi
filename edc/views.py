@@ -68,3 +68,15 @@ def submit_hack(request,uid):
     reg.save()
     Submission(hack=hack,team=reg,content=files).save()
     return HttpResponse("You Submission has been saves successfully")
+
+
+@login_required(login_url='/user/login/')
+def reg_ws(request,uid):
+    ws = BioWorkshop.objects.get(id=uid)
+    if ws.price==0:
+        reg = RegisterWS(user=request.user, workshops=ws, registered=True)
+        reg.save()
+    else:
+        reg = RegisterWS(user=request.user, workshops=ws)
+        reg.save()
+        paypage(request,ws.price,"bioworkshop",reg.reg_id)
