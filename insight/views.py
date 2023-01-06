@@ -18,14 +18,23 @@ def reg_ws(request):
     amount = 0
     workshops = []
     free_ws = []
+    prev_reg = RegisterWorkshop.objects.filter(user=request.user,registered=True)
+    registered_ws = []
+    for prev in prev_reg:
+        registered_ws = registered_ws+prev.workshops
     for selec in selected:
         ws = Workshop.objects.get(id=selec)
         if ws.price==0:
             free_ws.append(ws)
-        else:
+        elif ws not in registered_ws:
             amount = amount+ws.price
             workshops.append(ws)
-    RegisterWorkshop(user=request.user,workshops=free_ws,registered=True).save()
+    free_reg = RegisterWorkshop.objects.get(user=request.user,free_collec=True)
+    if free_reg is None:
+        RegisterWorkshop(user=request.user,workshops=free_ws,registered=True).save()
+    else:
+        for freews in free_ws:
+            free_reg.workshops.add(freews)
     reg = RegisterWorkshop(user=request.user,workshops=workshops)
     reg.save()
     paypage(request,amount,"workshop",reg.reg_id)
@@ -36,14 +45,23 @@ def reg_event(request):
     amount = 0
     events = []
     free_ev = []
+    prev_reg = RegisterEvent.objects.filter(user=request.user,registered=True)
+    registered_ev = []
+    for prev in prev_reg:
+        registered_ev = registered_ev+prev.events
     for selec in selected:
         evnt = Events.objects.get(id=selec)
         if evnt.price==0:
             free_ev.append(evnt)
-        else:
+        elif evnt not in registered_ev:
             amount = amount+evnt.price
             events.append(evnt)
-    RegisterEvent(user=request.user,events=free_ev,registered=True).save()
+    free_reg = RegisterEvent.objects.get(user=request.user,free_collec=True)
+    if free_reg is None:
+        RegisterEvent(user=request.user,events=free_ev,registered=True).save()
+    else:
+        for freeev in free_ev:
+            free_reg.events.add(freeev)
     reg = RegisterEvent(user=request.user,events=events)
     reg.save()
     paypage(request,amount,"event",reg.reg_id)
