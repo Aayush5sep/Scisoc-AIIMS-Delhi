@@ -67,6 +67,8 @@ class Submission(models.Model):
     hack = models.ForeignKey(Hackathon,on_delete=models.CASCADE)
     team = models.ForeignKey(Registration,on_delete=models.CASCADE)
     content = models.FileField(upload_to='edc/hackathon/',null=True,blank=True)
+    live_host = models.URLField("Live Hosted Website Link",null=True,blank=True)
+    git_link = models.URLField("Github Repository",null=True,blank=True)
 
     def __str__(self):
         return self.team.team_name

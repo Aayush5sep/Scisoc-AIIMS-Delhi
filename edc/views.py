@@ -63,10 +63,12 @@ def submit_hack(request,uid):
     reg = Registration.objects.get(registered=True,hack_model=hack,leader=request.user)
     if reg is None:
         return HttpResponse("You are not registered for any such hackathon")
+    gitlink = request.POST['gitrepo']
+    liveweb = request.POST['hostweb']
     files = request.POST['files']
     reg.hack_submitted_at = timezone.now()
     reg.save()
-    Submission(hack=hack,team=reg,content=files).save()
+    Submission(hack=hack,team=reg,content=files,live_host=liveweb,git_link=gitlink).save()
     return HttpResponse("You Submission has been saves successfully")
 
 
