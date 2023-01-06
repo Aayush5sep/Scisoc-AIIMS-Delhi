@@ -16,6 +16,10 @@ class Insight(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ["-start"]
+        verbose_name_plural = "Insight"
+
 
 class Workshop(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -32,6 +36,10 @@ class Workshop(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ["preference"]
+        verbose_name_plural = "Workshops"
+
 
 class RegisterWorkshop(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -44,6 +52,9 @@ class RegisterWorkshop(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
+
+    class Meta:
+        verbose_name_plural = "Workshop Registrations"
 
 
 class Events(models.Model):
@@ -62,6 +73,11 @@ class Events(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ["preference"]
+        verbose_name_plural = "Events"
+
+
 class RegisterEvent(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -74,6 +90,10 @@ class RegisterEvent(models.Model):
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
 
+    class Meta:
+        verbose_name_plural = "Event Registrations"
+
+
 class InsightResult(models.Model):
     event = models.ForeignKey(Events,on_delete=models.CASCADE)
     position = models.CharField("Rank In Words OR Numeric",max_length=10)
@@ -81,3 +101,6 @@ class InsightResult(models.Model):
 
     def __str__(self):
         return self.event.title[:15] + " " + self.position + " " + self.reg.user.first_name[:15]
+
+    class Meta:
+        verbose_name_plural = "Event's Result"
