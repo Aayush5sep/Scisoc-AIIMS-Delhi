@@ -11,7 +11,7 @@ class Insight(models.Model):
     fest_img = models.ImageField("Fest Image",upload_to='insight/images/')
     brochure_img = models.ImageField("Brochure Image", upload_to='insight/images/')
     start = models.DateField("Start Date Of Insight")
-    live = models.BooleanField("Full Mode Display?",default=False)
+    live = models.BooleanField("Display On Web?",default=False)
 
     def __str__(self):
         return self.title
@@ -24,6 +24,7 @@ class Workshop(models.Model):
     desc = models.TextField("More About The Workshop")
     img = models.ImageField("Cover Photo",upload_to='insight/workshop/')
     ws_time = models.DateTimeField("Workshop Date And Time")
+    reg_link = models.URLField("External Registration Link",null=True,blank=True)
     link = models.URLField("Link If Conducted Online",null=True,blank=True)
     preference = models.IntegerField("Preference",default=1)
     price = models.IntegerField("Workshop Price",default=0)
@@ -36,6 +37,7 @@ class RegisterWorkshop(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     workshops = models.ManyToManyField(Workshop)
+    registered = models.BooleanField("Registration Valid?", default=False)
     pay_id = models.CharField(max_length=200,null=True,blank=True)
     payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Workshop_Payment")
 
@@ -50,6 +52,7 @@ class Events(models.Model):
     desc = models.TextField("More About The Event")
     img = models.ImageField("Cover Photo",upload_to='insight/event/')
     event_time = models.DateTimeField("Event Date And Time")
+    reg_link = models.URLField("External Registration Link",null=True,blank=True)
     link = models.URLField("Link (If Conducted Online)",null=True,blank=True)
     preference = models.IntegerField("Preference",default=1)
     price = models.IntegerField("Entry Price (if any)",default=0)
@@ -62,6 +65,7 @@ class RegisterEvent(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     workshops = models.ManyToManyField(Events)
+    registered = models.BooleanField("Registration Valid?", default=False)
     pay_id = models.CharField(max_length=200,null=True,blank=True)
     payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Event_Payment")
 
