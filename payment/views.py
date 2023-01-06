@@ -55,11 +55,13 @@ def callback(request):
             reg = Registration.objects.get(reg_id=uid)
             reg.pay_id = payment_id
             reg.payment = payment
+            reg.registered = True
             reg.save()
         elif mname=="bioworkshop":
             reg = RegisterWS.objects.get(reg_id=uid)
             reg.pay_id = payment_id
             reg.payment = payment
+            reg.registered = True
             reg.save()
         elif mname=="medquiz":
             reg = models.Registration.objects.get(reg_id=uid)
@@ -71,11 +73,13 @@ def callback(request):
             reg = RegisterEvent.objects.get(reg_id=uid)
             reg.pay_id = payment_id
             reg.payment = payment
+            reg.registered = True
             reg.save()
         elif mname=="workshop":
             reg = RegisterWorkshop.objects.get(reg_id=uid)
             reg.pay_id = payment_id
             reg.payment = payment
+            reg.registered = True
             reg.save()
 
     def verify_signature(response_data):

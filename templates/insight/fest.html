@@ -20,7 +20,7 @@
                 {% if ws.reg_link %}
                     <a href="{{ws.reg_link}}">Register Externally</a>
                 {% else %}
-                    <input class="form-check-input" type="checkbox" name="workshop" value="{{ws.title}}" id="workshop">
+                    <input class="form-check-input" type="checkbox" name="workshop" value="{{ws.id}}" id="workshop">
                     <label class="form-check-label" for="workshop">
                         Select To Register
                     </label><br>
@@ -43,7 +43,7 @@
                 {% if ev.reg_link %}
                     <a href="{{ev.reg_link}}">Register Externally</a>
                 {% else %}
-                    <input class="form-check-input" type="checkbox" name="event" value="{{ev.title}}" id="event">
+                    <input class="form-check-input" type="checkbox" name="event" value="{{ev.id}}" id="event">
                     <label class="form-check-label" for="event">
                         Select To Register
                     </label><br>

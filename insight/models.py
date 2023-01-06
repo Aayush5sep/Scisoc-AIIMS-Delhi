@@ -64,7 +64,7 @@ class Events(models.Model):
 class RegisterEvent(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    workshops = models.ManyToManyField(Events)
+    events = models.ManyToManyField(Events)
     registered = models.BooleanField("Registration Valid?", default=False)
     pay_id = models.CharField(max_length=200,null=True,blank=True)
     payment = models.ForeignKey(Payment,on_delete=models.DO_NOTHING,null=True,blank=True,related_name="Event_Payment")
