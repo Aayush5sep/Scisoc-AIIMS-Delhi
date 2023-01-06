@@ -1,0 +1,22 @@
+{% extends 'common.html' %}
+
+{% block title %}Insight{% endblock %}
+
+{% block body %}
+    All Insight =><br>
+    {% for fest in fests %}
+        {% if forloop.counter==1 %}
+            <!-- Special Display For Latest Insight -->
+            Starts On {{fest.start}} :)<br>
+            {{fest.title}}<br>
+            {{fest.desc}}<br>
+            <img src="{{fest.fest_img}}"><br>
+        {% else %}
+            {{fest.title}}<br>
+            {{fest.desc}}<br>
+            <img src="{{fest.fest_img}}"><br>
+            {{fest.start}}<br>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

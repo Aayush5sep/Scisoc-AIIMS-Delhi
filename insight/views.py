@@ -5,7 +5,8 @@ from payment.views import paypage
 # Create your views here.
 
 def insight_home(request):
-    pass
+    fests = Insight.objects.filter(live=True).order_by('-start')
+    return render(request,'insight/insight.html',{'fests':fests})
 
 def insight(request,id):
     fest = Insight.objects.get(id=id,live=True)
@@ -31,7 +32,7 @@ def reg_ws(request):
             workshops.append(ws)
     free_reg = RegisterWorkshop.objects.get(user=request.user,free_collec=True)
     if free_reg is None:
-        RegisterWorkshop(user=request.user,workshops=free_ws,registered=True).save()
+        RegisterWorkshop(user=request.user,workshops=free_ws,registered=True,free_collec=True).save()
     else:
         for freews in free_ws:
             free_reg.workshops.add(freews)
@@ -58,7 +59,7 @@ def reg_event(request):
             events.append(evnt)
     free_reg = RegisterEvent.objects.get(user=request.user,free_collec=True)
     if free_reg is None:
-        RegisterEvent(user=request.user,events=free_ev,registered=True).save()
+        RegisterEvent(user=request.user,events=free_ev,registered=True,free_collec=True).save()
     else:
         for freeev in free_ev:
             free_reg.events.add(freeev)
