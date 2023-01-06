@@ -30,6 +30,14 @@
     {% if hack.hack_live %}
         {% if on_web %}
             <form method="post" action="/edc/hackathon/submit/{{hack.id}}">{% csrf_token %}
+                <div class="form-group">
+                    <label for="gitrepo">Github Repository Link with Readme File</label>
+                    <input type="text" class="form-control" name="gitrepo" id="gitrepo" placeholder="github.com/User/Repo">
+                </div>
+                <div class="form-group">
+                    <label for="hostweb">Live Website URL (if any)</label>
+                    <input type="text" class="form-control" name="hostweb" id="hostweb" placeholder="http://weburl.com">
+                </div>
                 <div>
                     <label for="formFileLg" class="form-label">Zip File</label>
                     <input class="form-control form-control-lg" id="formFileLg" type="file" name="files">
