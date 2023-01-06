@@ -12,6 +12,10 @@ class Hack_Topics(models.Model):
     def __str__(self):
         return self.title[:25]
 
+    class Meta:
+        verbose_name = "Hackathon Topic"
+        verbose_name_plural = "Hackathon Topics"
+
 
 class Sponsors(models.Model):
     name = models.CharField("Sponsor Name",max_length=50)
@@ -19,6 +23,10 @@ class Sponsors(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Sponsor"
+        verbose_name_plural = "Sponsors"
 
 
 class Hackathon(models.Model):
@@ -40,12 +48,20 @@ class Hackathon(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Hackathon"
+        verbose_name_plural = "Hackathons"
+
 
 class Team_Members(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Team Member"
+        verbose_name_plural = "Team Members"
 
 
 class Registration(models.Model):
@@ -62,6 +78,10 @@ class Registration(models.Model):
     def __str__(self):
         return self.team_name
 
+    class Meta:
+        verbose_name = "Hackathon Registration"
+        verbose_name_plural = "Hackathon Registrations"
+
 
 class Submission(models.Model):
     hack = models.ForeignKey(Hackathon,on_delete=models.CASCADE)
@@ -73,6 +93,10 @@ class Submission(models.Model):
     def __str__(self):
         return self.team.team_name
 
+    class Meta:
+        verbose_name = "Hackathon Submission"
+        verbose_name_plural = "Hackathon Submissions"
+
 
 class Result(models.Model):
     hack = models.ForeignKey(Hackathon,on_delete=models.CASCADE)
@@ -81,6 +105,10 @@ class Result(models.Model):
 
     def __str__(self):
         return self.hack.name[:15] + " " + self.position + " " + self.submission.team.team_name[:15]
+
+    class Meta:
+        verbose_name = "Hackathon Result"
+        verbose_name_plural = "Hackathon Results"
 
 
 class BioWorkshop(models.Model):
@@ -98,6 +126,10 @@ class BioWorkshop(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "BioDesign Workshop"
+        verbose_name_plural = "BioDesign Workshops"
+
 
 class RegisterWS(models.Model):
     reg_id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -109,3 +141,7 @@ class RegisterWS(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
+
+    class Meta:
+        verbose_name = "Workshop Registration"
+        verbose_name_plural = "eDC Workshop Registrations"
