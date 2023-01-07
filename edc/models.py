@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 from payment.models import Payment
+from django.utils.html import mark_safe
 
 # Create your models here.
 
@@ -13,6 +14,7 @@ class Hack_Topics(models.Model):
         return self.title[:25]
 
     class Meta:
+        ordering = ["title"]
         verbose_name = "Hackathon Topic"
         verbose_name_plural = "Hackathon Topics"
 
@@ -24,7 +26,16 @@ class Sponsors(models.Model):
     def __str__(self):
         return self.name
 
+    def delete(self):
+        self.logo.storage.delete(self.logo.name)
+        super().delete()
+    
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.logo))
+    view_image.short_description = 'Image'
+
     class Meta:
+        ordering = ["name"]
         verbose_name = "Sponsor"
         verbose_name_plural = "Sponsors"
 
@@ -47,6 +58,14 @@ class Hackathon(models.Model):
 
     def __str__(self):
         return self.name
+
+    def delete(self):
+        self.poster.storage.delete(self.poster.name)
+        super().delete()
+    
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.poster))
+    view_image.short_description = 'Image'
 
     class Meta:
         verbose_name = "Hackathon"
@@ -126,7 +145,16 @@ class BioWorkshop(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self):
+        self.img.storage.delete(self.img.name)
+        super().delete()
+    
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.img))
+    view_image.short_description = 'Image'
+
     class Meta:
+        ordering = ["-ws_time"]
         verbose_name = "BioDesign Workshop"
         verbose_name_plural = "BioDesign Workshops"
 

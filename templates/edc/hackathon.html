@@ -28,7 +28,7 @@
     {% endfor %}
 
     {% if hack.hack_live %}
-        {% if on_web %}
+        {% if hack.on_web %}
             <form method="post" action="/edc/hackathon/submit/{{hack.id}}">{% csrf_token %}
                 <div class="form-group">
                     <label for="gitrepo">Github Repository Link with Readme File</label>
@@ -51,7 +51,7 @@
 
     {% if hack.reg_open %}
         Not Registered Yet?<br>
-        {% if on_web %}
+        {% if hack.on_web %}
             {% if user.is_authenticated %}
                 <form method="post" action="/edc/hackathon/register/{{hack.id}}">{% csrf_token %}
                     <label for="leadname" class="col-sm-2 col-form-label">Leader Name</label>
@@ -74,6 +74,7 @@
                             </div>
                         </div>
                     {% endfor %}
+                    <button type="submit">Register</button><br>
                 </form>
             {% else %}
                 Kindly Login To Register....<br> 

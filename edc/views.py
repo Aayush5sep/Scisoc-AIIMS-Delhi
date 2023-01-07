@@ -23,7 +23,7 @@ def hackathon(request,uid):
     hack = Hackathon.objects.get(id=uid,display=True)
     members = hack.team_cnt
     if not hack.show_topics:
-        del hack["topics"]
+        hack = Hackathon.objects.filter(id=uid,display=True).defer('topics')[0]
     return render(request,'edc/hackathon.html',{'hack':hack,'members':range(members)})
 
 
