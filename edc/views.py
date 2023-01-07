@@ -33,7 +33,6 @@ def reg_hack(request,uid):
         hack = Hackathon.objects.get(id=uid)
         if hack is None:
             return HttpResponse("No Such Hackathon Exists")
-        userid = request.POST['leader']
         teamname = request.POST['teamname']
         members = request.POST.getlist('member')
         leaduser = request.user
@@ -42,17 +41,23 @@ def reg_hack(request,uid):
             meb = Team_Members(name=member)
             meb.save()
             team.append(meb)
-        reg = Registration.objects.get(hack_model=hack,leader=leaduser)
+        reg = None
+        try:
+            reg = Registration.objects.get(hack_model=hack,leader=leaduser)
+        except:
+            print("No Previous Registration")
         if reg is not None and reg.registered==True:
             return HttpResponse("You have already registered for this hackathon")
         if reg is None:
-            reg = Registration(hack_model=hack,team_name=teamname,leader=leaduser,members=team)
+            reg = Registration.objects.create(hack_model=hack,team_name=teamname,leader=leaduser)
+            reg.members.set(team)
         if hack.reg_price==0:
             reg.registered=True
             reg.save()
+            return HttpResponse("Registered Successfully")
         else:
             reg.save()
-            paypage(request,hack.reg_price,"hackathon",reg.reg_id)
+            return paypage(request,hack.reg_price,"hackathon",reg.reg_id)
     else:
         return HttpResponse("Invalid Request")
 
@@ -81,4 +86,4 @@ def reg_ws(request,uid):
     else:
         reg = RegisterWS(user=request.user, workshops=ws)
         reg.save()
-        paypage(request,ws.price,"bioworkshop",reg.reg_id)
+        return paypage(request,ws.price,"bioworkshop",reg.reg_id)

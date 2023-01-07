@@ -32,7 +32,7 @@ def register_quiz(request,qzid):
         # Payment & then save in registration
         reg = registration(user = request.user, quiz_model = qz)
         reg.save()
-        paypage(request,qz.reg_price,"anastomosis",reg.reg_id)
+        return paypage(request,qz.reg_price,"anastomosis",reg.reg_id)
 
 
 @login_required(login_url='/user/loginpage')

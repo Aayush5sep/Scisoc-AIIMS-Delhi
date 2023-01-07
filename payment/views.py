@@ -27,15 +27,8 @@ def paypage(request,amount,modelname,uid):
         user=user, amount=amount, modelname=modelname, uid=uid, provider_order_id=razorpay_order["id"]
     )
     order.save()
-    return render(
-        request,
-        'payment/payment.html',
-        {
-            "callback_url": "http://" + "127.0.0.1:8000" + "/payment/callback/",
-            "razorpay_key": RAZORPAY_KEY_ID,
-            "order": order,
-        },
-    )
+    print("execution")
+    return render(request,'payment/payment.html',{"callback_url": "http://" + "127.0.0.1:8000" + "/payment/callback/","razorpay_key": RAZORPAY_KEY_ID,"order": order})
 
 
 @csrf_exempt
@@ -98,11 +91,11 @@ def callback(request):
             order.status = PaymentStatus.SUCCESS
             order.save()
             update_registration(payment_id)
-            return render(request, "callback.html", {"status": order.status})
+            return render(request, 'payment/callback.html', {"status": order.status})
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
-            return render(request, "callback.html", {"status": order.status})
+            return render(request, 'payment/callback.html', {"status": order.status})
     else:
         payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
         provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
@@ -112,4 +105,4 @@ def callback(request):
         order.payment_id = payment_id
         order.status = PaymentStatus.FAILURE
         order.save()
-        return render(request, "callback.html", {"status": order.status})
+        return render(request, 'payment/callback.html', {"status": order.status})

@@ -38,7 +38,7 @@ def reg_ws(request):
             free_reg.workshops.add(freews)
     reg = RegisterWorkshop(user=request.user,workshops=workshops)
     reg.save()
-    paypage(request,amount,"workshop",reg.reg_id)
+    return paypage(request,amount,"workshop",reg.reg_id)
 
 
 def reg_event(request):
@@ -65,4 +65,4 @@ def reg_event(request):
             free_reg.events.add(freeev)
     reg = RegisterEvent(user=request.user,events=events)
     reg.save()
-    paypage(request,amount,"event",reg.reg_id)
+    return paypage(request,amount,"event",reg.reg_id)
