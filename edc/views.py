@@ -28,7 +28,8 @@ def hackathon(request,uid):
         prev_reg = True
     if not hack.show_topics:
         hack = Hackathon.objects.filter(id=uid,display=True).defer('topics')[0]
-    return render(request,'edc/hackathon.html',{'hack':hack,'prev_reg':prev_reg,'members':range(members)})
+    results = Result.objects.filter(hack=hack)
+    return render(request,'edc/hackathon.html',{'hack':hack,'prev_reg':prev_reg,'members':range(members),'results':results})
 
 
 @login_required(login_url='/user/login/')

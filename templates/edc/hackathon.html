@@ -8,7 +8,9 @@
     Hackathon Details =><br>
     Title : {{hack.name}}<br>
     Description : {{hack.desc}}<br>
-    <img src="/media/{{hack.poster}}"><br>
+    {% if hack.poster %}
+        <img src="/media/{{hack.poster}}" height=200 width=200><br>
+    {% endif %}
     Registration Price : {{hack.reg_price}}<br>
     Maximum Members : {{hack.team_cnt}}<br>
 
@@ -24,7 +26,7 @@
     {% endif %}
     {% for sponsor in hack.sponsors.all %}
         {{sponsor.name}}<br>
-        <img src="{{sponsor.logo}}"><br>
+        <img src="/media/{{sponsor.logo}}" height=100 width=100><br>
     {% endfor %}
 
     {% if hack.hack_live %}
@@ -49,7 +51,7 @@
         {% endif %}
     {% endif %}
 
-    {% if prev_reg %}
+    {% if prev_reg and hack.reg_open %}
         You have registered for this hackathon :)<br>
     {% elif hack.reg_open %}
         Not Registered Yet?<br>
@@ -90,6 +92,15 @@
         {% else %}
             <a href="{{hack.hack_or_reg_link}}">Register Now -></a><br>
         {% endif %}
+    {% endif %}
+
+
+    {% if results %}
+        <br>Results =><br>
+        {% for result in results %}
+            {{result.position}} -> {{result.submission.team.team_name}}
+        {% endfor %}
+        <br> Kindly mail to scisoc_email from your registered ids to claim the rewards
     {% endif %}
 
 
