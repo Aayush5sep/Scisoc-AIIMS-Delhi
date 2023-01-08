@@ -9,7 +9,7 @@
 
         Reply to user queries:  [Staff Access] <br><br>
         {% for prob in probs %}
-            {{prob.id}}> {{prob.name}} : {{prob.email}} <br>
+            {{forloop.counter}}> {{prob.name}} : {{prob.email}} <br>
             Problem : {{prob.header}}<br>{{prob.desc}}<br>
             <form action="/extra/reply" method="get"> {% csrf_token %}
                 <input type="hidden" name="id" value="{{prob.id}}">

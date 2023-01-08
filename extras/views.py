@@ -35,6 +35,10 @@ def replypage(request):
 @staff_member_required
 def send_reply(request):
     qid = request.GET['id']
+    prob = problem.objects.filter(id=qid)
+    if len(prob)==0:
+        messages.error(request,"Reply to the query has been already sent.")
+        return redirect('/extra/allprobs/')
     email = request.GET['email']
     subject = "Reply To:" + request.GET['subject']
     reply = request.GET['reply']
@@ -42,7 +46,7 @@ def send_reply(request):
     send_mail(subject, reply, sender, [email])
     messages.success(request,"Reply to the query has been sent.")
     problem.objects.filter(id=qid).delete()
-    return redirect('/extras/allprobs')
+    return redirect('/extra/allprobs/')
 
 def faqs(request):
     faq_list = faq.objects.order_by('order')
