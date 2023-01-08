@@ -15,7 +15,7 @@ def edc(request):
         hacks.append(hack)
     for hack in view_hacks:
         hacks.append(hack)
-    workshops = BioWorkshop.objects.filter(display=True)
+    workshops = BioWorkshop.objects.filter(display=True).order_by('-preference')
     return render(request,'edc/edcpage.html',{'hacks':hacks,'workshops':workshops})
 
 
@@ -92,11 +92,14 @@ def submit_hack(request,uid):
 
 @login_required(login_url='/user/login/')
 def reg_ws(request,uid):
-    ws = BioWorkshop.objects.get(id=uid)
+    ws = BioWorkshop.objects.get(id=uid,display=True)
+    reg = RegisterWS.objects.filter(workshops=ws,user=request.user,registered=True)
+    if len(reg)>0:
+        return HttpResponse("You have already registered for this workshop <br><a href='/'>Return To Homepage</a>")
     if ws.price==0:
         reg = RegisterWS(user=request.user, workshops=ws, registered=True)
         reg.save()
-    else:
-        reg = RegisterWS(user=request.user, workshops=ws)
-        reg.save()
-        return paypage(request,ws.price,"bioworkshop",reg.reg_id)
+        return HttpResponse("You have been successfully registered for the workshop <br><a href='/'>Return To Homepage</a>")
+    reg = RegisterWS(user=request.user, workshops=ws)
+    reg.save()
+    return paypage(request,ws.price,"bioworkshop",reg.reg_id)

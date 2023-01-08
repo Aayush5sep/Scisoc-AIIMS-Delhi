@@ -40,11 +40,15 @@
     {% endfor %}
 
 
-    <h1>BioDesign Workshop => </h1><br>
+
+
+    <h1>BioDesign Workshop => </h1>
     {% for workshop in workshops %}
-        {{workshop.title}}<br>
+        <h3>{{workshop.title}}</h3>
         {{workshop.desc}}<br>
-        <img src="{{workshop.img}}"><br>
+        {% if workshop.img %}
+            <img src="/media/{{workshop.img}}" height=100 width=100><br>
+        {% endif %}
         DateTime : {{workshop.ws_time}}<br>
         {% if workshop.price > 0 %}
             Price : {{workshop.price}}<br>
