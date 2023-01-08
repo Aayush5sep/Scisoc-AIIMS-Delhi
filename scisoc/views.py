@@ -1,15 +1,12 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from django.contrib import messages
+from django.shortcuts import render
 from user.models import PositionDetails
 from .models import Latest,Gallery
 from django.utils import timezone
-from django.utils.timezone import timedelta
 
 def homepage(request):
     team = PositionDetails.objects.filter(display_home=True)
-    startdate = timezone.now().today()
-    enddate = startdate + timedelta(days=11)
+    startdate = timezone.now()
+    enddate = startdate + timezone.timedelta(days=11)
     latest = Latest.objects.filter(upload_date__range=[startdate, enddate])
     params = {'team':team,'latest':latest}
     return render(request,'index.html',params)

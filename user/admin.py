@@ -17,4 +17,3 @@ class MyUserAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, MyUserAdmin)
-admin.site.register(PositionDetails)

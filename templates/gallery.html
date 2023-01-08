@@ -8,7 +8,10 @@
 
 
         {% for img in images %}
-            <image id="{{img.hidden_title}}" src="{{img.image}}">
+            <div>
+                <image id="{{img.hidden_title}}" src="/media/{{img.image}}" height=200 width=200><br>
+                {{img.hidden_title}} <br> {{img.upload_date}}
+                </div>
         {% endfor %}
 
 
