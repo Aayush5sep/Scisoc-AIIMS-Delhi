@@ -7,7 +7,7 @@ def homepage(request):
     team = PositionDetails.objects.filter(display_home=True)
     startdate = timezone.now()
     enddate = startdate - timezone.timedelta(days=16)
-    latest = Latest.objects.filter(upload_date__range=[enddate, startdate])
+    latest = Latest.objects.filter(upload_date__range=[enddate, startdate]).order_by('-upload_date')
     params = {'team':team,'latest':latest}
     return render(request,'index.html',params)
 

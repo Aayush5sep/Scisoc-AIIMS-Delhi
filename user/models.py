@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
 # Create your models here.
 
 class UserDetails(models.Model):
@@ -24,12 +27,15 @@ class PositionDetails(models.Model):
     def __str__(self):
         return self.user.username
 
-    def delete(self):
-        self.image.storage.delete(self.image.name)
-        super().delete()
-
     class Meta:
         verbose_name_plural = "Positions"
+
+@receiver(post_delete, sender=PositionDetails)
+def position_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
+
 
 class Newsletter(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

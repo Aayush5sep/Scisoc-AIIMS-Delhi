@@ -9,7 +9,9 @@
 
         <h2>Our Team </h2>
         {% for member in team %}
-            <image src="{{member.image}}"> <br>
+            {% if member.image %}
+                <image src="{{member.image}}" height=150 width=150> <br>
+            {% endif %}
             Name : {{member.user.first_name}} {{member.user.last_name}} <br>
             Position : {{member.position}} <br>
             About : {{member.description}} <br>
@@ -22,7 +24,7 @@
                 <div class="card-golden">
                     <a href="{{news.link}}">Title : {{news.title}}</a> <br>
                     Description : {{news.description}} <br>
-                    Date : {{news.upload_date}} <br>
+                    Date : {{news.upload_date.date}} <br>
                     {% if news.image %}
                         <image src="/media/{{news.image}}" height=80 width=80> <br>
                     {% endif %}
