@@ -19,6 +19,13 @@ class Latest(models.Model):
         verbose_name = "Latest News"
         verbose_name_plural = "Latest News"
 
+@receiver(post_delete, sender=Latest)
+def latest_news_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
+
+
 class Gallery(models.Model):
     hidden_title = models.CharField("Hidden Title Behind Image",max_length=50)
     image = models.ImageField("Gallery Image",upload_to='gallery/',null=False,blank=False)
@@ -27,11 +34,6 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.hidden_title
-
-    def delete(self):
-        self.image.storage.delete(self.image.name)
-        print("Deleting")
-        super().delete()
 
     def view_image(self):
         return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))

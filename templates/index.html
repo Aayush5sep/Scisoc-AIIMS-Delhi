@@ -7,7 +7,7 @@
     {% block body %}
 
 
-        Our Team <br>
+        <h2>Our Team </h2>
         {% for member in team %}
             <image src="{{member.image}}"> <br>
             Name : {{member.user.first_name}} {{member.user.last_name}} <br>
@@ -16,21 +16,25 @@
         {% endfor %}
         <br>
 
-        Latest News <br>
+        <h2>Latest News </h2>
         {% for news in latest %}
             {% if news.important %}
                 <div class="card-golden">
                     <a href="{{news.link}}">Title : {{news.title}}</a> <br>
                     Description : {{news.description}} <br>
                     Date : {{news.upload_date}} <br>
-                    <image src="{{news.image}}"> <br>
+                    {% if news.image %}
+                        <image src="/media/{{news.image}}" height=80 width=80> <br>
+                    {% endif %}
                 </div>
             {% else %}
                 <div class="card">
                     <a href="{{news.link}}">Title : {{news.title}}</a> <br>
                     Description : {{news.description}} <br>
                     Date : {{news.upload_date}} <br>
-                    <image src="{{news.image}}"> <br>
+                    {% if news.image %}
+                        <image src="/media/{{news.image}}" height=80 width=80> <br>
+                    {% endif %}
                 </div>
             {% endif %}
         {% endfor %}
