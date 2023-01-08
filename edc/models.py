@@ -73,7 +73,8 @@ class Hackathon(models.Model):
 
 
 class Team_Members(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField("Team Member Name",max_length=50)
+    mail = models.EmailField("Team Member Email",unique=True)
 
     def __str__(self):
         return self.name

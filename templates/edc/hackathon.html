@@ -8,14 +8,14 @@
     Hackathon Details =><br>
     Title : {{hack.name}}<br>
     Description : {{hack.desc}}<br>
-    <img src="{{hack.poster}}"><br>
+    <img src="/media/{{hack.poster}}"><br>
     Registration Price : {{hack.reg_price}}<br>
     Maximum Members : {{hack.team_cnt}}<br>
 
-    {% if show_topics %}
-        Topics :
+    {% if hack.show_topics %}
+        Topics :<br>
         {% for topic in hack.topics.all %}
-            {{topic.title}}<br>
+            {{forloop.counter}}) {{topic.title}}<br>
             {{topic.desc}}<br>
         {% endfor %}
     {% endif %}
@@ -49,7 +49,9 @@
         {% endif %}
     {% endif %}
 
-    {% if hack.reg_open %}
+    {% if prev_reg %}
+        You have registered for this hackathon :)<br>
+    {% elif hack.reg_open %}
         Not Registered Yet?<br>
         {% if hack.on_web %}
             {% if user.is_authenticated %}
@@ -71,6 +73,12 @@
                             <label for="member" class="col-sm-2 col-form-label">Member {{i|add:"1"}}</label>
                             <div class="col-sm-10">
                             <input type="text" class="form-control" id="member" name="member">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="mebmail" class="col-sm-2 col-form-label">Member {{i|add:"1"}} Email</label>
+                            <div class="col-sm-10">
+                            <input type="email" class="form-control" id="mebmail" name="mebmail">
                             </div>
                         </div>
                     {% endfor %}

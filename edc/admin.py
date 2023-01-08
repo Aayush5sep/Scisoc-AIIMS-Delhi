@@ -25,7 +25,7 @@ class HackAdmin(admin.ModelAdmin):
 
 class MemberAdmin(admin.TabularInline):
     model = Registration.members.through
-    extra = 1
+    extra = 0
 
 class HackSubmission(admin.StackedInline):
     model = Submission
@@ -33,7 +33,7 @@ class HackSubmission(admin.StackedInline):
 
 class TeamAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Team Details', {'fields':['reg_id','hack_model','team_name','leader','members']}),
+        ('Team Details', {'fields':['reg_id','hack_model','team_name','leader']}),
         ('Registration Status', {'fields':['registered','payment','pay_id','hack_submitted_at']}),
     ]
     readonly_fields = ('reg_id','pay_id','payment','hack_submitted_at')
@@ -49,7 +49,7 @@ class WorkshopAdmin(admin.ModelAdmin):
         ('Basic Details', {'fields':['id','title','desc','ws_time','price','img','view_image']}),
         ('Display Details', {'fields':['display','reg_link','link','preference']}),
     ]
-    readonly_fields = ('id',)
+    readonly_fields = ('id','view_image')
     inlines = [WorkshopRegister]
 
 class SponsorAdmin(admin.ModelAdmin):

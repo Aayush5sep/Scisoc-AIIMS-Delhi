@@ -22,9 +22,13 @@ def edc(request):
 def hackathon(request,uid):
     hack = Hackathon.objects.get(id=uid,display=True)
     members = hack.team_cnt
+    preg = Registration.objects.filter(hack_model=hack,registered=True)
+    prev_reg = False
+    if len(preg)>0:
+        prev_reg = True
     if not hack.show_topics:
         hack = Hackathon.objects.filter(id=uid,display=True).defer('topics')[0]
-    return render(request,'edc/hackathon.html',{'hack':hack,'members':range(members)})
+    return render(request,'edc/hackathon.html',{'hack':hack,'prev_reg':prev_reg,'members':range(members)})
 
 
 @login_required(login_url='/user/login/')
@@ -35,17 +39,22 @@ def reg_hack(request,uid):
             return HttpResponse("No Such Hackathon Exists")
         teamname = request.POST['teamname']
         members = request.POST.getlist('member')
+        mebmails = request.POST.getlist('mebmail')
         leaduser = request.user
         team=[]
-        for member in members:
-            meb = Team_Members(name=member)
-            meb.save()
+        for member,mebmail in members,mebmails:
+            meb = Team_Members.objects.filter(name__icontains=member,mail=mebmail)
+            if len(meb)>0:
+                meb = meb[0]
+            else:
+                meb = Team_Members(name=member,mail=mebmail)
+                meb.save()
             team.append(meb)
         reg = None
         try:
-            reg = Registration.objects.get(hack_model=hack,leader=leaduser)
+            reg = Registration.objects.get(hack_model=hack,leader=leaduser,members=team)
         except:
-            print("No Previous Registration")
+            print("New Registration")
         if reg is not None and reg.registered==True:
             return HttpResponse("You have already registered for this hackathon")
         if reg is None:
@@ -68,13 +77,16 @@ def submit_hack(request,uid):
     reg = Registration.objects.get(registered=True,hack_model=hack,leader=request.user)
     if reg is None:
         return HttpResponse("You are not registered for any such hackathon")
+    sub = Submission.objects.filter(hack=hack,team=reg)
+    if len(sub)>0:
+        return HttpResponse("You have already submitted...<br><a href='/'>Return To Homepage</a>")
     gitlink = request.POST['gitrepo']
     liveweb = request.POST['hostweb']
     files = request.POST['files']
     reg.hack_submitted_at = timezone.now()
     reg.save()
     Submission(hack=hack,team=reg,content=files,live_host=liveweb,git_link=gitlink).save()
-    return HttpResponse("You Submission has been saves successfully")
+    return HttpResponse("You Submission has been saved successfully <br><a href='/'>Return To Homepage</a>")
 
 
 @login_required(login_url='/user/login/')

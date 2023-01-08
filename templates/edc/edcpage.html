@@ -6,12 +6,14 @@
 
 {% block body %}
 
-    Hackathons => <br>
+    <h1>Hackathons => </h1>
     {% for hack in hacks %}
 
-        {{hack.name}}<br>
+        <h2>{{hack.name}}</h2>
         {{hack.desc}}<br>
-        <img src="{{hack.poster}}"><br>
+        {% if hack.poster %}
+            <img src="/media/{{hack.poster}}" height=100 width=100><br>
+        {% endif %}
         Registration Price : {{hack.reg_price}}<br>
         Max Members : {{hack.team_cnt}}<br>
 
@@ -19,7 +21,7 @@
         {% if hack.show_topics %}
             Topics : <br>
             {% for topic in hack.topics.all %}
-                {{forloop.counter}} {{topic.title}}<br>
+                {{forloop.counter}}. {{topic.title}}<br>
             {% endfor %}
         {% endif %}
 
@@ -38,7 +40,7 @@
     {% endfor %}
 
 
-    BioDesign Workshop => <br>
+    <h1>BioDesign Workshop => </h1><br>
     {% for workshop in workshops %}
         {{workshop.title}}<br>
         {{workshop.desc}}<br>
