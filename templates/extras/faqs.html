@@ -6,8 +6,9 @@
 
     {% block body %}
 
-
+        <h2>FAQs =></h2>
         {% for faq in faqs %}
+            {{forloop.counter}}) 
             Question : {{faq.question}} <br>
             Answer : {{faq.answer}} <br>
         {% endfor %}
