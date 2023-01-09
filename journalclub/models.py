@@ -23,11 +23,16 @@ class Curate(models.Model):
         return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
     view_image.short_description = 'Image'
 
+    class Meta:
+        verbose_name="Curate"
+        verbose_name_plural="Curates"
+
 @receiver(post_delete, sender=Curate)
 def curate_post_delete(sender,instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
+
 
 class Curate_Article(models.Model):
     curate = models.ForeignKey(Curate,on_delete=models.CASCADE)
@@ -45,11 +50,16 @@ class Curate_Article(models.Model):
         return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
     view_image.short_description = 'Image'
 
+    class Meta:
+        verbose_name="Curate Article"
+        verbose_name_plural="Curate Articles"
+
 @receiver(post_delete, sender=Curate_Article)
 def curate_article_delete(sender,instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
+
 
 class TWCAOS(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4)
@@ -62,11 +72,20 @@ class TWCAOS(models.Model):
     def __str__(self):
         return self.title
 
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
+    view_image.short_description = 'Image'
+
+    class Meta:
+        verbose_name="TWCAOS"
+        verbose_name_plural="TWCAOS"
+
 @receiver(post_delete, sender=TWCAOS)
 def twcaos_delete(sender,instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
+
 
 class TWCAOS_Guest(models.Model):
     twcaos = models.ForeignKey(TWCAOS,on_delete=models.CASCADE)
@@ -77,6 +96,10 @@ class TWCAOS_Guest(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name="TWCAOS Guest"
+        verbose_name_plural="TWCAOS Guests"
+
 class TWCAOS_Link(models.Model):
     twcaos = models.ForeignKey(TWCAOS,on_delete=models.CASCADE)
     site = models.CharField("Platform Name",max_length=20)
@@ -85,6 +108,11 @@ class TWCAOS_Link(models.Model):
 
     def __str__(self):
         return self.site
+
+    class Meta:
+        verbose_name="TWCAOS Link"
+        verbose_name_plural="TWCAOS Links"
+
 
 class FRYUMS(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4)

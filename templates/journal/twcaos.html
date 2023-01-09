@@ -7,16 +7,16 @@
     {% block body %}
 
 
-        twcaos<br>
+        <h2>TWCAOS</h2>
             {% for twcao in twcaos %}
                 <section class="twcao">
-                    <image src="{{twcao.twcao.image}}"> <br>
-                    Twcaos Name : {{twcao.twcao.title}} <br>
-                    About Twcaos : {{twcao.twcao.description}} <br>
+                    <image src="/media/{{twcao.twcao.image}}"> <br>
+                    <h3>TWCAOS Name : {{twcao.twcao.title}} </h3>
+                    About TWCAOS : {{twcao.twcao.description}} <br>
                     On : {{twcao.twcao.live_date}} <br>
 
                     {% if twcao.guests %}
-                        Guests <br>
+                        <h4>Guests </h4>
                         {% for guest in twcao.guests %}
                             Guest Name : {{guest.name}} <br>
                             About Guest : {{guest.desc}} <br>
@@ -24,7 +24,7 @@
                     {% endif %}
                     
                     {% if twcao.links %}
-                        Links for Twcaos platform <br>
+                        <h4>Links for TWCAOS platform </h4>
                         {% for link in twcao.links %}
                             <a href="{{link.link}}">{{link.site}}-></a> <br>
                         {% endfor %}
