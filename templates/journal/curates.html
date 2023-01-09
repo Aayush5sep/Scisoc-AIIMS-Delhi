@@ -7,18 +7,18 @@
     {% block body %}
 
 
-        Curates<br>
+        <h2>Curates</h2>
             {% for curate in curates %}
                 <section class="curate">
-                    <image src="{{curate.curate.image}}"> <br>
-                    Curate Name : {{curate.curate.title}} <br>
+                    <image src="/media/{{curate.curate.image}}" height=200 width=250> <br>
+                    <h3>Curate Name : {{curate.curate.title}} </h3>
                     About Curate : {{curate.curate.description}} <br>
                     From : {{curate.curate.start_date}}  To : {{curate.curate.end_date}} <br>
                     {% if curate.articles %}
                         Articles Of the Curate <br>
                         {% for article in curate.articles %}
                             <div class="article">
-                                <image src="{{article.image}}"> <br>
+                                <image src="/media/{{article.image}}" height=150 width=200> <br>
                                 Article Title : {{article.title}} <br>
                                 Description : {{article.description}} <br>
                                 --by {{article.author}} <br>
@@ -26,7 +26,7 @@
                             </div> <br>
                         {% endfor %}
                     {% endif %}
-                </section>
+                </section><br>
             {% endfor %}
 
 

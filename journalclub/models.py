@@ -1,5 +1,10 @@
 from django.db import models
 import uuid
+from django.db.models.signals import post_delete
+import os
+from django.dispatch import receiver
+from django.utils.html import mark_safe
+
 # Create your models here.
 
 class Curate(models.Model):
@@ -14,9 +19,15 @@ class Curate(models.Model):
     def __str__(self):
         return self.title
 
-    def delete(self):
-        self.image.storage.delete(self.image.name)
-        super().delete()
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
+    view_image.short_description = 'Image'
+
+@receiver(post_delete, sender=Curate)
+def curate_post_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 class Curate_Article(models.Model):
     curate = models.ForeignKey(Curate,on_delete=models.CASCADE)
@@ -30,9 +41,15 @@ class Curate_Article(models.Model):
     def __str__(self):
         return self.title
 
-    def delete(self):
-        self.image.storage.delete(self.image.name)
-        super().delete()
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
+    view_image.short_description = 'Image'
+
+@receiver(post_delete, sender=Curate_Article)
+def curate_article_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 class TWCAOS(models.Model):
     uid = models.UUIDField(primary_key = True, default = uuid.uuid4)
@@ -45,9 +62,11 @@ class TWCAOS(models.Model):
     def __str__(self):
         return self.title
 
-    def delete(self):
-        self.image.storage.delete(self.image.name)
-        super().delete()
+@receiver(post_delete, sender=TWCAOS)
+def twcaos_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 class TWCAOS_Guest(models.Model):
     twcaos = models.ForeignKey(TWCAOS,on_delete=models.CASCADE)
@@ -80,9 +99,11 @@ class FRYUMS(models.Model):
     def __str__(self):
         return self.title
 
-    def delete(self):
-        self.image.storage.delete(self.image.name)
-        super().delete()
+@receiver(post_delete, sender=FRYUMS)
+def fryums_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 class FRYUMS_Link(models.Model):
     fryums = models.ForeignKey(FRYUMS,on_delete=models.CASCADE)

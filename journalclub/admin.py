@@ -3,11 +3,12 @@ from .models import Curate,Curate_Article,TWCAOS,TWCAOS_Guest,TWCAOS_Link,FRYUMS
 # Register your models here.
 
 class ArticleAdmin(admin.StackedInline):
+    readonly_fields=('view_image',)
     model = Curate_Article
     extra = 1
 
 class CurateAdmin(admin.ModelAdmin):
-    readonly_fields=('uid',)
+    readonly_fields=('uid','view_image')
     inlines=[ArticleAdmin]
 
 class GuestAdmin(admin.StackedInline):
