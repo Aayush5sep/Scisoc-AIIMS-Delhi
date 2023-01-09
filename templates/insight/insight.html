@@ -3,20 +3,20 @@
 {% block title %}Insight{% endblock %}
 
 {% block body %}
-    All Insight =><br>
+    <h2>All Insight =></h2>
     {% for fest in fests %}
-        {% if forloop.counter==1 %}
+        {% if forloop.counter == 1 %}
             <!-- Special Display For Latest Insight -->
-            Starts On {{fest.start}} :)<br>
+            <h3>Starts On {{fest.start}} :)</h3>
             {{fest.title}}<br>
             {{fest.desc}}<br>
-            <img src="{{fest.fest_img}}"><br>
+            <img src="/media/{{fest.fest_img}}"><br>
             <a href="/insight/{{fest.id}}">Check Now !!</a>
         {% else %}
-            {{fest.title}}<br>
+            <h3>{{fest.title}}</h3>
             {{fest.desc}}<br>
-            <img src="{{fest.fest_img}}"><br>
-            {{fest.start}}<br>
+            <img src="/media/{{fest.fest_img}}"><br>
+            {{fest.start.date}} {{fest.start.time}}<br>
             <a href="/insight/{{fest.id}}">Check Now !!</a>
         {% endif %}
     {% endfor %}

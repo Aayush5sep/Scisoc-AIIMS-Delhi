@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from payment.models import Payment
+from django.utils.html import mark_safe
+from django.db.models.signals import post_delete
+import os
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -16,9 +20,22 @@ class Insight(models.Model):
     def __str__(self):
         return self.title
 
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.fest_img))
+    view_image.short_description = 'Image'
+
     class Meta:
         ordering = ["-start"]
         verbose_name_plural = "Insight"
+
+@receiver(post_delete, sender=Insight)
+def insight_delete(sender,instance, **kwargs):
+    if instance.fest_img:
+        if os.path.isfile(instance.fest_img.path):
+            os.remove(instance.fest_img.path)
+    if instance.brochure_img:
+        if os.path.isfile(instance.brochure_img.path):
+            os.remove(instance.brochure_img.path)
 
 
 class Workshop(models.Model):

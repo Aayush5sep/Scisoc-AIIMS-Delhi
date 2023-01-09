@@ -13,6 +13,7 @@ class EventsList(admin.StackedInline):
     extra = 1
 
 class InsightAdmin(admin.ModelAdmin):
+    readonly_fields = ('view_image',)
     inlines = [WorkShopList,EventsList]
 
 class EventResult(admin.TabularInline):
