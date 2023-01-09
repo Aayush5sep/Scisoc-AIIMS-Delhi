@@ -127,6 +127,14 @@ class FRYUMS(models.Model):
     def __str__(self):
         return self.title
 
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
+    view_image.short_description = 'Image'
+
+    class Meta:
+        verbose_name="FRYUMS"
+        verbose_name_plural="FRYUMS"
+
 @receiver(post_delete, sender=FRYUMS)
 def fryums_delete(sender,instance, **kwargs):
     if instance.image:
@@ -141,3 +149,7 @@ class FRYUMS_Link(models.Model):
 
     def __str__(self):
         return self.site
+
+    class Meta:
+        verbose_name="FRYUMS Link"
+        verbose_name_plural="FRYUMS Links"

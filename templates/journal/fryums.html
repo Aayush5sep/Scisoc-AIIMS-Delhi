@@ -1,5 +1,5 @@
 {% extends 'common.html' %}
-    {% block title %} Fryums {% endblock %}
+    {% block title %} FRYUMS {% endblock %}
 
     {% block css %}
     {% endblock %}
@@ -7,18 +7,18 @@
     {% block body %}
 
 
-        Fryums<br>
+        <h2>FRYUMS</h2>
             {% for fryum in fryums %}
                 <section class="fryum">
-                    <image src="{{fryum.fryum.image}}"> <br>
-                    fryum Name : {{fryum.fryum.title}} <br>
-                    About fryum : {{fryum.fryum.description}} <br>
+                    <image src="/media/{{fryum.fryum.image}}"> <br>
+                    <h3>FRYUMS Name : {{fryum.fryum.title}} </h3>
+                    About FRYUMS : {{fryum.fryum.description}} <br>
                     On : {{fryum.fryum.live_date}} <br>
                     --by {{fryum.fryum.author}} <br>
                     More about author : {{fryum.fryum.abt_author}} <br>
                     
                     {% if fryum.links %}
-                        Links for fryum platform <br>
+                        <h4>Links for FRYUMS platform </h4>
                         {% for link in fryum.links %}
                             <a href="{{link.link}}">{{link.site}}-></a> <br>
                         {% endfor %}
