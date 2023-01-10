@@ -4,18 +4,18 @@
 
 {% block body %}
 
-    Title : {{fest.title}}<br>
+    <h1>Title : {{fest.title}}</h1>
     Description : {{fest.desc}}<br>
-    <img src="{{fest.fest_img}}"><br><br>
+    <img src="/media/{{fest.fest_img}}"><br><br>
 
     {% if workshops %}
-        Workshops =><br>
+        <h2>Workshops =></h2>
         <form method="post" action="/insight/workshop/register/">{% csrf_token %}
             {% for ws in workshops %}
-                {{ws.title}}<br>
+                <h3>{{ws.title}}</h3>
                 {{ws.desc}}<br>
                 Price : {{ws.price}}<br>
-                <img src="{{ws.img}}"><br>
+                <img src="/media/{{ws.img}}"><br>
                 {{ws.ws_time}}<br>
                 {% if ws.reg_link %}
                     <a href="{{ws.reg_link}}">Register Externally</a>
@@ -32,13 +32,13 @@
 
 
     {% if events %}
-        Events And Competitions =><br>
+        <h2>Events And Competitions =></h2>
         <form method="post" action="/insight/event/register/">{% csrf_token %}
             {% for ev in events %}
-                {{ev.title}}<br>
+                <h3>{{ev.title}}</h3>
                 {{ev.desc}}<br>
                 Price : {{ev.price}}<br>
-                <img src="{{ev.img}}"><br>
+                <img src="/media/{{ev.img}}"><br>
                 {{ev.event_time}}<br>
                 {% if ev.reg_link %}
                     <a href="{{ev.reg_link}}">Register Externally</a>

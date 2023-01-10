@@ -21,16 +21,18 @@ class EventResult(admin.TabularInline):
     extra = 0
 
 class EventAdmin(admin.ModelAdmin):
-    readonly_fields = ('id',)
+    readonly_fields = ('id','view_image')
     inlines = [EventResult]
 
 class WorkshopAdmin(admin.ModelAdmin):
-    readonly_fields = ('id',)
+    readonly_fields = ('id','view_image')
 
 class WorkshopRegister(admin.ModelAdmin):
+    list_display = ["__str__","registered","free_collec"]
     readonly_fields = ('reg_id','pay_id','payment')
 
 class EventRegister(admin.ModelAdmin):
+    list_display = ["__str__","registered","free_collec"]
     readonly_fields = ('reg_id','pay_id','payment')
 
 admin.site.register(Insight,InsightAdmin)

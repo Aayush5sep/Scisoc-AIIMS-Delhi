@@ -11,13 +11,13 @@
             {{fest.title}}<br>
             {{fest.desc}}<br>
             <img src="/media/{{fest.fest_img}}"><br>
-            <a href="/insight/{{fest.id}}">Check Now !!</a>
+            <a href="/insight/details/{{fest.id}}">Check Now !!</a>
         {% else %}
             <h3>{{fest.title}}</h3>
             {{fest.desc}}<br>
             <img src="/media/{{fest.fest_img}}"><br>
             {{fest.start.date}} {{fest.start.time}}<br>
-            <a href="/insight/{{fest.id}}">Check Now !!</a>
+            <a href="/insight/details/{{fest.id}}">Check Now !!</a>
         {% endif %}
     {% endfor %}
 

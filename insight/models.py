@@ -53,9 +53,19 @@ class Workshop(models.Model):
     def __str__(self):
         return self.title
 
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.img))
+    view_image.short_description = 'Image'
+
     class Meta:
         ordering = ["preference"]
         verbose_name_plural = "Workshops"
+
+@receiver(post_delete, sender=Workshop)
+def insight_delete(sender,instance, **kwargs):
+    if instance.img:
+        if os.path.isfile(instance.img.path):
+            os.remove(instance.img.path)
 
 
 class RegisterWorkshop(models.Model):
@@ -90,9 +100,19 @@ class Events(models.Model):
     def __str__(self):
         return self.title
 
+    def view_image(self):
+        return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.img))
+    view_image.short_description = 'Image'
+
     class Meta:
         ordering = ["preference"]
         verbose_name_plural = "Events"
+
+@receiver(post_delete, sender=Events)
+def insight_delete(sender,instance, **kwargs):
+    if instance.img:
+        if os.path.isfile(instance.img.path):
+            os.remove(instance.img.path)
 
 
 class RegisterEvent(models.Model):
