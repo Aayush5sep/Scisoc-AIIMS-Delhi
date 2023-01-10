@@ -11,7 +11,7 @@
     {% if workshops %}
         <h2>Workshops =></h2>
         <form method="post" action="/insight/workshop/register/">{% csrf_token %}
-            {% for ws in workshops %}
+            {% for ws,registered in workshops %}
                 <h3>{{ws.title}}</h3>
                 {{ws.desc}}<br>
                 Price : {{ws.price}}<br>
@@ -19,6 +19,8 @@
                 {{ws.ws_time}}<br>
                 {% if ws.reg_link %}
                     <a href="{{ws.reg_link}}">Register Externally</a>
+                {% elif registered %}
+                    You have already registered for this workshop :)<br>
                 {% else %}
                     <input class="form-check-input" type="checkbox" name="workshop" value="{{ws.id}}" id="workshop">
                     <label class="form-check-label" for="workshop">
@@ -26,7 +28,7 @@
                     </label><br>
                 {% endif %}
             {% endfor %}
-            <button type="submit">Register For Selected Workshops</button><br>
+            <br><button type="submit">Register For Selected Workshops</button><br>
         </form><br>
     {% endif %}
 
@@ -34,7 +36,7 @@
     {% if events %}
         <h2>Events And Competitions =></h2>
         <form method="post" action="/insight/event/register/">{% csrf_token %}
-            {% for ev in events %}
+            {% for ev,registered in events %}
                 <h3>{{ev.title}}</h3>
                 {{ev.desc}}<br>
                 Price : {{ev.price}}<br>
@@ -42,6 +44,8 @@
                 {{ev.event_time}}<br>
                 {% if ev.reg_link %}
                     <a href="{{ev.reg_link}}">Register Externally</a>
+                {% elif registered %}
+                    You have already registered for this event :)<br>
                 {% else %}
                     <input class="form-check-input" type="checkbox" name="event" value="{{ev.id}}" id="event">
                     <label class="form-check-label" for="event">
@@ -49,7 +53,7 @@
                     </label><br>
                 {% endif %}
             {% endfor %}
-            <button type="submit">Register For Selected Events</button><br>
+            <br><button type="submit">Register For Selected Events</button><br>
         </form><br>
     {% endif %}
 

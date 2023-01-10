@@ -11,8 +11,22 @@ def insight_home(request):
 
 def insight(request,id):
     fest = Insight.objects.get(id=id,live=True)
-    workshops = Workshop.objects.filter(insight=fest).order_by('preference')
-    events = Events.objects.filter(insight=fest).order_by('preference')
+    workshop = Workshop.objects.filter(insight=fest).order_by('preference')
+    event = Events.objects.filter(insight=fest).order_by('preference')
+    prev_registered = []
+    for ws in workshop:
+        if RegisterWorkshop.objects.filter(registered=True,workshops__in=[ws]):
+            prev_registered.append(True)
+        else:
+            prev_registered.append(False)
+    workshops = zip(workshop,prev_registered)
+    registered_ev = []
+    for ev in event:
+        if RegisterEvent.objects.filter(registered=True,events__in=[ev]):
+            registered_ev.append(True)
+        else:
+            registered_ev.append(False)
+    events = zip(event,registered_ev)
     return render(request,'insight/fest.html',{'fest':fest,'workshops':workshops,'events':events})
 
 def reg_ws(request):
@@ -32,9 +46,9 @@ def reg_ws(request):
         elif ws not in registered_ws:
             amount = amount+ws.price
             workshops.append(ws)
-    free_reg = RegisterWorkshop.objects.filter(user=request.user,free_collec=True)
-    if len(free_reg)>0:
-        free_reg = free_reg[0]
+    free_reg = None
+    if RegisterWorkshop.objects.filter(user=request.user,free_collec=True):
+        free_reg = RegisterWorkshop.objects.get(user=request.user,free_collec=True)
     if free_reg is None:
         temp_reg = RegisterWorkshop.objects.create(user=request.user,registered=True,free_collec=True)
         temp_reg.workshops.set(free_ws)
@@ -65,9 +79,9 @@ def reg_event(request):
         elif evnt not in registered_ev:
             amount = amount+evnt.price
             events.append(evnt)
-    free_reg = RegisterEvent.objects.filter(user=request.user,free_collec=True)
-    if len(free_reg)>0:
-        free_reg = free_reg[0]
+    free_reg = None
+    if RegisterEvent.objects.filter(user=request.user,free_collec=True):
+        free_reg = RegisterEvent.objects.get(user=request.user,free_collec=True)
     if free_reg is None:
         temp_reg = RegisterEvent.objects.create(user=request.user,registered=True,free_collec=True)
         temp_reg.events.set(free_ev)
