@@ -27,7 +27,6 @@ def paypage(request,amount,modelname,uid):
         user=user, amount=amount, modelname=modelname, uid=uid, provider_order_id=razorpay_order["id"]
     )
     order.save()
-    print("execution")
     return render(request,'payment/payment.html',{"callback_url": "http://" + "127.0.0.1:8000" + "/payment/callback/","razorpay_key": RAZORPAY_KEY_ID,"order": order})
 
 
