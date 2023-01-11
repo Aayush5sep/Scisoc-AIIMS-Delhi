@@ -13,11 +13,10 @@
 
             {% for qans in question_list %}
 
-                Question {{forloop.counter}}:{{qans.question.question_detail}}       Marks:{{qans.question.marks}}<br>
+                <h3>Question {{forloop.counter}}:{{qans.question.question_detail}}</h3>       Marks:{{qans.question.marks}}<br>
                 {% if qans.question.image %}
-                    <image src="/media/{{qans.question.image}}" style="max-width:250; max-height:250" >
+                    <image src="/media/{{qans.question.image}}" style="max-width:250; max-height:250" ><br>
                 {% endif %}
-                <br>
                 Answer:<br>
                 {% if qans.question.choices %}
                     Select any one option

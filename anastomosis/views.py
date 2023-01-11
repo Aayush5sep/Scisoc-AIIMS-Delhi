@@ -10,7 +10,14 @@ from payment.views import paypage
 # Create your views here.
 
 def frontpage(request):
-    quizzes = quiz.objects.filter(Q(reg_open = True) | Q(quiz_live = True))
+    quizs = quiz.objects.filter(Q(reg_open = True) | Q(quiz_live = True))
+    prev_reg = []
+    for qz in quizs:
+        if registration.objects.filter(user=request.user,quiz_model=qz,registered=True):
+            prev_reg.append(True)
+        else:
+            prev_reg.append(False)
+    quizzes = zip(quizs,prev_reg)
     return render(request,'anastomosis/frontpage.html',{'quizzes':quizzes})
 
 @login_required(login_url='/user/loginpage')

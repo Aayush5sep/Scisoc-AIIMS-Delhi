@@ -3,7 +3,9 @@ from .models import quiz,registration,question,choice,solution
 # Register your models here.
 
 class RegistrationAdmin(admin.StackedInline):
+    readonly_fields = ('reg_id','pay_id','payment')
     model = registration
+    extra = 0
 
 class QuizAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
@@ -11,7 +13,7 @@ class QuizAdmin(admin.ModelAdmin):
 
 class ChoiceAdmin(admin.StackedInline):
     model = choice
-    extra = 2
+    extra = 1
 
 class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('qid','qn_image')
@@ -23,7 +25,7 @@ class SolutionAdmin(admin.StackedInline):
     extra = 0
 
 class RegisteredAdmin(admin.ModelAdmin):
-    readonly_fields = ('reg_id',)
+    readonly_fields = ('reg_id','pay_id','payment')
     inlines = [SolutionAdmin]
 
 admin.site.register(quiz,QuizAdmin)

@@ -7,7 +7,7 @@
     {% block body %}
 
 
-        {% for quiz in quizzes %}
+        {% for quiz,registered in quizzes %}
 
             {{quiz.title}}<br>
             {{quiz.desc}}<br>
@@ -26,15 +26,19 @@
             <br>
 
             {% if quiz.on_web %}
-                {% if quiz.reg_open %}
+                {% if registered %}
+                    You are registered for this quiz :)<br>
+                {% elif quiz.reg_open %}
                     <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a>
-                {% elif quiz.quiz_live %}
+                {% endif %}
+                
+                {% if quiz.quiz_live %}
                     <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a>
                 {% endif %}
             {% else %}
                 <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a>
             {% endif %}
-
+            <br>
         {% endfor %}
 
 
