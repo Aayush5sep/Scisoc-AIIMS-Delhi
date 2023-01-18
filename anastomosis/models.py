@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 import uuid
 from django.utils.html import mark_safe
 from payment.models import Payment
+from django.db.models.signals import post_delete
+import os
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -68,6 +71,12 @@ class question(models.Model):
     def qn_image(self):
         return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.image))
     qn_image.short_description = 'Image'
+
+@receiver(post_delete, sender=question)
+def insight_delete(sender,instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
 
 
 class choice(models.Model):
