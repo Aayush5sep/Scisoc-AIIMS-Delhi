@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import quiz,registration,question,solution,choice
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
@@ -103,7 +104,12 @@ def submit_quiz(request,qzid):
 # def checked_submission(request):
 #     pass
 
-# @login_required(login_url='user/login')
-# def view_marks(request):
-#     marks =registration.objects.get(user=request.user).get_marks()
-#     return HttpResponse(marks)
+@staff_member_required()
+def view_marks(request,qzid):
+    qz =None
+    if quiz.objects.get(id=qzid):
+        qz = quiz.objects.get(id=qzid)
+    else:
+        return HttpResponse("No Such Quiz Found")
+    regs = registration.objects.filter(quiz_model=qz,registered=True)
+    return render(request,'anastomosis/allmarks.html',{'regs':regs})

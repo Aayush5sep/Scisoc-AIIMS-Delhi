@@ -29,16 +29,22 @@
                 {% if registered %}
                     You are registered for this quiz :)<br>
                 {% elif quiz.reg_open %}
-                    <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a>
+                    <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a><br>
                 {% endif %}
                 
                 {% if quiz.quiz_live %}
-                    <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a>
+                    <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a><br>
                 {% endif %}
             {% else %}
-                <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a>
+                <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a><br>
             {% endif %}
+                
+            {% if user.is_superuser %}
+                <a href="/anastomosis/marks/{{quiz.id}}">Submissions=></a><br>
+            {% endif %}
+
             <br>
+
         {% endfor %}
 
 

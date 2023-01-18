@@ -1,0 +1,11 @@
+{% extends 'common.html' %}
+
+{% block title %}Marks{% endblock %}
+
+{% block body %}
+
+{% for reg in regs %}
+    {{reg.user}}  =>  {{reg.get_marks}}<br>
+{% endfor %}
+
+{% endblock %}
