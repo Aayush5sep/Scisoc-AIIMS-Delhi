@@ -1,0 +1,348 @@
+.navbar{
+    min-height: 5rem;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+}
+#img {
+        background: url(./images/logo.png) no-repeat center center;
+        background-size: cover;
+        width: 100px;
+        height:100px;
+}
+.hero{
+    background-image:url(./images/Subtle.jpg) ;
+}
+.hero h1{
+    display: inline-block;
+    font-size:5rem;
+    font-family: 'Playfair Display', serif;
+}
+h1 span{
+    font-family: 'Playfair Display', serif
+}
+.x1{
+    display: inline-flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.about h1{
+    font-size: 3.5rem;
+    font-family: 'Playfair Display', serif;
+}
+.about p{
+    font-family: 'Arvo', serif;
+    line-height: 2.5rem;
+    font-size: 1.25rem;
+}
+.about{
+    background-color: #023047;
+    color: white;
+}
+.team{
+    font-family: 'Playfair Display', serif;
+    color: black;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.slide-container {
+    max-width: 1280px;
+    width: 100%;
+    padding: 40px 0px;
+}
+
+
+.slide-content {
+    margin: 0 40px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+.cards {
+    border-radius: 25px;
+    background-color: #FFF;
+}
+
+.image-content,
+.cards-content {
+    margin-bottom:20px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px;
+}
+
+.image-content {
+    position: relative;
+    row-gap: 5px;
+    padding: 25px 0;
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    /*background:radial-gradient(circle, rgba(142,202,230,1) 30%, rgba(33,158,188,1) 60%, rgba(2,48,71,1) 90%);*/
+    background: linear-gradient(90deg, rgba(255,183,3,1) 0%, rgba(251,133,0,1) 100%);
+    border-radius: 25px 25px 0 25px;
+}
+
+.overlay::before,
+.overlay::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(251,133,0,1);
+    border: none;
+}
+
+.overlay::after {
+    border-radius: 0 25px 0 0;
+    background-color: #FFF;
+    border: none;
+}
+
+.cards-image {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background: #FFF;
+    padding: 3px;
+}
+
+.cards-image .cards-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #023047;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    font-family: 'Averia Serif Libre', cursive;
+}
+
+.description {
+    font-family: 'Arvo', serif;
+    font-size: 14px;
+    color: #707070;
+    text-align: center;
+}
+
+/*.button {
+    border: none;
+    font-size: 16px;
+    color: #FFF;
+    padding: 8px 16px;
+    background-color: #023047;
+    border-radius: 6px;
+    margin: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: #265DF2;
+}*/
+
+.swiper-navBtn {
+    color: #8ECAE6;
+    transition: color 0.3s ease;
+}
+
+.swiper-navBtn:hover {
+    color: #023047;
+}
+
+.swiper-navBtn::before,
+.swiper-navBtn::after {
+    font-size: 35px;
+}
+
+.swiper-button-next {
+    right: 0;
+}
+
+.swiper-button-prev {
+    left: 0;
+}
+
+.swiper-pagination-bullet {
+    background-color: #8ECAE6;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #023047;
+}
+
+@media screen and (max-width: 900px) {
+    .hero{
+        margin-bottom: 15rem;
+    }
+    .hero{
+    background:linear-gradient(rgba(188, 185, 177, 0.225),rgba(0, 0, 0, 0.373)),url(back.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat:no-repeat ;
+    aspect-ratio: 500/450;
+    }
+    .x{
+        display: none;
+    }
+    .team{
+        margin-top: 6.25rem;
+    }
+    .spacer{
+        margin: 0;
+    }
+    .layer2{
+        margin: 0;
+    }
+    .slide-content {
+        margin: 0.2rem 0.625rem;
+        padding: 0.2rem;
+    }
+    .swiper-button-next,.swiper-button-prev{
+        visibility: hidden;
+    }
+    .swiper-navBtn {
+        display: none;
+    }
+    .hero h1{
+        font-size:3rem;
+    }
+}
+
+.footer {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 50px;
+    color: #fff;
+    background-color: #023047;
+}
+
+.footer>* {
+    flex: 1 100%;
+}
+
+.l-footer {
+    margin-right: 1.25em;
+    margin-bottom: 2em;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.footer ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer li {
+    line-height: 2em;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.r-footer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.r-footer>* {
+    flex: 1 50%;
+    margin-right: 1.25em;
+}
+.boxes{
+    background-color: #023047;
+}
+.boxes a {
+    color: #999;
+}
+
+.boxes a:hover {
+    color: #219EBC;
+}
+
+.b-footer {
+    text-align: center;
+    color: #999;
+    padding-top: 50px;
+}
+
+.l-footer p {
+    padding-right: 20%;
+    color: #999;
+}
+
+@media screen and (min-width: 600px) {
+    .r-footer>* {
+        flex: 1;
+    }
+    .features {
+        flex-grow: 1;
+    }
+    .l-footer {
+        flex: 1 0px;
+    }
+    .r-footer {
+        flex: 2 0px;
+    }
+}
+.swiper-slide{
+    border: solid black 0.75px;
+}
+.l-footer h1 img{
+    width: 100px;
+    height: 100px;
+}
+.spacer{
+    margin-top: -350px;
+    aspect-ratio: 960/300;
+    width: 100%;
+    background-repeat:no-repeat ;
+    background-position:center ;
+    background-size: cover;
+}
+.layer1{
+    background-image:url("./images/spacer.png") ;
+}
+.layer2{
+    margin-bottom: -300px;
+        aspect-ratio: 900/300;
+        width: 100%;
+        background-repeat:no-repeat ;
+        background-position:center ;
+        background-size: cover;
+    background-image:url("./images/space2.png") ;
+}
+.x{
+    background:url(./images/back.jpg);
+    background-size: cover;
+    background-repeat:no-repeat ;
+    border-radius:100% ;
+    filter: drop-shadow(8px 9px 12px rgba(0, 0, 0, 0.464));
+    aspect-ratio: 500/450;
+    width: 31.25rem;
+    height:28.125rem ;
+}

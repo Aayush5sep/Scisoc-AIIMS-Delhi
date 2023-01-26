@@ -1,47 +1,118 @@
 {% extends 'common.html' %}
-    {% block title %} Homepage {% endblock %}
+{% block title %} Homepage {% endblock %}
 
-    {% block css %}
+{% block css %}
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<section class="hero is-medium">
+    <div class="hero-body">
+      <div class="columns">
+        <div class="y column is-three-fifths">
+          <h1 style="color:black">
+            Declare the Past,<br>
+            Diagnose the Present,<br>
+            <span style="color:#FFB703;">Foretell the Future</span>
+          </h1>
+        </div>
+        <div class="x column auto">
+        </div>
+      </div>
+  </section>
+  <div class="spacer layer1">
+
+  </div>
+<section class="about section ">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-two-fifths x1">
+                <h1 class="reveal-up">About Us</h1>
+            </div>
+            <div class="column reveal-up is-three-fifths y1">
+                <p>The Scientific Society, started somewhere in the year 2018 by two (then) young souls, Lajja Patel and
+                    Aditya Agarwal under the aegis of Varad Puntambekar and Vasishta Polisetty, has evolved in its
+                    vision manifolds from its modest origins.
+                    <br>Originally a platform for science nerds to rant, for tips and experiences to be shared
+                    effectively, the Scientific Society has now begun to host large stake events at high school,
+                    undergraduate levels and beyond. Its primary aim has evolved to not only encourage undergraduate
+                    research at AIIMS, but also facilitate programs, internships and grants.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="spacer2 layer2"></div>
+<section class="section team">
+    <div class="container">
+        <div class="columns">
+            <div class="column has-text-centered">
+                <h2 class="team is-size-1">Meet The Team</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section mem">
+    <div class="slide-container swiper">
+        <div class="slide-content">
+            <div class="cards-wrapper swiper-wrapper">
+                {% for member in team %}
+                    <div class="cards swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+                            <div class="cards-image">
+                                {% if member.image %}
+                                    <img src={{member.image}} alt="" class="cards-img">
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="cards-content">
+                            <h2 class="name">{{member.user.first_name}} {{member.user.last_name}}</h2>
+                            <h3 class="name">{{member.position}}</h3>
+                            <p class="description">{{member.description}}</p>
+                            <!--<button class="button">View More</button>-->
+
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="swiper-button-next swiper-navBtn"></div>
+                <div class="swiper-button-prev swiper-navBtn"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<h2>Latest News </h2>
+    {% for news in latest %}
+        {% if news.important %}
+            <div class="card-golden">
+                <a href="{{news.link}}">Title : {{news.title}}</a> <br>
+                Description : {{news.description}} <br>
+                Date : {{news.upload_date.date}} <br>
+                {% if news.image %}
+                <image src="/media/{{news.image}}" height=80 width=80> <br>
+                    {% endif %}
+            </div>
+        {% else %}
+            <div class="card">
+                <a href="{{news.link}}">Title : {{news.title}}</a> <br>
+                Description : {{news.description}} <br>
+                Date : {{news.upload_date}} <br>
+                {% if news.image %}
+                <image src="/media/{{news.image}}" height=80 width=80> <br>
+                    {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+
     {% endblock %}
 
-    {% block body %}
-
-
-        <h2>Our Team </h2>
-        {% for member in team %}
-            {% if member.image %}
-                <image src="{{member.image}}" height=150 width=150> <br>
-            {% endif %}
-            Name : {{member.user.first_name}} {{member.user.last_name}} <br>
-            Position : {{member.position}} <br>
-            About : {{member.description}} <br>
-        {% endfor %}
-        <br>
-
-        <h2>Latest News </h2>
-        {% for news in latest %}
-            {% if news.important %}
-                <div class="card-golden">
-                    <a href="{{news.link}}">Title : {{news.title}}</a> <br>
-                    Description : {{news.description}} <br>
-                    Date : {{news.upload_date.date}} <br>
-                    {% if news.image %}
-                        <image src="/media/{{news.image}}" height=80 width=80> <br>
-                    {% endif %}
-                </div>
-            {% else %}
-                <div class="card">
-                    <a href="{{news.link}}">Title : {{news.title}}</a> <br>
-                    Description : {{news.description}} <br>
-                    Date : {{news.upload_date}} <br>
-                    {% if news.image %}
-                        <image src="/media/{{news.image}}" height=80 width=80> <br>
-                    {% endif %}
-                </div>
-            {% endif %}
-        {% endfor %}
-
-
+    {% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <script src={% static 'index.js' %}></script>
     {% endblock %}
-
-    {% block js %}{% endblock %}

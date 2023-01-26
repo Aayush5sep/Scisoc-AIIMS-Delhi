@@ -1,21 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-
-    {% block css %}{% endblock %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href={% static 'styles.css' %}>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  {% block css %}{% endblock %}
 </head>
+
 <body>
-    <!-- Common Content Here -->
+  <nav class="navbar is-fixed-top-desktop" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a>
+        <img id="img" width="80" src={% static 'images/logo.png' %}>
+      </a>
 
-    {% block body %}{% endblock %}
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
-    <!-- More Common Content after body -->
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a href="/" class="navbar-item">
+          Home
+        </a>
 
-    {% block js %}{% endblock %}
-    
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Journal Club
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/journal/curates/">
+              Curater
+            </a>
+            <a class="navbar-item" href="/journal/fryums/">
+              FRYUMS
+            </a>
+            <a class="navbar-item" href="/journal/twcaos/">
+              TWCAOS
+            </a>
+            <a class="navbar-item" href="/journal/curates/">
+              Critical Appraisal
+            </a>
+          </div>
+        </div>
+        <a href="/edc/" class="navbar-item">
+          eDC
+        </a>
+        <a class="navbar-item" href="/medquiz/">
+          Medquiz
+        </a>
+        <a class="navbar-item" href="/insight/">
+          INSIGHT
+        </a>
+        <a href="/anastomosis/" class="navbar-item">
+          Anastomosis
+        </a>
+        <a class="navbar-item" href="/gallery/">
+          Gallery
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Help
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/extra/faqs/">
+              FAQs
+            </a>
+            <a class="navbar-item" href="/extra/contact/">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+  </nav>
+
+  <!-- Common Content Here -->
+
+  {% block body %}{% endblock %}
+
+  <footer class="footer section">
+    <div class="l-footer">
+      <h1>
+        <img src={% static 'images/logo.png' %} alt=""></h1>
+      </p>
+    </div>
+    <ul class="r-footer">
+      <li>
+        <h2>
+          Social</h2>
+        <ul class="boxes">
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Pinterest</a></li>
+          <li><a href="#">Dribbble</a></li>
+        </ul>
+      </li>
+      <li class="features">
+        <h2>
+          Information</h2>
+        <ul class="boxes">
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </li>
+      <li>
+        <h2>
+          Legal</h2>
+        <ul class="boxes">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Contract</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="b-footer">
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+  <script src={% static 'index.js' %}></script>
+  {% block js %}{% endblock %}
 </body>
+
 </html>
