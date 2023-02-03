@@ -21,7 +21,7 @@ def frontpage(request):
     quizzes = zip(quizs,prev_reg)
     return render(request,'anastomosis/frontpage.html',{'quizzes':quizzes})
 
-@login_required(login_url='/user/loginpage')
+@login_required(login_url='/user/loginpage/')
 def register_quiz(request,qzid):
     qz = quiz.objects.get(id=qzid)
     regis =registration.objects.filter(quiz_model=qz,user=request.user,registered=True)
@@ -43,7 +43,7 @@ def register_quiz(request,qzid):
         return paypage(request,qz.reg_price,"anastomosis",reg.reg_id)
 
 
-@login_required(login_url='/user/loginpage')
+@login_required(login_url='/user/loginpage/')
 def live_quiz(request,qzid):
     qz = quiz.objects.get(id=qzid)
     regis =registration.objects.get(quiz_model=qz,user=request.user,registered=True)
@@ -64,7 +64,7 @@ def live_quiz(request,qzid):
         question_list.append({"question":qn,"choices":choices,"iter":range(0,qn.num_match)})
     return render(request,'anastomosis/quiz.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
 
-@login_required(login_url='/user/loginpage')
+@login_required(login_url='/user/loginpage/')
 def submit_quiz(request,qzid):
     regid = request.POST['reg_id']
     qz = quiz.objects.get(id=qzid)

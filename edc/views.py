@@ -32,7 +32,7 @@ def hackathon(request,uid):
     return render(request,'edc/hackathon.html',{'hack':hack,'prev_reg':prev_reg,'members':range(members),'results':results})
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url='/user/loginpage/')
 def reg_hack(request,uid):
     if request.method=='POST':
         hack = Hackathon.objects.get(id=uid)
@@ -72,7 +72,7 @@ def reg_hack(request,uid):
         return HttpResponse("Invalid Request")
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url='/user/loginpage/')
 def submit_hack(request,uid):
     hack = Hackathon.objects.get(id=uid)
     reg = Registration.objects.get(registered=True,hack_model=hack,leader=request.user)
@@ -90,7 +90,7 @@ def submit_hack(request,uid):
     return HttpResponse("You Submission has been saved successfully <br><a href='/'>Return To Homepage</a>")
 
 
-@login_required(login_url='/user/login/')
+@login_required(login_url='/user/loginpage/')
 def reg_ws(request,uid):
     ws = BioWorkshop.objects.get(id=uid,display=True)
     reg = RegisterWS.objects.filter(workshops=ws,user=request.user,registered=True)

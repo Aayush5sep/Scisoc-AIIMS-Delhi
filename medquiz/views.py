@@ -13,7 +13,7 @@ def medsoc(request):
     quizzes = Quiz.objects.filter(Q(reg_open = True) | Q(quiz_live = True))
     return render(request,'medquiz/mainpage.html',{'quizzes':quizzes})
 
-@login_required(login_url='/user/loginpage')
+@login_required(login_url='/user/loginpage/')
 def register_quiz(request,qzid):
     qz = Quiz.objects.get(id=qzid)
     regis =Registration.objects.filter(quiz_model=qz,leader=request.user,registered=True)
@@ -35,7 +35,7 @@ def register_quiz(request,qzid):
         reg.save()
         return paypage(request,qz.reg_price,"medquiz",reg.reg_id)
 
-@login_required(login_url='/user/loginpage')
+@login_required(login_url='/user/loginpage/')
 def live_quiz(request,qzid):
     qz = Quiz.objects.get(id=qzid)
     regis = Registration.objects.get(quiz_model=qz,leader=request.user,registered=True)
@@ -56,7 +56,7 @@ def live_quiz(request,qzid):
         question_list.append({"question":qn,"choices":choices,"iter":range(0,qn.num_match)})
     return render(request,'medquiz/quizview.html',{'reg_id':regis.reg_id,'quiz_id':qz.id,'quiz_name':qz.title,'question_list':question_list})
 
-@login_required(login_url='/user/loginpage')
+@login_required(login_url='/user/loginpage/')
 def submit_quiz(request,qzid):
     regid = request.POST['reg_id']
     qz = Quiz.objects.get(id=qzid)

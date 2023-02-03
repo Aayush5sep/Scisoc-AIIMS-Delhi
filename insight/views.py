@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Insight,Workshop,RegisterWorkshop,Events,RegisterEvent,InsightResult
 from payment.views import paypage
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -29,6 +30,7 @@ def insight(request,id):
     events = zip(event,registered_ev)
     return render(request,'insight/fest.html',{'fest':fest,'workshops':workshops,'events':events})
 
+@login_required(login_url='/user/loginpage/')
 def reg_ws(request):
     selected = request.POST.getlist('workshop')
     amount = 0
@@ -61,7 +63,7 @@ def reg_ws(request):
     reg.workshops.set(workshops)
     return paypage(request,amount,"workshop",reg.reg_id)
 
-
+@login_required(login_url='/user/loginpage/')
 def reg_event(request):
     selected = request.POST.getlist('event')
     amount = 0
