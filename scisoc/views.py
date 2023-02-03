@@ -2,6 +2,7 @@ from django.shortcuts import render
 from user.models import PositionDetails
 from .models import Latest,Gallery
 from django.utils import timezone
+import random
 
 def homepage(request):
     team = PositionDetails.objects.filter(display_home=True)
@@ -12,5 +13,7 @@ def homepage(request):
     return render(request,'index.html',params)
 
 def gallery(request):
-    images = Gallery.objects.order_by('-preference')
+    imags = Gallery.objects.all()
+    images = list(imags)
+    random.shuffle(images)
     return render(request,'gallery.html',{'images':images})

@@ -1,19 +1,166 @@
 {% extends 'common.html' %}
     {% block title %} Gallery {% endblock %}
-
+    {% load static %}
     {% block css %}
+        <link rel="stylesheet" href="{% static 'gallery.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     {% endblock %}
 
     {% block body %}
 
 
-        {% for img in images %}
+        {% comment %} {% for img in images %}
             <div>
                 <image id="{{img.hidden_title}}" src="/media/{{img.image}}" height=200 width=200><br>
                 {{img.hidden_title}} <br> {{img.upload_date}}
                 </div>
+        {% endfor %} {% endcomment %}
+    <div class="grid-wrapper">
+        {% for img in images %}
+            {% if forloop.counter|divisibleby:20 %}
+            <div class="big images">
+                <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1951&amp;q=80" class="thumbnail" alt="" />
+                <div class="text">
+                    <p>{{img.hidden_title}}</p>
+                </div>
+            </div>
+            {% elif forloop.counter|divisibleby:19 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1351&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:18 %}
+                <div class="images tall">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" class="thumbnail" alt="">
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:17 %}
+                <div class="images wide">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:16 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:15 %}
+                <div class=" images tall">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2134&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:14 %}
+                <div class="images big">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1951&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:13 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=564&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:12 %}
+                <div class="images wide">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:11 %}
+                <div class="big images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1951&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:10 %}
+                <div class="images tall">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:9 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=675&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:8 %}
+                <div class="images wide">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:7 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:6 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1353&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:5 %}
+                <div class="images tall">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:4 %}
+                <div class="images wide">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:3 %}
+                <div class="images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1489&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:2 %}
+                <div class="images wide">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1489&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% elif forloop.counter|divisibleby:1 %}
+                <div class="big images">
+                    <img src="/media/{{img.image}}?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1951&amp;q=80" class="thumbnail" alt="" />
+                    <div class="text">
+                        <p>{{img.hidden_title}}</p>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
-
+    </div>
 
     {% endblock %}
 
