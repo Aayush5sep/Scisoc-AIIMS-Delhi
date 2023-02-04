@@ -1,0 +1,43 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+.back{
+    display: block;
+    margin:0 auto;
+    border-radius: 50px;
+}
+.im{
+    margin-bottom: 70px;
+}
+.edch{
+    font-size: 3rem;
+    font-weight:700;
+    color:black;
+}
+.edch::after{
+content: '';
+position: relative;
+width: 40px;
+height: 17px;
+background-color: #fcce2d;
+left: 0px;
+right: 0px;
+margin: 0 auto 50px auto;
+display: block;
+border-radius: 10px;
+}
+.edcp{
+    font-family: 'Averia serif libre','serif';
+    line-height: 2rem;
+    font-size: 1.2rem;
+}
+.card{
+    margin-top: 2rem;
+    transition: 0.15s ease-in;
+}
+.card:hover{
+    transform: scale(1.02);
+    box-shadow: 0px 0px 10px 5px rgba(156,156,156,1);;
+}

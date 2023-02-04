@@ -1,35 +1,102 @@
 {% extends 'common.html' %}
+{% load static %}
     {% block title %} Curates {% endblock %}
 
     {% block css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
+    <link rel="stylesheet" href={% static 'journal/curates.css' %}>
     {% endblock %}
 
     {% block body %}
 
-
-        <h2>Curates</h2>
-            {% for curate in curates %}
-                <section class="curate">
-                    <image src="/media/{{curate.curate.image}}" height=200 width=250> <br>
-                    <h3>Curate Name : {{curate.curate.title}} </h3>
-                    About Curate : {{curate.curate.description}} <br>
-                    From : {{curate.curate.start_date}}  To : {{curate.curate.end_date}} <br>
-                    {% if curate.articles %}
-                        Articles Of the Curate <br>
-                        {% for article in curate.articles %}
-                            <div class="article">
-                                <image src="/media/{{article.image}}" height=150 width=200> <br>
-                                Article Title : {{article.title}} <br>
-                                Description : {{article.description}} <br>
-                                --by {{article.author}} <br>
-                                <a href="{{article.link}}">View Article -></a> <br>
-                            </div> <br>
-                        {% endfor %}
-                    {% endif %}
-                </section><br>
-            {% endfor %}
-
-
+<br><br>
+{% for curate in curates %}
+    <div class="curate-container" style="margin-left:2%;margin-right:2%;margin-bottom:2%;padding:2%;border-style:ridge">
+        <center>
+        <image src="/media/{{curate.curate.image}}" height=200 width=250> <br>
+        <h3>Curate Name : {{curate.curate.title}} </h3>
+        About Curate : {{curate.curate.description}} <br>
+        From : {{curate.curate.start_date}}  To : {{curate.curate.end_date}} <br>
+        </center><br>
+        {% if curate.articles %}
+        <center>
+            <b>Articles Of the Curate</b> <br>
+        </center>
+        <section class="container">
+                <div class="columns features">
+                {% for article in curate.articles %}
+                <div class="column is-4">
+                    <div class="card is-shady">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                        <img src="/media/{{article.image}}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                        <h4>{{article.title}}</h4>
+                        <p>{{article.description}}</p>
+                        <span class="button is-link modal-button" data-target="modal-card-{{article.id}}">Read More</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+        </section>
+        <!--  ===============
+        HERE BE MODALS
+        ===============  -->
+        <!-- 3dFlipVertical card tiny -->
+        {% for article in curate.articles %}
+        <div id="modal-card-{{article.id}}" class="modal modal-fx-3dSlit">
+            <div class="modal-background"></div>
+            <div class="modal-content is-tiny">
+            <!-- content -->
+            <div class="card">
+                <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="/media/{{article.image}}" alt="Placeholder image">
+                </figure>
+                </div>
+                <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                    <p class="title is-4">{{article.title}}</p>
+                    <p class="subtitle is-6">@{{article.author}}</p>
+                    </div>
+                </div>
+                <div class="content">{{article.description}}<br>
+                    <a href="{{article.link}}">Visit =></a>
+                    <br>
+                </div>
+                </div>
+            </div>
+            <!-- end content -->
+            </div>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+{% endfor %}
+<br><br>
     {% endblock %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>  
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        //The first argument are the elements to which the plugin shall be initialized
+        //The second argument has to be at least a empty object or a object with your desired options
+        OverlayScrollbars(document.querySelectorAll("body"), { });
+        });
+        </script>  
+    {% endblock %}
