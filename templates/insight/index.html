@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href={% static 'insight/logo.png' %} type="image/x-icon">  
+    <title>{{fest.title}}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Arvo&family:wght@400;500&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href={% static 'insight/insight.css' %}>
+</head>
+<body>
+    <main>
+    <div id="loading">
+    </div>
+    <section class="banner" id="banner">
+        <nav class="navba t">
+            <a class="logo" href="/"><img src={% static 'insight/image.png' %} alt=""></a>
+           
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/insight/#">Insight</a></li>
+                <li class="active"><a href="/insight/#events">Events</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+        <div class="mob-nav">
+            <div class="log1"><img src={% static 'insight/image.png' %} alt=""></div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+        {% comment %} <div class="content">
+
+            <div>
+                <button class="button" href="" type="submit" name="button"><span></span>Register Now!</button>
+
+            </div>
+        </div> {% endcomment %}
+    </section>
+    <section class="sec section">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-half x1">
+                <h1 >ABOUT {{fest.title}}</h1>
+                <p>{{fest.desc}}</p>
+              </div>
+            <div class="column is-half x" >
+                {% if fest.video %}
+                    <video autoplay muted controls loop src="/media/{{fest.video}}" type="video/mp4"></video>
+                {% elif fest.img %}
+                    <image src="/media/{{fest.img}}"
+                {% endif %}
+            </div>
+          </div>
+        </div>
+    </section>
+
+    {% if workshops %}
+    <section class="event section"  id="events">
+        <div class="event-block">
+            <div class="heading">
+                <h1>Workshops</h1>
+            </div>
+            <div class="grids">
+                <form method="post" action="/insight/workshop/register/">{% csrf_token %}
+                    {% for ws,registered in workshops %}
+                        <div class="event-tiles">
+                            <div class="screen1" style="width:100%;height:100%;border-radius:25px">
+                                <img src="/media/{{ws.img}}" style="width:100%;height:100%;border-radius:25px">
+                            </div>
+                            <div class="screen2" style="margin-left:0;padding:0">
+                                <div class="description" style="margin:0;padding:0">
+                                    <h1 style="width:90%;margin-left:auto;margin-right:auto;text-align:center;font-weight:600;font-size:125%">{{ws.title}}</h1>
+                                    <p style="width:90%;margin-left:auto;margin-right:auto;text-align:center;">{{ws.desc}}<br><span style="font-weight:500">Price: </span>{{ws.price}}<br><span style="font-weight:500">Time: </span>{{ws.ws_time}}</p>
+                            </div>
+                            <div>
+                                {% if ws.reg_link %}
+                                    <buttton><a href="{{ws.reg_link}}">Register Externally</a></button>
+                                {% elif registered %}
+                                    You have already registered for this workshop :)<br>
+                                {% else %}
+                                    <input class="form-check-input" type="checkbox" name="workshop" value="{{ws.id}}" id="workshop">
+                                    <label class="form-check-label" for="workshop">
+                                        Select To Register
+                                    </label><br>
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <br><button type="submit" style="margin-top: 3.5rem;width: auto;padding: 10px 10px;text-align: center;margin: 20px 10px;border-radius: 20px;font-weight: bold;border: 2px solid #FFB703;background: transparent;cursor: pointer;color:white;">Register For Selected Workshops</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if events %}
+    <section class="event section"  id="events">
+        <div class="event-block">
+            <div class="heading">
+                <h1>Events & Competitions</h1>
+            </div>
+            <div class="grids">
+                <form method="post" action="/insight/event/register/">{% csrf_token %}
+                    {% for ev,registered in events %}
+                        <div class="event-tiles">
+                            <div class="screen1" style="width:100%;height:100%;border-radius:25px">
+                                <img src="/media/{{ev.img}}" style="width:100%;height:100%;border-radius:25px">
+                            </div>
+                            <div class="screen2" style="margin-left:0;padding:0">
+                                <div class="description" style="margin:0;padding:0">
+                                    <h1 style="width:90%;margin-left:auto;margin-right:auto;text-align:center;font-weight:600;font-size:125%">{{ev.title}}</h1>
+                                    <p style="width:90%;margin-left:auto;margin-right:auto;text-align:center;">{{ev.desc}}<br><span style="font-weight:500">Price: </span>{{ev.price}}<br><span style="font-weight:500">Time: </span>{{ev.event_time}}</p>
+                            </div>
+                            <div>
+                                {% if ev.reg_link %}
+                                    <buttton><a href="{{ev.reg_link}}">Register Externally</a></button>
+                                {% elif registered %}
+                                    You have already registered for this Event :)<br>
+                                {% else %}
+                                    <input class="form-check-input" type="checkbox" name="workshop" value="{{ev.id}}" id="workshop">
+                                    <label class="form-check-label" for="workshop">
+                                        Select To Register
+                                    </label><br>
+                                {% endif %}
+                            </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <br><button type="submit" style="margin-top: 3.5rem;width: auto;padding: 10px 10px;text-align: center;margin: 20px 10px;border-radius: 20px;font-weight: bold;border: 2px solid #FFB703;background: transparent;cursor: pointer;color:white;">Register For Selected Events</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if speakers %}
+    <section class="section s speakers">
+        <div class="block">
+            <div class="title">
+                <h1>Speakers</h1>
+            </div>
+            <div class="grids">
+                {% for speaker in speakers %}
+                    <div class="tile a">
+                        <img src="/media/{{speaker.photo}}" alt="">
+                        <h2>{{speaker.name}}</h2>
+                        <p>{{speaker.position}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if sponsors %}
+    <section class="sponsors section">
+        <h1>Our Sponsors & Partners</h1>
+        <div class="slider">
+            <div class="slider-track">
+                {% for sponsor in sponsors %}
+                    <div class="slide">
+                        <img src="/media/{{sponsor.logo}}" height="100" width="250" alt="" />
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="section" id="contact">
+        <h1>Contact Us</h1>
+        <div class="contacts">
+            <div class="contact">
+                <h2>FOR SPEAKING OPPORTUNITIES</h2>
+                <img src={% static 'insight/speaking@2x.png' %} alt="">
+                <p>scisoc@gmail.com</p>
+            </div>
+            <div class="contact">
+                <h2>FOR ASSOCIATION OPPORTUNITIES</h2>
+                <img src={% static 'insight/association@2x.png' %} alt="">
+                <p>scisoc@gmail.com</p>
+            </div>
+            <div class="contact">
+                <h2>FOR QUERIES
+                    <br>
+                    <br>
+                </h2>
+                <img src={% static 'insight/queries@2x.png' %} alt="">
+                <p>scisoc@gmail.com</p>
+            </div>
+            <div class="contact">
+                <h2>FOR SPONSORSHIP OPPORTUNITIES</h2>
+                <img src={% static 'insight/sponsorship@2x.png' %} alt="">
+                <p>scisoc@gmail.com</p>
+            </div>
+        </div>
+    </section>
+</main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <script>
+        let tl1=gsap.timeline({
+  scrollTrigger:{
+    trigger:".t",
+    start:"top top",
+    end:"bottom",
+    toggleActions:"restart none none reset"
+  }
+});
+tl1.from(".x1",{x:-200,opacity:0,duration:1})
+.from(".x",{x:200,opacity:0,duration:1},"-=1");
+    </script>
+       <script>
+        batch(".tile", {
+  interval: 0.1, // time window (in seconds) for batching to occur. The first callback that occurs (of its type) will start the timer, and when it elapses, any other similar callbacks for other targets will be batched into an array and fed to the callback. Default is 0.1
+  batchMax: 4,   // maximum batch size (targets)
+  onEnter: batch => gsap.to(batch, {autoAlpha: 1, stagger: 0.15, overwrite: true}),
+  onLeave: batch => gsap.set(batch, {autoAlpha: 0, overwrite: true}),
+  onEnterBack: batch => gsap.to(batch, {autoAlpha: 1, stagger: 0.15, overwrite: true}),
+  onLeaveBack: batch => gsap.set(batch, {autoAlpha: 0, overwrite: true})
+  // you can also define things like start, end, etc.
+});
+
+
+
+
+// the magical helper function (no longer necessary in GSAP 3.3.1 because it was added as ScrollTrigger.batch())...
+function batch(targets, vars) {
+  let varsCopy = {},
+      interval = vars.interval || 0.1,
+      proxyCallback = (type, callback) => {
+        let batch = [],
+            delay = gsap.delayedCall(interval, () => {callback(batch); batch.length = 0;}).pause();
+        return self => {
+          batch.length || delay.restart(true);
+          batch.push(self.trigger);
+          vars.batchMax && vars.batchMax <= batch.length && delay.progress(1);
+        };
+      },
+      p;
+  for (p in vars) {
+    varsCopy[p] = (~p.indexOf("Enter") || ~p.indexOf("Leave")) ? proxyCallback(p, vars[p]) : vars[p];
+  }
+  gsap.utils.toArray(targets).forEach(target => {
+    let config = {};
+    for (p in varsCopy) {
+      config[p] = varsCopy[p];
+    }
+    config.trigger = target;
+    ScrollTrigger.create(config);
+  });
+}
+//events
+gsap.set(".event-tiles", {y: 100});
+
+
+ScrollTrigger.batch(".event-tiles", {
+  start: "top bottom-=100px",
+  onEnter: batch => gsap.to(batch, {opacity: 1, y: 0, backgroundSize:"100%", stagger: 0.15}),
+  onLeaveBack:batch => gsap.to(batch, {opacity: 0, y: 100, backgroundSize:"0%", stagger: 0.1})
+});
+ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".event-tiles", {y: 0, backgroundSize:"0%"}));
+    </script>
+    
+    <script>
+        let hamburger=document.querySelector(".hamburger")
+hamburger.onclick=function(){
+    let navbar=document.querySelector(".navba");
+    navbar.classList.toggle("activ");
+}
+    </script>
+    <script>
+        $(window).on('load',function(){setTimeout(function () {
+            $('main').css({
+  'overflow-y': 'hidden',
+  'height': '100%'});
+            $('#loading').fadeOut(700);
+        },3000)})
+
+      </script>
+</body>
+</html>

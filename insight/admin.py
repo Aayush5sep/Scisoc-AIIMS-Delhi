@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Insight,Workshop,RegisterWorkshop,Events,RegisterEvent,InsightResult
+from .models import Insight,Workshop,RegisterWorkshop,Events,RegisterEvent,InsightResult,Speaker,Sponsor
 # Register your models here.
 
 class WorkShopList(admin.StackedInline):
@@ -40,3 +40,5 @@ admin.site.register(Workshop,WorkshopAdmin)
 admin.site.register(RegisterWorkshop,WorkshopRegister)
 admin.site.register(RegisterEvent,EventRegister)
 admin.site.register(Events,EventAdmin)
+admin.site.register(Speaker)
+admin.site.register(Sponsor)

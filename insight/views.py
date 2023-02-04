@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Insight,Workshop,RegisterWorkshop,Events,RegisterEvent,InsightResult
+from .models import Insight,Workshop,RegisterWorkshop,Events,RegisterEvent,InsightResult,Sponsor,Speaker
 from payment.views import paypage
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -8,27 +8,33 @@ from django.contrib.auth.decorators import login_required
 
 def insight_home(request):
     fests = Insight.objects.filter(live=True).order_by('-start')
-    return render(request,'insight/insight.html',{'fests':fests})
+    return insight(request,fests[0].id)
 
 def insight(request,id):
     fest = Insight.objects.get(id=id,live=True)
     workshop = Workshop.objects.filter(insight=fest).order_by('preference')
     event = Events.objects.filter(insight=fest).order_by('preference')
+    sponsors = Sponsor.objects.filter(insight=fest)
+    speakers = Speaker.objects.filter(insight=fest)
     prev_registered = []
     for ws in workshop:
         if RegisterWorkshop.objects.filter(registered=True,workshops__in=[ws]):
             prev_registered.append(True)
         else:
             prev_registered.append(False)
-    workshops = zip(workshop,prev_registered)
+    workshops = []
+    if len(workshop)>0:
+        workshops = zip(workshop,prev_registered)
     registered_ev = []
     for ev in event:
         if RegisterEvent.objects.filter(registered=True,events__in=[ev]):
             registered_ev.append(True)
         else:
             registered_ev.append(False)
-    events = zip(event,registered_ev)
-    return render(request,'insight/fest.html',{'fest':fest,'workshops':workshops,'events':events})
+    events = []
+    if len(event)>0:
+        events = zip(event,registered_ev)
+    return render(request,'insight/index.html',{'fest':fest,'workshops':workshops,'events':events,'sponsors':sponsors,'speakers':speakers})
 
 @login_required(login_url='/user/loginpage/')
 def reg_ws(request):

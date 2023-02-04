@@ -12,8 +12,8 @@ from django.dispatch import receiver
 class Insight(models.Model):
     title = models.CharField("Insight Title",max_length=50)
     desc = models.TextField("About Insight")
-    fest_img = models.ImageField("Fest Image",upload_to='insight/images/')
-    brochure_img = models.ImageField("Brochure Image", upload_to='insight/images/')
+    video = models.FileField("Fest Video",upload_to='insight/videos',null=True,blank=True)
+    img = models.ImageField("Fest Image",upload_to='insight/images',null=True,blank=True)
     start = models.DateField("Start Date Of Insight")
     live = models.BooleanField("Display On Web?",default=False)
 
@@ -30,12 +30,42 @@ class Insight(models.Model):
 
 @receiver(post_delete, sender=Insight)
 def insight_delete(sender,instance, **kwargs):
-    if instance.fest_img:
-        if os.path.isfile(instance.fest_img.path):
-            os.remove(instance.fest_img.path)
-    if instance.brochure_img:
-        if os.path.isfile(instance.brochure_img.path):
-            os.remove(instance.brochure_img.path)
+    if instance.video:
+        if os.path.isfile(instance.video.path):
+            os.remove(instance.video.path)
+    if instance.img:
+        if os.path.isfile(instance.img.path):
+            os.remove(instance.img.path)
+
+class Sponsor(models.Model):
+    insight = models.ForeignKey(Insight,on_delete=models.CASCADE)
+    name = models.CharField(max_length=25)
+    logo = models.ImageField(upload_to='insight/images')
+
+    def __str__(self):
+        return self.name
+
+@receiver(post_delete, sender=Sponsor)
+def insight_delete(sender,instance, **kwargs):
+    if instance.logo:
+        if os.path.isfile(instance.logo.path):
+            os.remove(instance.logo.path)
+
+
+class Speaker(models.Model):
+    insight = models.ForeignKey(Insight,on_delete=models.CASCADE)
+    name = models.CharField(max_length=25)
+    photo = models.ImageField(upload_to='insight/images')
+    position = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+@receiver(post_delete, sender=Speaker)
+def insight_delete(sender,instance, **kwargs):
+    if instance.photo:
+        if os.path.isfile(instance.photo.path):
+            os.remove(instance.photo.path)
 
 
 class Workshop(models.Model):
