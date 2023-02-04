@@ -1,13 +1,21 @@
 {% extends 'common.html' %}
+{% load static %}
     {% block title %} TWCAOS {% endblock %}
 
     {% block css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
+    <link rel="stylesheet" href={% static 'journal/curates.css' %}>
     {% endblock %}
 
     {% block body %}
 
 
-        <h2>TWCAOS</h2>
+        {% comment %} <h2>TWCAOS</h2>
             {% for twcao in twcaos %}
                 <section class="twcao">
                     <image src="/media/{{twcao.twcao.image}}"> <br>
@@ -30,9 +38,91 @@
                         {% endfor %}
                     {% endif %}
                 </section>
-            {% endfor %}
+            {% endfor %} {% endcomment %}
+
+
+<br><br>
+<h2>TWCAOS</h2>
+<section class="container">
+    <div class="columns features">
+    {% for twcao in twcaos %}
+    <div class="column is-4">
+        <div class="card is-shady">
+        <div class="card-image">
+            <figure class="image is-4by3">
+            <img src="/media/{{twcao.twcao.image}}" alt="Placeholder image">
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="content">
+            <h4>{{twcao.twcao.title}}</h4>
+            <p>{{twcao.twcao.description|truncatechars:100}}</p>
+            <time datetime="{{twcao.twcao.live_date}}">{{twcao.twcao.live_date}}</time><br><br>
+            <span class="button is-link modal-button" data-target="modal-card-{{twcao.twcao.uid}}">Read More</span>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</section>
+<!--  ===============
+HERE BE MODALS
+===============  -->
+<!-- 3dFlipVertical card tiny -->
+{% for twcao in twcaos %}
+<div id="modal-card-{{twcao.twcao.uid}}" class="modal modal-fx-3dSlit">
+    <div class="modal-background"></div>
+    <div class="modal-content is-tiny">
+    <!-- content -->
+    <div class="card">
+        <div class="card-image">
+        <figure class="image is-4by3">
+            <img src="/media/{{twcao.twcao.image}}" alt="Placeholder image">
+        </figure>
+        </div>
+        <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+            <p class="title is-4">{{twcao.twcao.title}}</p>
+            </div>
+        </div>
+        <div class="content">{{twcao.twcao.description}}<br>
+            {% if twcao.guests %}
+                <br><b>Guests</b><br>
+                {% for guest in twcao.guests %}
+                    &nbsp;&nbsp;{{guest.name}},
+                    &nbsp;{{guest.desc}} <br>
+                {% endfor %}
+            {% endif %}
+            {% if twcao.links %}
+                <br><b>Links</b><br>
+                {% for link in twcao.links %}
+                &nbsp;&nbsp;<a href="{{link.link}}">{{link.site}}-></a> <br>
+                {% endfor %}
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    <!-- end content -->
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endfor %}
+<br><br>
 
 
     {% endblock %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>  
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        //The first argument are the elements to which the plugin shall be initialized
+        //The second argument has to be at least a empty object or a object with your desired options
+        OverlayScrollbars(document.querySelectorAll("body"), { });
+        });
+        </script>  
+    {% endblock %}
