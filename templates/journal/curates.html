@@ -40,7 +40,7 @@
                     <div class="card-content">
                         <div class="content">
                         <h4>{{article.title}}</h4>
-                        <p>{{article.description}}</p>
+                        <p>{{article.description|truncatechars:100}}</p>
                         <span class="button is-link modal-button" data-target="modal-card-{{article.id}}">Read More</span>
                         </div>
                     </div>
