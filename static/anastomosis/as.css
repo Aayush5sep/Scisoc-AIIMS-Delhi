@@ -1,0 +1,53 @@
+body{
+    background-color: azure;
+}
+.anastosmosis{
+    background: rgb(2,48,71);
+background: linear-gradient(90deg, rgba(2,48,71,1) 16%, rgba(33,158,188,1) 80%, #fcce2d 100%);
+margin: -20px auto 40px auto;
+box-shadow: -12px 2px 46px 4px rgba(2,48,71,0.8);
+border-radius: 20px;
+width:95%;
+transition: 0.25s ease-in;
+}
+.edch{
+    font-size: 3rem;
+    font-weight:700;
+    color:black;
+}
+.edch::after{
+content: '';
+position: relative;
+width: 40px;
+height: 17px;
+background-color: #fcce2d;
+left: 0px;
+right: 0px;
+margin: 0 auto 50px auto;
+display: block;
+border-radius: 10px;
+}
+p{
+    font-family: 'Arvo','serif';
+    color: white;
+    font-size: 20px;
+    line-height: 35px;
+}
+.im{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.im img{
+    max-width: 100%;
+}
+.x:hover{
+    transform: translate(2px,-3px);
+}
+.button{
+    transition: 0.2s ease-in;
+}
+.button:hover{
+    background-color: #fcce2d;
+
+}

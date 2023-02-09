@@ -1,51 +1,137 @@
 {% extends 'common.html' %}
+{% load static %}
     {% block title %} Anastomosis {% endblock %}
 
     {% block css %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href={% static 'anastomosis/as.css' %}>
     {% endblock %}
 
     {% block body %}
 
+    {% comment %} <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column has-text-centered">
+              <h1 class="edch"><span style="color: #FFB703;">Anas</span>tosmosis</h1>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section class="section anastosmosis">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half">
+            <p>Do you feel lifeless and bored when you memorize formulas by heart rather than logically applying your notions and imagination? Do you desire to challenge your mind to its extremes, delve into the vastness of logical argumentation, and adopt a fresh perspective on science?
+              The Scientific Society, AIIMS, proudly presents to you “ANASTOMOSIS”, a pan-India scientific aptitude challenge for the young minds of class IX and X. Anastomosis is an endeavor to foster analytical and logical reasoning skills, to value creative minds, and to present them with a one-of-a-kind experience at AIIMS.
+              Anastomosis kicks off with an online exam that features original and thought-provoking math and science problems that are engaging and enjoyable to solve. These unique, hand-crafted questions will place more emphasis on the use of concepts and common sense than on mindless memorization. The challenge's top performers will be invited to a memorable scientific excursion at AIIMS, where they will participate in electrifying workshops, talks, exhibitions, and demonstrations with India's best.
+              PS: Anastomosis is absolutely free.
+            </p>
+          </div>
+          <div class="column im">
+            <img src="{% static 'anastomosis/anas.png' %}" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="columns">
+        <div class="column has-text-centered">
+          <div style="font-family: 'Averia Serif Libre','serif';" class="button">Register for Quiz</div>
+        </div></div></div>
+    </section> {% endcomment %}
 
-        {% for quiz,registered in quizzes %}
 
-            {{quiz.title}}<br>
-            {{quiz.desc}}<br>
-            {% if quiz.reg_price == 0 %}
-                Free !!
-            {% else %}
-                ₹{{quiz.reg_price}}
-            {% endif %}
-            <br>
+{% for quiz,registered in quizzes %}
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <h1 class="edch"><span style="color: #FFB703;">{{quiz.title}}</span></h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section anastosmosis">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-half">
+        <p>
+          {{quiz.desc}} <br>
+          {% if quiz.reg_price == 0 %}
+            Free !!
+          {% else %}
+            Registration Fee : ₹{{quiz.reg_price}}
+          {% endif %}
+        </p>
+      </div>
+      <div class="column im">
+        <img src="{% static 'anastomosis/anas.png' %}" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="columns">
+    <div class="column has-text-centered">
+      <div style="font-family: 'Averia Serif Libre','serif';" class="button">
+        {% if quiz.on_web %}
+          {% if registered %}
+            You are registered for this quiz :)<br>
+          {% elif quiz.reg_open %}
+            <a href="/anastomosis/register/{{quiz.id}}"> Register Now </a><br>
+          {% endif %}
+          
+          {% if quiz.quiz_live %}
+            <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz </a><br>
+          {% endif %}
+        {% else %}
+          <a href="{{quiz.quiz_or_reg_link}}"> Register </a><br>
+        {% endif %}
+      </div>
+    </div></div></div>
+    {% if user.is_superuser %}
+      <center><br><a href="/anastomosis/marks/{{quiz.id}}" style="color:white">Submissions =></a></center>
+    {% endif %}
+  </section>
 
-            {% if quiz.reg_open %}
-                Registrations are open !!
-            {% elif quiz.quiz_live %}
-                Quiz is now live. Hurry Up !!
-            {% endif %}
-            <br>
+    {% comment %} {{quiz.title}}<br>
+    {{quiz.desc}}<br>
+    {% if quiz.reg_price == 0 %}
+        Free !!
+    {% else %}
+        ₹{{quiz.reg_price}}
+    {% endif %}
+    <br>
 
-            {% if quiz.on_web %}
-                {% if registered %}
-                    You are registered for this quiz :)<br>
-                {% elif quiz.reg_open %}
-                    <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a><br>
-                {% endif %}
-                
-                {% if quiz.quiz_live %}
-                    <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a><br>
-                {% endif %}
-            {% else %}
-                <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a><br>
-            {% endif %}
-                
-            {% if user.is_superuser %}
-                <a href="/anastomosis/marks/{{quiz.id}}">Submissions=></a><br>
-            {% endif %}
+    {% if quiz.reg_open %}
+        Registrations are open !!
+    {% elif quiz.quiz_live %}
+        Quiz is now live. Hurry Up !!
+    {% endif %}
+    <br>
 
-            <br>
+    {% if quiz.on_web %}
+        {% if registered %}
+            You are registered for this quiz :)<br>
+        {% elif quiz.reg_open %}
+            <a href="/anastomosis/register/{{quiz.id}}"> Register Now -> </a><br>
+        {% endif %}
+        
+        {% if quiz.quiz_live %}
+            <a href="/anastomosis/livequiz/{{quiz.id}}"> Attempt Quiz -> </a><br>
+        {% endif %}
+    {% else %}
+        <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a><br>
+    {% endif %}
+        
+    {% if user.is_superuser %}
+        <a href="/anastomosis/marks/{{quiz.id}}">Submissions=></a><br>
+    {% endif %} {% endcomment %}
 
-        {% endfor %}
+    <br>
+
+{% endfor %}
 
 
     {% endblock %}
