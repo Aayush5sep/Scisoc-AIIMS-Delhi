@@ -1,13 +1,94 @@
 {% extends 'common.html' %}
+{% load static %}
     {% block title %} MedQuiz Society {% endblock %}
 
     {% block css %}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap"
+        rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href={% static 'medquiz/med.css' %}>
     {% endblock %}
 
     {% block body %}
 
 
-        Medquiz Society
+    <section class="section sli">
+        <div class="slider" id="slider1">
+            {% for quiz in quizzes %}
+                {% if quiz.poster %}
+                    <div style="background-image:url('{{quiz.poster}}')"></div>
+                {% endif %}
+            {% endfor %}
+
+            <i class="left" class="arrows" style="z-index:2; position:absolute;"><svg viewBox="0 0 100 100">
+                    <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path>
+                </svg></i>
+            <i class="right" class="arrows" style="z-index:2; position:absolute;"><svg viewBox="0 0 100 100">
+                    <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" transform="translate(100, 100) rotate(180) "></path>
+                </svg></i>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column has-text-centered">
+              <h1 class="edch t"><span style="color: #FFB703;">Me</span>dquiz</h1>
+              <p class="edcp">
+                As the education system gradually shifted from teacher-centric to student-centric learning methods, the undergraduate world saw AIIMS Delhi become a pioneer in this regard by establishing the MedQuiz Society, a society formed by a group of highly enthusiastic students with a common interest in quizzing.Formed with the goal of conducting medical quizzes, the society first aimed at preparing and priming medical quizzers for quizzes outside AIIMS. The society aims to continue the conduction of grand offline quizzes, with the added flavour of some online ones for a change of pace, along with encouraging other institutions to conduct such quizzes as well, for the ultimate objective of promoting the quizzing culture among the medicos of our country as much as possible.
+              </p>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section class="section quiz">
+      <h1 class="register is-size-1">Register Now</h1>
+      <div class="flex">
+        {% for quiz in quizzes %}
+          <div class="q-tiles">
+              <div class="screen3">
+                  <img src={% static 'medquiz/logo.png' %} alt="">
+                  <h2 class="quiz-name">{{quiz.title}}</h2>
+              </div>
+              <div class="screen4">
+                  <div class="m-description">
+                      <p>{{quiz.desc}}</p>
+                      <ul>
+                          <li>
+                            {% if quiz.reg_price == 0 %}
+                                Free !!
+                            {% else %}
+                                ₹{{quiz.reg_price}}
+                            {% endif %}
+                          </li>
+                          <li>
+                            {% if quiz.reg_open %}
+                                Registrations Open !!
+                            {% elif quiz.quiz_live %}
+                                Quiz Live !!
+                            {% endif %}
+                          </li>
+                      </ul>
+                  </div>
+                  <button class="m-button">
+                    {% if quiz.on_web %}
+                        {% if quiz.reg_open %}
+                            <a href="/medquiz/register/{{quiz.id}}"> Register  </a>
+                        {% elif quiz.quiz_live %}
+                            <a href="/medquiz/live/{{quiz.id}}"> Attempt Quiz </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{quiz.quiz_or_reg_link}}"> Register </a>
+                    {% endif %}
+                  </button>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+
+        {% comment %} Medquiz Society
         {% for quiz in quizzes %}
 
             {{quiz.title}}<br>
@@ -37,9 +118,165 @@
                 <a href="{{quiz.quiz_or_reg_link}}"> Go -> </a>
             {% endif %}
 
-        {% endfor %}
+        {% endfor %} {% endcomment %}
 
 
     {% endblock %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    <script>
+        (function($) {
+  "use strict";
+  $.fn.sliderResponsive = function(settings) {
+    
+    var set = $.extend( 
+      {
+        slidePause: 5000,
+        fadeSpeed: 800,
+        autoPlay: "on",
+        showArrows: "off", 
+        hideDots: "off", 
+        hoverZoom: "on",
+        titleBarTop: "off"
+      },
+      settings
+    ); 
+    
+    var $slider = $(this);
+    var size = $slider.find("> div").length; //number of slides
+    var position = 0; // current position of carousal
+    var sliderIntervalID; // used to clear autoplay
+      
+    // Add a Dot for each slide
+    $slider.append("<ul></ul>");
+    $slider.find("> div").each(function(){
+      $slider.find("> ul").append('<li></li>');
+    });
+      
+    // Put .show on the first Slide
+    $slider.find("div:first-of-type").addClass("show");
+      
+    // Put .showLi on the first dot
+    $slider.find("li:first-of-type").addClass("showli")
+
+     //fadeout all items except .show
+    $slider.find("> div").not(".show").fadeOut();
+    
+    // If Autoplay is set to 'on' than start it
+    if (set.autoPlay === "on") {
+        startSlider(); 
+    } 
+    
+    // If showarrows is set to 'on' then don't hide them
+    if (set.showArrows === "on") {
+        $slider.addClass('showArrows'); 
+    }
+    
+    // If hideDots is set to 'on' then hide them
+    if (set.hideDots === "on") {
+        $slider.addClass('hideDots'); 
+    }
+    
+    // If hoverZoom is set to 'off' then stop it
+    if (set.hoverZoom === "off") {
+        $slider.addClass('hoverZoomOff'); 
+    }
+    
+    // If titleBarTop is set to 'on' then move it up
+    if (set.titleBarTop === "on") {
+        $slider.addClass('titleBarTop'); 
+    }
+
+    // function to start auto play
+    function startSlider() {
+      sliderIntervalID = setInterval(function() {
+        nextSlide();
+      }, set.slidePause);
+    }
+    
+    // on mouseover stop the autoplay
+    $slider.mouseover(function() {
+      if (set.autoPlay === "on") {
+        clearInterval(sliderIntervalID);
+      }
+    });
+      
+    // on mouseout starts the autoplay
+    $slider.mouseout(function() {
+      if (set.autoPlay === "on") {
+        startSlider();
+      }
+    });
+
+    //on right arrow click
+    $slider.find("> .right").click(nextSlide)
+
+    //on left arrow click
+    $slider.find("> .left").click(prevSlide);
+      
+    // Go to next slide
+    function nextSlide() {
+      position = $slider.find(".show").index() + 1;
+      if (position > size - 1) position = 0;
+      changeCarousel(position);
+    }
+    
+    // Go to previous slide
+    function prevSlide() {
+      position = $slider.find(".show").index() - 1;
+      if (position < 0) position = size - 1;
+      changeCarousel(position);
+    }
+
+    //when user clicks slider button
+    $slider.find(" > ul > li").click(function() {
+      position = $(this).index();
+      changeCarousel($(this).index());
+    });
+
+    //this changes the image and button selection
+    function changeCarousel() {
+      $slider.find(".show").removeClass("show").fadeOut();
+      $slider
+        .find("> div")
+        .eq(position)
+        .fadeIn(set.fadeSpeed)
+        .addClass("show");
+      // The Dots
+      $slider.find("> ul").find(".showli").removeClass("showli");
+      $slider.find("> ul > li").eq(position).addClass("showli");
+    }
+
+    return $slider;
+  };
+})(jQuery);
+$(document).ready(function() {
+  
+  $("#slider1").sliderResponsive({
+  // Using default everything
+    // slidePause: 5000,
+    // fadeSpeed: 800,
+    // autoPlay: "on",
+    // showArrows: "off", 
+    // hideDots: "off", 
+    // hoverZoom: "on", 
+    // titleBarTop: "off"
+  });
+})
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <script>
+
+      gsap.set(".q-tiles", {y: 100});
+
+
+ScrollTrigger.batch(".q-tiles", {
+  start: "top bottom-=100px",
+  onEnter: batch => gsap.to(batch, {opacity: 1, y: 0, backgroundSize:"100%", stagger: 0.15}),
+  onLeaveBack:batch => gsap.to(batch, {opacity: 0, y: 100, backgroundSize:"0%", stagger: 0.1})
+});
+ScrollTrigger.addEventListener("refreshInit", () => gsap.set(".event-tiles", {y: 0, backgroundSize:"0%"}));
+    </script>
+</script>
+    {% endblock %}

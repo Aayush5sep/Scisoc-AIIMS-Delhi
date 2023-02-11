@@ -1,0 +1,358 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.edch{
+    font-size: 3rem;
+    font-weight:700;
+    color:black;
+}
+.edch::after{
+content: '';
+position: relative;
+width: 40px;
+height: 17px;
+background-color: #fcce2d;
+left: 0px;
+right: 0px;
+margin: 0 auto 50px auto;
+display: block;
+border-radius: 10px;
+}
+.edcp{
+    font-family: 'Averia serif libre','serif';
+    line-height: 2rem;
+    font-size: 1.2rem;
+}
+
+.slider, 
+.slider > div {
+    /* Images default to Center Center. Maybe try 'center top'? */
+    background-position: center center;
+    display: block;
+    width: 100%;
+    height: 500px;
+    /* height: 100vh; *//* If you want fullscreen */
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
+    overflow: hidden;
+    -moz-transition: transform .4s;
+    -o-transition: transform .4s;
+    -webkit-transition: transform .4s;
+    transition: transform .4s;
+}
+
+.slider > div {
+    position: absolute;
+}
+
+.slider > i {
+    color: #5bbd72;
+    position: absolute;
+    font-size: 60px;
+    margin: 20px;
+    top: 40%;
+    text-shadow: 0 10px 2px #223422;
+    transition: .3s;
+    width: 30px;
+    padding: 10px 0;
+    background: #fff;
+    background: rgba(255, 255, 255, .3);
+    cursor: pointer;
+    line-height: 0;
+    box-sizing: content-box;
+    border-radius: 3px;
+    z-index: 4;
+}
+
+.slider > i svg {
+    margin-top: 3px;
+}
+
+.slider > .left {
+    left: -100px;
+}
+.slider > .right {
+    right: -100px;
+}
+.slider:hover > .left {
+    left: 0;
+}
+.slider:hover > .right {
+    right: 0;
+}
+
+.slider > i:hover {
+    background:#fff;
+    background: rgba(255, 255, 255, .8);
+    transform: translateX(-2px);
+}
+
+.slider > i.right:hover {
+    transform: translateX(2px);
+}
+
+.slider > i.right:active,
+.slider > i.left:active {
+    transform: translateY(1px);
+}
+
+.slider:hover > div {
+    transform: scale(1.01);
+}
+
+.hoverZoomOff:hover > div {
+    transform: scale(1);
+}
+
+.slider > ul {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 4;
+    padding: 0;
+    margin: 0;
+    transform: translateX(-50%);
+}
+
+.slider > ul > li {
+    padding: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    list-style: none;
+    float: left;
+    margin: 10px 3px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    -moz-transition: .3s;
+    -o-transition: .3s;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+.slider > ul > .showli {
+    background-color: #fcce2d;
+    -moz-animation: boing .5s forwards;
+    -o-animation: boing .5s forwards;
+    -webkit-animation: boing .5s forwards;
+    animation: boing .5s forwards;
+    width: 15px;
+    height: 15px;
+}
+
+.slider > ul > li:hover {
+    background-color: #fcce2d;
+}
+
+.slider > .show {
+    z-index: 1;
+}
+
+.hideDots > ul {
+    display: none;
+}
+
+.showArrows > .left {
+    left: 0;
+}
+
+.showArrows > .right {
+    right: 0;
+}
+
+
+.slider:hover,
+.slider:hover {
+    transform: translate(0);
+    opacity: 1;
+}
+
+.slider > div span {
+    display: block;
+    background: rgba(0,0,0,.5);
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    text-align: center;
+    padding: 0;
+    width: 100%;
+}
+
+
+@keyframes boing {
+    0% {
+        transform: scale(1.2);
+    }
+    40% {
+        transform: scale(.6);
+    }
+    60% {
+        transform: scale(1.2);
+    }
+    80% {
+        transform: scale(.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* -------------------------------------- */
+
+
+.row2Wrap {
+    display: flex;
+}
+
+.content {
+    padding: 50px;
+    margin-bottom: 100px;
+}
+
+.content {
+    padding: 10px 15vw;
+}
+.sli{
+    padding: 0 !important;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section h1 {
+    margin-bottom: 3rem;
+}
+
+.flex {
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.q-tiles {
+    position: relative;
+    height: 20em;
+    width: 30em;
+    background-color: rgb(234, 234, 234);
+    border-radius: 2em;
+}
+
+.screen3 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s ease-in-out;
+}
+
+.screen3 img {
+    width: 50%;
+    aspect-ratio: 1/1;
+}
+
+.screen4 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen4 ul {
+    list-style: none;
+    justify-self: flex-start;
+}
+
+.m-description {
+    align-self: flex-start;
+    margin: 0;
+    line-height: 3ch;
+    padding: 2rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    height: 70%;
+    width: 90%;
+}
+.m-description{
+overflow-y: scroll;
+height: 150px;
+padding: 10px;
+}
+.m-description p,.m-description ul li{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size:18px;
+}
+
+.m-button {
+    width: 100px;
+    padding: 10px 0;
+    text-align: center;
+    margin: 2rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 2px solid #084484;
+    background: transparent;
+    color: black;
+    cursor: pointer;
+}
+
+.m-button:hover {
+    cursor: pointer;
+    background: #084484;
+    box-shadow: 0 0 5px #084484;
+    color: wheat;
+}
+
+.q-tiles:hover .screen4,.q-tiles:focus .screen4 {
+    opacity: 1;
+}
+
+.q-tiles:hover .screen3,.q-tiles:focus .screen3 {
+    opacity: 0;
+}
+.register{
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
+::-webkit-scrollbar{
+    width: 3px;
+    color: black #fff;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+.quiz{
+    background-image: url('./layered-steps-haikei.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.quiz-name{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: black;
+}
