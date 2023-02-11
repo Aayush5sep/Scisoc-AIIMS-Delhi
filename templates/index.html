@@ -12,6 +12,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"
 		crossorigin="anonymous"></script> {% endcomment %}
+    <link rel="stylesheet" href={% static 'style-start.css' %}>
 {% endblock %}
 
 {% block body %}
@@ -124,6 +125,36 @@
         </div>
     </div>
 </div>
+
+
+<section class="section news">
+    <div class="container">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <h2 class="team is-size-1">Latest News</h2>
+        </div>
+      </div>
+    </div>
+    <main class="testimonial-grid">
+    {% for news in latest %}
+      <article class="testimonial flow bg-neutral-100 text-secondary-400">
+        <div>
+          <img class="news-img" src="/media/{{news.image}}" alt="">
+        </div>
+      
+      <p><a href="{{news.link}}">{{news.title}}</a></p>
+      <p>
+        {{news.description}} <br> {{news.upload_date.date}}
+      </p>
+      </article>
+    {% endfor %}
+    </main>
+</section>
+  
+  
+  
+  
+  </section>
 
 {% comment %} <h2>Latest News </h2>
     {% for news in latest %}
