@@ -1,19 +1,53 @@
 {% extends 'common.html' %}
+{% load static %}
     {% block title %} FAQs {% endblock %}
 
     {% block css %}
+    <link rel="stylesheet" href={% static 'extras/faq.css' %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     {% endblock %}
 
     {% block body %}
 
-        <h2>FAQs =></h2>
+
+    <section class="section">
+        <div class="contain">
+        
+          <h2 class="faq">Frequently Asked Questions</h2>
+        
+          <div class="accordion">
+            {% for faq in faqs %}
+                <div class="accordion-item">
+                <a>{{faq.question}}</a>
+                <div class="content">
+                    <p>{{faq.answer}}</p>
+                </div>
+                </div>
+            {% endfor %}
+          </div>
+          
+        </div>
+    </section>
+
+
+        {% comment %} <h2>FAQs =></h2>
         {% for faq in faqs %}
             {{forloop.counter}}) 
             Question : {{faq.question}} <br>
             Answer : {{faq.answer}} <br>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
 
 
     {% endblock %}
 
-    {% block js %}{% endblock %}
+    {% block js %}
+    <script>$(document).ready(function() {
+        $('.accordion a').click(function(){
+          $(this).toggleClass('active');
+          $(this).next('.content').slideToggle(400);
+         });
+      });
+    </script>
+    {% endblock %}
