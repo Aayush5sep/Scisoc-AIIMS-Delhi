@@ -1,0 +1,95 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+.edch{
+    font-size: 3rem;
+    font-weight:700;
+    color:black;
+}
+.edch::after{
+content: '';
+position: relative;
+width: 40px;
+height: 17px;
+background-color: #fcce2d;
+left: 0px;
+right: 0px;
+margin: 0 auto 50px auto;
+display: block;
+border-radius: 10px;
+}
+.edcp{
+    font-family: 'Averia serif libre','serif';
+    line-height: 2rem;
+    font-size: 1.2rem;
+}
+.container{
+    margin-top: 40px;
+}
+.sec h1{
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    text-align: center;
+}
+.sec p{
+    font-family: 'Arvo', serif;
+    line-height: 2.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+}
+.sec1{
+    /* background-color: #023047; */
+    background: url("./sec.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: white;
+}
+.x5{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+.button{
+    font-family: 'Averia Serif Libre','serif';
+    padding: 20px;
+    font-size: large;
+    transition: ease-in-out 0.2s;
+}
+.button:hover{
+    background-color: #fcce2d;
+    transform: scale(1.1);
+    border: black solid 1px;
+}
+.sec h1{
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px
+}
+.sec h2{
+    font-family: 'Arvo', serif;
+    font-size: 2rem;
+    font-weight: 600;
+}
+.sec img{
+    border-radius: 5%;
+-webkit-box-shadow: 0px 0px 18px 5px rgba(23,83,107,1);
+-moz-box-shadow: 0px 0px 18px 5px rgba(23,83,107,1);
+box-shadow: 0px 0px 18px 5px rgba(23,83,107,1);
+}
+
+.sponsors h1{
+    text-align: center;
+    font-family:monospace;
+    font-weight: 600;
+    line-height: 39.3667px;
+    vertical-align: baseline;
+    letter-spacing: 4px;
+    margin-bottom: 50px;
+    font-size: 50px;
+    color: black;
+}

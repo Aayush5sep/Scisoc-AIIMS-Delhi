@@ -1,38 +1,138 @@
 {% extends 'common.html' %}
+{% load static %}
 {% block title %}Hackathon{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href={% static 'edc/hackn.css' %}>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<link
+        href="https://fonts.googleapis.com/css2?family=Arvo&family:wght@400;500&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    
+{% endblock %}
 
 {% block body %}
 
-    Hackathon Details =><br>
+<section class="section">
+    <div class="container mt-0">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <h1 class="edch t">{{hack.name}}</h1>
+          <p class="edcp">{{hack.desc}}<br>
+            <span style="color: #FFB703;">Registration Price </span>: ₹{{hack.reg_price}}<br>
+            <span style="color: #FFB703;">Maximum Members In One Team </span>: {{hack.team_cnt}}
+        </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+    {% comment %} Hackathon Details =><br>
     Title : {{hack.name}}<br>
     Description : {{hack.desc}}<br>
     {% if hack.poster %}
         <img src="/media/{{hack.poster}}" height=200 width=200><br>
     {% endif %}
     Registration Price : {{hack.reg_price}}<br>
-    Maximum Members : {{hack.team_cnt}}<br>
+    Maximum Members : {{hack.team_cnt}}<br> {% endcomment %}
 
-    {% if hack.show_topics %}
+{% if hack.show_topics %}
+{% for topic in hack.topics.all %}
+    {% if forloop.counter|divisibleby:2 %}
+      <section class="stock sec section ">
+        <h1 style="color: black;" class="reveal-up x3">{{forloop.counter}}) {{topic.title}}</h1>
+        <div class="container">
+          <div class="columns">
+            <div class="column is-three-fifths x5">
+                <p class="reveal-up y3">
+                    {{topic.desc}}
+                </p>
+            </div>
+            <div class="reveal-up x3 column is-two-fifths x5">
+              <img class="r" src="/media/{{hack.poster}}"/>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <section class="sec1 sec section ">
+        <h1 class="reveal-up x4">{{forloop.counter}}) {{topic.title}}</h1>
+        <div class="container">
+          <div class="columns">
+            <div class="column x4 is-two-fifths x5">
+              <img src="/media/{{hack.poster}}"/>
+            </div>
+            <div class="s reveal-up column is-three-fifths y x5">
+              <p>{{topic.desc}}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+{% endfor %}
+{% endif %}
+
+    {% comment %} {% if hack.show_topics %}
         Topics :<br>
         {% for topic in hack.topics.all %}
             {{forloop.counter}}) {{topic.title}}<br>
             {{topic.desc}}<br>
         {% endfor %}
-    {% endif %}
+    {% endif %} {% endcomment %}
+
+<div class="container bordered">
     {% if hack.sponsors %}
-        Sponsors : <br>
-    {% endif %}
-    {% for sponsor in hack.sponsors.all %}
+        <section class="sponsors section">
+            <h1>Our Sponsors & Partners</h1>
+            <div class="slider">
+                <div class="slider-track">
+                    {% for sponsor in hack.sponsors.all %}
+                        <div class="slide">
+                            <img src="/media/{{sponsor.logo}}" height="100" width="250" alt="" />
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% comment %} {% for sponsor in hack.sponsors.all %}
         {{sponsor.name}}<br>
         <img src="/media/{{sponsor.logo}}" height=100 width=100><br>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
+    {% endif %}
+</div>
 
+<div class="container bordered">
     {% if hack.hack_live %}
         {% if hack.on_web %}
+        <h3 class="subtitle is-3">Submit your Work/Ideas</h3>
             <form method="post" action="/edc/hackathon/submit/{{hack.id}}">{% csrf_token %}
-                <div class="form-group">
+                <div class="field">
+                    <label class="label">Github Repository Link with Readme File</label>
+                    <div class="control">
+                    <input class="input" type="text" name="gitrepo" id="gitrepo" placeholder="github.com/User/Repo">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Live Website URL (if any)</label>
+                    <div class="control">
+                    <input class="input" type="text" name="hostweb" id="hostweb" placeholder="http://weburl.com">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Zip File</label>
+                    <div class="control">
+                    <input class="input" id="formFileLg" type="file" name="files">
+                    </div>
+                </div>
+                {% comment %} <div class="form-group">
                     <label for="gitrepo">Github Repository Link with Readme File</label>
                     <input type="text" class="form-control" name="gitrepo" id="gitrepo" placeholder="github.com/User/Repo">
                 </div>
@@ -44,20 +144,67 @@
                     <label for="formFileLg" class="form-label">Zip File</label>
                     <input class="form-control form-control-lg" id="formFileLg" type="file" name="files">
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Submit</button> {% endcomment %}
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-link">Register</button>
+                    </div>
+                </div>
             </form>
         {% else %}
             <a href="{{hack.hack_or_reg_link}}">Submit -></a><br>
         {% endif %}
     {% endif %}
+</div>
 
+<div class="container bordered">
     {% if prev_reg and hack.reg_open %}
-        You have registered for this hackathon :)<br>
+    <h4 class="subtitle is-4">You have registered for this hackathon :)</h4><br>
     {% elif hack.reg_open %}
-        Not Registered Yet?<br>
+    <h3 class="subtitle is-3">Not Registered Yet?</h3>
         {% if hack.on_web %}
             {% if user.is_authenticated %}
-                <form method="post" action="/edc/hackathon/register/{{hack.id}}">{% csrf_token %}
+            <form method="post" action="/edc/hackathon/register/{{hack.id}}">{% csrf_token %}
+                <div class="field">
+                    <label class="label">Leader Name</label>
+                    <div class="control">
+                    <input class="input" type="text" readonly value="{{user.first_name}} {{user.last_name}}">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Leader Email</label>
+                    <div class="control">
+                    <input class="input" type="text" readonly value="{{user.email}}">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Team Name</label>
+                    <div class="control">
+                    <input class="input" type="text" name="teamname" placeholder="Team_Name">
+                    </div>
+                </div>
+                {% for i in members %}
+                    <div class="field">
+                        <label class="label">Member {{i|add:"1"}} Name</label>
+                        <div class="control">
+                        <input class="input" type="text" name="member" placeholder="Team_Name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Member {{i|add:"1"}} Email</label>
+                        <div class="control">
+                        <input class="input" type="email" name="mebmail" placeholder="Team_Name">
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-link">Register</button>
+                    </div>
+                </div>
+            </form><br>
+              
+                {% comment %} <form method="post" action="/edc/hackathon/register/{{hack.id}}">{% csrf_token %}
                     <label for="leadname" class="col-sm-2 col-form-label">Leader Name</label>
                     <div class="col-sm-10">
                         <input type="text" readonly class="form-control-plaintext" id="leadname" value="{{user.first_name}} {{user.last_name}}">
@@ -85,23 +232,26 @@
                         </div>
                     {% endfor %}
                     <button type="submit">Register</button><br>
-                </form>
+                </form> {% endcomment %}
             {% else %}
-                Kindly Login To Register....<br> 
+                <h4 class="subtitle is-4">Kindly Login To Register....</h4>
             {% endif %}
         {% else %}
-            <a href="{{hack.hack_or_reg_link}}">Register Now -></a><br>
+            <h4 class="subtitle is-4"><a href="{{hack.hack_or_reg_link}}">Register Now -></a></h4>
         {% endif %}
     {% endif %}
+</div>
 
 
-    {% if results %}
-        <br>Results =><br>
-        {% for result in results %}
-            {{result.position}} -> {{result.submission.team.team_name}}
-        {% endfor %}
-        <br> Kindly mail to scisoc_email from your registered ids to claim the rewards
-    {% endif %}
+{% if results %}
+<div class="container bordered">
+    <br><h2 class="subtitle is-2">Results =></h2>
+    {% for result in results %}
+        <h5 class="subtitle is-5">{{result.position}} -> {{result.submission.team.team_name}}</h5>
+    {% endfor %}
+    <br> <h4 class="subtitle is-4">Kindly mail to scisoc_email from your registered ids to claim the rewards</h4>
+</div>
+{% endif %}
 
 
 {% endblock %}

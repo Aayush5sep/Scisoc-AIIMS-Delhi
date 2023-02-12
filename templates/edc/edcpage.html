@@ -1,12 +1,72 @@
 {% extends 'common.html' %}
+{% load static %}
 
 {% block title %}eDC AIIMS Delhi{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href={% static 'edc/edc.css' %}>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+{% endblock %}
 
 {% block body %}
 
-    <h1>Hackathons => </h1>
+<section class="section">
+    <div class="container mt-0">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <h1 class="edch t"><span style="color: #FFB703;">e</span>DC</h1>
+          <p class="edcp">The Entrepreneurship and Development Cell (eDC), AIIMS, New Delhi is amongst the pioneer societies of the country which aims at promoting product development, financial literacy, innovation and entrepreneurship among medical undergraduates. As a part of the Scientific Society, eDC has till now successfully conducted numerous events like hackathons, Biodesign workshops, finance quizzes and much more. </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+{% for hack in hacks %}
+  {% if forloop.counter|divisibleby:2 %}
+    <section class="stock sec section ">
+      <h1 style="color: black;" class="reveal-up x3">{{hack.name}}</h1>
+      <div class="container">
+        <div class="columns">
+          <div class="column is-three-fifths x5">
+              <p class="reveal-up y3">
+                {{hack.desc}}<br>Registration Price : {{hack.reg_price}}
+              </p>
+              <center><div class="button">
+                <a href="/edc/hackathon/{{hack.id}}"> View More </a>
+              </div></center>
+            </div>
+          <div class="reveal-up x3 column is-two-fifths x5">
+            <img class="r" src="/media/{{hack.poster}}"/>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <section class="sec1 sec section ">
+      <h1 class="reveal-up x4">{{hack.name}}</h1>
+      <div class="container">
+        <div class="columns">
+          <div class="column x4 is-two-fifths x5">
+            <img src="/media/{{hack.poster}}"/>
+          </div>
+          <div class="s reveal-up column is-three-fifths y x5">
+            <p>{{hack.desc}}<br>Registration Price : {{hack.reg_price}}</p>
+            <center><div class="button"><a href="/edc/hackathon/{{hack.id}}"> View More </a></div></center>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endfor %}
+
+    {% comment %} <h1>Hackathons => </h1>
     {% for hack in hacks %}
 
         <h2>{{hack.name}}</h2>
@@ -17,7 +77,7 @@
         Registration Price : {{hack.reg_price}}<br>
         Max Members : {{hack.team_cnt}}<br>
 
-        {% comment %} Topics can be shown in a div at the right side {% endcomment %}
+        Topics can be shown in a div at the right side
         {% if hack.show_topics %}
             Topics : <br>
             {% for topic in hack.topics.all %}
@@ -37,12 +97,74 @@
             <br>
         {% endif %}
         <br>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 
 
+{% for workshop in workshops %}
+  {% if forloop.counter|divisibleby:2 %}
+    <section class="sec1 sec section ">
+      <h1 class="reveal-up x4">{{workshop.title}}</h1>
+      <div class="container">
+        <div class="columns">
+          <div class="column x4 is-two-fifths x5">
+            <img src="/media/{{workshop.img}}"/>
+          </div>
+          <div class="s reveal-up column is-three-fifths y x5">
+            <p>
+              {{workshop.desc}}<br>
+              {% if workshop.price > 0 %}
+                Price : {{workshop.price}}
+              {% else %}
+                Free Registration
+              {% endif %}
+            </p>
+            <center>
+            <div class="button">
+              {% if workshop.reg_link %}
+                <a href="{{workshop.reg_link}}"> Register </a><br>
+              {% else %}
+                <a href="/edc/bioworkshop/register/{{workshop.id}}"> Register </a><br>
+              {% endif %}
+            </div>
+            </center>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <section class="stock sec section ">
+      <h1 style="color: black;" class="reveal-up x3">{{workshop.title}}</h1>
+      <div class="container">
+        <div class="columns">
+          <div class="column is-three-fifths x5">
+              <p class="reveal-up y3">
+                {{workshop.desc}}<br>
+                {% if workshop.price > 0 %}
+                  Price : {{workshop.price}}
+                {% else %}
+                  Free Registration
+                {% endif %}
+              </p>
+              <center>
+              <div class="button">
+                {% if workshop.reg_link %}
+                  <a href="{{workshop.reg_link}}"> Register </a><br>
+                {% else %}
+                  <a href="/edc/bioworkshop/register/{{workshop.id}}"> Register </a><br>
+                {% endif %}
+              </div>
+            </center>
+            </div>
+          <div class="reveal-up x3 column is-two-fifths x5">
+            <img class="r" src="/media/{{workshop.img}}"/>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endfor %}
 
-
-    <h1>BioDesign Workshop => </h1>
+    {% comment %} <h1>BioDesign Workshop => </h1>
     {% for workshop in workshops %}
         <h3>{{workshop.title}}</h3>
         {{workshop.desc}}<br>
@@ -61,9 +183,46 @@
             <a href="/edc/bioworkshop/register/{{workshop.id}}"> Register -> </a><br>
         {% endif %}
         <br>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+<script>
+  let tl1=gsap.timeline({
+scrollTrigger:{
+  trigger:".t",
+  start:"top top",
+  end:"bottom bottom",
+  toggleActions:"restart none none reset"
+}
+});
+tl1.from(".x4",{y:-300,opacity:0,duration:1})
+.from(".y",{x:-200,opacity:0,duration:1.5},"-=1");
+
+  let tl2=gsap.timeline({
+  scrollTrigger:{
+    trigger:".r",
+    start:"top top",
+    end:"bottom bottom",
+    toggleActions:"restart none none reset"
+  }
+  });
+  tl2.from(".x2",{y:-200,opacity:0,duration:1})
+  .from(".y2",{x:-200,opacity:0,duration:1.5},"-=1");
+
+{% comment %} let tl3=gsap.timeline({
+scrollTrigger:{
+  trigger:".s",
+  start:"bottom 30%",
+  end:"bottom",
+  toggleActions:"restart none none reset"
+}
+});
+tl3.from(".x3",{y:-100,opacity:0,duration:1})
+.from(".y3",{x:200,opacity:0,duration:1.5},"-=1"); {% endcomment %}
+  </script>
+{% endblock %}
