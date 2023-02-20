@@ -31,4 +31,5 @@ urlpatterns = [
     path('edc/',include('edc.urls')),
     path('insight/',include('insight.urls')),
     path('payment/',include('payment.urls')),
+    path('aboutdev/',views.developers),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

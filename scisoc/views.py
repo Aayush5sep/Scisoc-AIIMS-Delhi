@@ -17,3 +17,6 @@ def gallery(request):
     images = list(imags)
     random.shuffle(images)
     return render(request,'gallery.html',{'images':images})
+
+def developers(request):
+    return render(request,'dev.html')
