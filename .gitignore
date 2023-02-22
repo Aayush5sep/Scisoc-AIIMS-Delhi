@@ -1,5 +1,4 @@
-scisoc/settings.py
-db.sqlite3
+
 scisoc/.env
 django-to-gdrive-aacfba9eaec2.json
 google_drive/oauth-credentials.json
