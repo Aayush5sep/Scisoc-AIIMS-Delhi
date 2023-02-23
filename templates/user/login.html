@@ -1,133 +1,40 @@
+{% extends 'common.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Log in - SciSoc</title>
-    <link rel="stylesheet" href="{% static 'assets2/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css">
-    <link rel="stylesheet" href="{% static 'assets2/css/untitled.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href={% static 'styles.css' %}>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-</head>
-
-<body>
-    <nav class="navbar " role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a>
-            <img id="img" width="80" src={% static 'images/logo.png' %}>
-          </a>
-    
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-    
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a href="/" class="navbar-item">
-              Home
-            </a>
-    
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-                Journal Club
-              </a>
-    
-              <div class="navbar-dropdown">
-                <a class="navbar-item" href="/journal/curates/">
-                  Curater
-                </a>
-                <a class="navbar-item" href="/journal/fryums/">
-                  FRYUMS
-                </a>
-                <a class="navbar-item" href="/journal/twcaos/">
-                  TWCAOS
-                </a>
-                <a class="navbar-item" href="/journal/curates/">
-                  Critical Appraisal
-                </a>
-              </div>
+  {% block body %}
+    {% if user.is_authenticated %}
+    <h2 class="has-text-link">You Are Already Logged In </h2>
+    {% else %}
+    <center>
+    <section class="" style='background: #ADA996;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    '>
+        <div class="container py-5">
+            <div class="row mb-5 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                  <h6 class="has-text-primary title is-6 mb-5 is-uppercase">Login</h6>
+                  <h6 class="has-text-weight-semibold subtitle is-6">Welcome back</h6>
+                </div>
             </div>
-            <a href="/edc/" class="navbar-item">
-              eDC
-            </a>
-            <a class="navbar-item" href="/medquiz/">
-              Medquiz
-            </a>
-            <a class="navbar-item" href="/insight/">
-              INSIGHT
-            </a>
-            <a href="/anastomosis/" class="navbar-item">
-              Anastomosis
-            </a>
-            <a class="navbar-item" href="/gallery/">
-              Gallery
-            </a>
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-                Help
-              </a>
-    
-              <div class="navbar-dropdown">
-                <a class="navbar-item" href="/extra/faqs/">
-                  FAQs
-                </a>
-                <a class="navbar-item" href="/extra/contact/">
-                  Contact Us
-                </a>
-              </div>
+            <div class="columns is-mobile mb-4">
+            <div style="margin:0 auto" class="column is-4">
+            <div class="card pb-6">
+              <img class="my-5" src="data:image/png;base64,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">
+              <form method="post" action="/user/login/"> {% csrf_token %}
+                  <div class="field mx-6 mb-5"><input class="input" type="text" name="username" placeholder="Username"></div>
+                  <div class="field mx-6 mb-5"><input class="input" type="password" name="password" placeholder="Password"></div>
+                  <div class="field mb-5"><button style="color:white;" type="submit" class="button is-primary">Log in</button></div>
+                  <p class="text-muted">Don't have an account?&nbsp;<a href="/user/newaccntpage">Sign Up</a></p>
+              </form>
             </div>
           </div>
-      </nav>
-    {% if user.is_authenticated %}
-    <h2 class="fw-bold">You Are Already Logged In </h2>
-    {% else %}
-    <section class="py-5 mt-5">
-        <div class="container py-5">
-            <div class="row mb-4 mb-lg-5">
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <p class="fw-bold text-success mb-2">Login</p>
-                    <h2 class="fw-bold">Welcome back</h2>
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-6 col-xl-4">
-                    <div class="card">
-                        <div class="card-body text-center d-flex flex-column align-items-center">
-                            <div class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
-                                </svg></div>
-                            <form method="post" action="/user/login/"> {% csrf_token %}
-                                <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Username"></div>
-                                <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
-                                <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Log in</button></div>
-                                <p class="text-muted">Don't have an account?&nbsp;<a href="/user/newaccntpage">Sign Up</a></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
         </div>
     </section>
+    </center>
     
     {% endif %}
-    <script src="{% static 'assets2/js/jquery.min.js' %}"></script>
-    <script src="{% static 'assets2/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
-    <script src="{% static 'assets2/js/bold-and-bright.js' %}"></script>
-    <script src="{% static 'assets2/js/Lightbox-Gallery.js' %}"></script>
-</body>
+  {% endblock body %}
 
 </html>

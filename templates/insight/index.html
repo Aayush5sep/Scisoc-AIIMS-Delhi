@@ -36,7 +36,7 @@
             </ul>
         </nav>
         <div class="mob-nav">
-            <div class="log1"><img src={% static 'insight/image.png' %} alt=""></div>
+            <div class="log1"><a href="/"><img src={% static 'insight/image.png' %} alt=""></a></div>
         <div class="hamburger">
             <div class="line"></div>
             <div class="line"></div>
@@ -172,6 +172,20 @@
                         <img src="/media/{{sponsor.logo}}" height="100" width="250" alt="" />
                     </div>
                 {% endfor %}
+                {% if sponsors|length < 14 %}
+                    {% for sponsor in sponsors %}
+                        <div class="slide">
+                            <img src="/media/{{sponsor.logo}}" height="100" width="250" alt="" />
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if sponsors|length < 7 %}
+                    {% for sponsor in sponsors %}
+                        <div class="slide">
+                            <img src="/media/{{sponsor.logo}}" height="100" width="250" alt="" />
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </section>
