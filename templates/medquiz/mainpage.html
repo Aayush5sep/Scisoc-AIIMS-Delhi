@@ -15,10 +15,8 @@
 
     <section class="section sli">
         <div class="slider" id="slider1">
-            {% for quiz in quizzes %}
-                {% if quiz.poster %}
-                    <div style="background-image:url('{{quiz.poster}}')"></div>
-                {% endif %}
+            {% for slide in slides %}
+                <div style="background-image:url('/media/{{slide.img}}')"></div>
             {% endfor %}
 
             <i class="left" class="arrows" style="z-index:2; position:absolute;"><svg viewBox="0 0 100 100">
@@ -47,7 +45,7 @@
         {% for quiz in quizzes %}
           <div class="q-tiles">
               <div class="screen3">
-                  <img src={% static 'medquiz/logo.png' %} alt="">
+                  <img src="/media/{{quiz.poster}}" alt="">
                   <h2 class="quiz-name">{{quiz.title}}</h2>
               </div>
               <div class="screen4">

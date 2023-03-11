@@ -98,3 +98,8 @@ class Solution(models.Model):
     def qn_image(self):
         return mark_safe('<img src="/media/%s" width="250" max-height="250" />' % (self.question_detail.image))
     qn_image.short_description = 'Image'
+
+
+class Slider(models.Model):
+    title = models.CharField("Small Description",max_length=50)
+    img = models.ImageField("Slider Image",upload_to='medquiz/slider/')

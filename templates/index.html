@@ -63,7 +63,7 @@
         </div>
     </div>
 </section>
-<section class="section mem">
+<section class="section mem" style="height:fit-content">
     <div class="slide-container swiper">
         <div class="slide-content">
             <div class="cards-wrapper swiper-wrapper">
@@ -73,7 +73,7 @@
                             <span class="overlay"></span>
                             <div class="cards-image">
                                 {% if member.image %}
-                                    <img src={{member.image}} alt="" class="cards-img">
+                                    <img src=/media/{{member.image}} alt="" class="cards-img">
                                 {% endif %}
                             </div>
                         </div>
@@ -87,11 +87,11 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div class="swiper-button-next swiper-navBtn"></div>
-                <div class="swiper-button-prev swiper-navBtn"></div>
-                <div class="swiper-pagination"></div>
             </div>
         </div>
+        <div class="swiper-button-next swiper-navBtn"></div>
+        <div class="swiper-button-prev swiper-navBtn"></div>
+        <div class="swiper-pagination"></div>
     </div>
 </section>
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Quiz,Registration,Question,Choice,Solution
+from .models import Quiz,Registration,Question,Choice,Solution,Slider
 # Register your models here.
 
 class RegistrationAdmin(admin.StackedInline):
@@ -8,7 +8,7 @@ class RegistrationAdmin(admin.StackedInline):
 
 class QuizAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Quiz Display', {'fields':['title','desc','reg_price','team_cnt']}),
+        ('Quiz Display', {'fields':['title','desc','reg_price','team_cnt','poster']}),
         ('Optional Display', {'fields':['reg_open','quiz_live']}),
         ('Conducting Platform', {'fields':['on_web','quiz_or_reg_link']}),
     ]
@@ -44,3 +44,4 @@ class RegisteredAdmin(admin.ModelAdmin):
 admin.site.register(Quiz,QuizAdmin)
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Registration,RegisteredAdmin)
+admin.site.register(Slider)

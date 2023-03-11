@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Quiz,Registration,Team_Members,Question,Choice,Solution
+from .models import Quiz,Registration,Team_Members,Question,Choice,Solution,Slider
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,7 +11,8 @@ from payment.views import paypage
 
 def medsoc(request):
     quizzes = Quiz.objects.filter(Q(reg_open = True) | Q(quiz_live = True))
-    return render(request,'medquiz/mainpage.html',{'quizzes':quizzes})
+    slides = Slider.objects.all()
+    return render(request,'medquiz/mainpage.html',{'quizzes':quizzes,'slides':slides})
 
 @login_required(login_url='/user/loginpage/')
 def register_quiz(request,qzid):
