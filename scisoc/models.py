@@ -29,6 +29,10 @@ def latest_news_delete(sender,instance, **kwargs):
 class Gallery(models.Model):
     hidden_title = models.CharField("Hidden Title Behind Image",max_length=50)
     image = models.ImageField("Gallery Image",upload_to='gallery/',null=False,blank=False)
+    size_images = models.BooleanField("Normal( 183:100 )",default=True)
+    size_big = models.BooleanField("Big( 743:410 )",default=False)
+    size_tall = models.BooleanField("Tall( 183:205 )",default=False)
+    size_wide = models.BooleanField("Wide( 743:200 )",default=False)
     upload_date = models.DateTimeField(auto_now_add=True)
     preference = models.IntegerField("Higher Preference For Upper Display",default=1)
 
