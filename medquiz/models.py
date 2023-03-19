@@ -9,7 +9,7 @@ from payment.models import Payment
 class Quiz(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     title = models.CharField("Quiz Title",max_length=50)
-    desc = models.TextField("About Quiz",max_length=500)
+    desc = models.TextField("About Quiz")
     poster = models.ImageField("Quiz Poster",upload_to='medquiz/posters/',null=True,blank=True)
     reg_price = models.IntegerField("Registration Cost(if any)",default=0)
     team_cnt = models.IntegerField("Max Members In 1 Team",default=1)
