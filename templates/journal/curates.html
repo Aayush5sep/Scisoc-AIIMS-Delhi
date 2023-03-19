@@ -1,102 +1,158 @@
-{% extends 'common.html' %}
-{% load static %}
-    {% block title %} Curates {% endblock %}
+{% extends 'common.html' %} 
+{% load static %} 
+{% block title %} Curates {% endblock %} 
+{% block css %}
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css"
+/>
+<link
+  href="https://fonts.googleapis.com/css?family=Open+Sans"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Arvo&family=Averia+Serif+Libre:wght@400;700&family=Playfair+Display:wght@500&display=swap"
+  rel="stylesheet"
+/>
+<!-- Bulma Version 0.9.0-->
+<link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css"
+/>
+<link rel="stylesheet" href={% static 'journal/curates.css' %}>
+<link rel="stylesheet" href="./curates.css" />
+{% endblock %} 
 
-    {% block css %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css'>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <!-- Bulma Version 0.9.0-->
-    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
-    <link rel="stylesheet" href={% static 'journal/curates.css' %}>
-    {% endblock %}
-
-    {% block body %}
-
-<br><br>
+{% block body %}
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column has-text-centered">
+        <h1 class="edch"><span style="color: #ffb703">Cu</span>rates</h1>
+        <p class="edcp">
+          SciSoc Curates is a collection of research studies, articles, opinion
+          pieces, tweetorials, and other resources from across the internet. It
+          is another beautiful element of the Scientific Society.The idea is to
+          have a running list of high signal-to-noise ratio resources for
+          scientifically inclined medical students. The team , involving
+          AIIMSonians and now, also involving people from other colleges,
+          selects these resources and presents it to the readers in a more
+          palatable form, which invokes their interest. GOALS To invoke the
+          interest of UGs in various things happening in the world of science
+          through latest articles and works. To develop a reading habit among
+          the students who will get an idea of how research is done and also
+          reach a wider audience of people who find reading articles dry.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<br /><br />
 {% for curate in curates %}
-    <div class="curate-container" style="margin-left:2%;margin-right:2%;margin-bottom:2%;padding:2%;border-style:ridge">
-        <center>
-        <image src="/media/{{curate.curate.image}}" height=200 width=250> <br>
-        <h3>Curate Name : {{curate.curate.title}} </h3>
-        <p style="text-align:left">About Curate : {{curate.curate.description}}</p> <br>
-        From : {{curate.curate.start_date}}  to  {{curate.curate.end_date}} <br>
-        </center><br>
-        {% if curate.articles %}
-        <center>
-            <b>Articles Of the Curate</b> <br>
-        </center>
-        <section class="container">
-                <div class="columns features">
-                {% for article in curate.articles %}
-                <div class="column is-4">
-                    <div class="card is-shady">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                        <img src="/media/{{article.image}}" alt="Placeholder image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="content">
-                        <h4>{{article.title}}</h4>
-                        <p>{{article.description|truncatechars:100}}</p>
-                        <span class="button is-link modal-button" data-target="modal-card-{{article.id}}">Read More</span>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                {% endfor %}
-                </div>
-        </section>
-        <!--  ===============
-        HERE BE MODALS
-        ===============  -->
-        <!-- 3dFlipVertical card tiny -->
+  <section class="section curate-container"
+  style="margin:0 2%;padding: 2%;border-style: ridge;">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-two-fifths">
+          <img src="/media/{{curate.curate.image}}" height="400" width="400" />
+        </div>
+        <div class="column is-three-fifths">
+          <h3 style="text-align: center">{{curate.curate.title}}</h3>
+          <h4 style="text-align: center">
+            About Curate : {{curate.curate.description}}
+          </h4>
+          <h6 style="text-align: center">
+            From : {{curate.curate.start_date}} to {{curate.curate.end_date}}
+          </h6>
+        </div>
+      </div>
+    </div>
+    {% if curate.articles %}
+    <center>
+      <h2 style="font-size: 40px"><b>Articles Of the Curate</b></h2>
+      <br />
+    </center>
+    <section class="container">
+      <div class="columns features">
         {% for article in curate.articles %}
-        <div id="modal-card-{{article.id}}" class="modal modal-fx-3dSlit">
-            <div class="modal-background"></div>
-            <div class="modal-content is-tiny">
-            <!-- content -->
-            <div class="card">
-                <div class="card-image">
-                <figure class="image is-4by3">
-                    <img src="/media/{{article.image}}" alt="Placeholder image">
-                </figure>
-                </div>
-                <div class="card-content">
-                <div class="media">
-                    <div class="media-content">
-                    <p class="title is-4">{{article.title}}</p>
-                    <p class="subtitle is-6">@{{article.author}}</p>
-                    </div>
-                </div>
-                <div class="content">{{article.description}}<br>
-                    <a href="{{article.link}}">Visit =></a>
-                    <br>
-                </div>
-                </div>
+        <div class="column is-4">
+          <div class="card is-shady">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="/media/{{article.image}}" alt="Placeholder image" />
+              </figure>
             </div>
-            <!-- end content -->
+            <div class="card-content">
+              <div class="content">
+                <h4>{{article.title}}</h4>
+                <p>{{article.description|truncatechars:100}}</p>
+                <span
+                  class="button is-link modal-button"
+                  data-target="modal-card-{{article.id}}"
+                  >Read More</span
+                >
+              </div>
             </div>
-            <button class="modal-close is-large" aria-label="close"></button>
+          </div>
         </div>
         {% endfor %}
-        {% endif %}
+      </div>
+    </section>
+    <!--  ===============
+        HERE BE MODALS
+        ===============  -->
+    <!-- 3dFlipVertical card tiny -->
+    {% for article in curate.articles %}
+    <div id="modal-card-{{article.id}}" class="modal modal-fx-3dSlit">
+      <div class="modal-background"></div>
+      <div class="modal-content is-tiny">
+        <!-- content -->
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="/media/{{article.image}}" alt="Placeholder image" />
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4">{{article.title}}</p>
+                <p class="subtitle is-6">@{{article.author}}</p>
+              </div>
+            </div>
+            <div class="content">
+              {{article.description}}<br />
+              <a href="{{article.link}}">Visit =></a>
+              <br />
+            </div>
+          </div>
+        </div>
+        <!-- end content -->
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
     </div>
-{% endfor %}
-<br><br>
-    {% endblock %}
+    {% endfor %} {% endif %}
+  </section>
+  {% endfor %}
+  <br /><br />
+</section>
+  {% endblock %} 
+  
+  {% block js %}
+  <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      //The first argument are the elements to which the plugin shall be initialized
+      //The second argument has to be at least a empty object or a object with your desired options
+      OverlayScrollbars(document.querySelectorAll("body"), {});
+    });
+  </script>
+  {% endblock %}
 
-    {% block js %}
-    <script src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js'></script>  
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        //The first argument are the elements to which the plugin shall be initialized
-        //The second argument has to be at least a empty object or a object with your desired options
-        OverlayScrollbars(document.querySelectorAll("body"), { });
-        });
-        </script>  
-    {% endblock %}
