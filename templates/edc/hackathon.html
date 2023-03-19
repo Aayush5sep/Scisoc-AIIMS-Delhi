@@ -27,8 +27,8 @@
         <div class="column has-text-centered">
           <h1 class="edch t">{{hack.name}}</h1>
           <p class="edcp">{{hack.desc}}<br>
-            <span style="color: #FFB703;">Registration Price </span>: ₹{{hack.reg_price}}<br>
-            <span style="color: #FFB703;">Maximum Members In One Team </span>: {{hack.team_cnt}}
+            {% if hack.reg_price > 0 %}<span style="color: #FFB703;">Registration Price </span>: ₹{{hack.reg_price}}<br>{% endif %}
+            {% if hack.team_cnt > 0 %}<span style="color: #FFB703;">Maximum Members In One Team </span>: {{hack.team_cnt}}{% endif %}
         </p>
         </div>
       </div>
@@ -89,7 +89,7 @@
     {% endif %} {% endcomment %}
 
 <div class="container bordered">
-    {% if hack.sponsors %}
+    {% if hack.sponsors|length > 0 %}
         <section class="sponsors section">
             <h1>Our Sponsors & Partners</h1>
             <div class="slider">

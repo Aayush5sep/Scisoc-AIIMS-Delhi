@@ -36,7 +36,7 @@
         <div class="columns">
           <div class="column is-three-fifths x5">
               <p class="reveal-up y3">
-                {{hack.desc}}<br>Registration Price : {{hack.reg_price}}
+                {{hack.desc}}{% if hack.reg_price > 0 %}<br>Registration Price : {{hack.reg_price}}{% endif %}
               </p>
               <center><div class="button">
                 <a href="/edc/hackathon/{{hack.id}}"> View More </a>
@@ -57,7 +57,9 @@
             <img src="/media/{{hack.poster}}"/>
           </div>
           <div class="s reveal-up column is-three-fifths y x5">
-            <p>{{hack.desc}}<br>Registration Price : {{hack.reg_price}}</p>
+            <p>
+              {{hack.desc}}{% if hack.reg_price > 0 %}<br>Registration Price : {{hack.reg_price}}{% endif %}
+            </p>
             <center><div class="button"><a href="/edc/hackathon/{{hack.id}}"> View More </a></div></center>
           </div>
         </div>
