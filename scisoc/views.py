@@ -13,10 +13,8 @@ def homepage(request):
     return render(request,'index.html',params)
 
 def gallery(request):
-    imags = Gallery.objects.all()
-    images = list(imags)
-    random.shuffle(images)
-    return render(request,'gallery.html',{'images':images})
+    imags = Gallery.objects.all().order_by('-preference')
+    return render(request,'gallery.html',{'images':imags})
 
 def developers(request):
     return render(request,'dev.html')
