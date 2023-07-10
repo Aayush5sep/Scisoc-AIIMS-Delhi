@@ -14,7 +14,7 @@ def frontpage(request):
     quizs = quiz.objects.filter(Q(reg_open = True) | Q(quiz_live = True))
     prev_reg = []
     for qz in quizs:
-        if registration.objects.filter(user=request.user,quiz_model=qz,registered=True):
+        if request.user.is_authenticated and registration.objects.filter(user=request.user,quiz_model=qz,registered=True):
             prev_reg.append(True)
         else:
             prev_reg.append(False)

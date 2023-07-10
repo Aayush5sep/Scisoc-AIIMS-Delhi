@@ -27,8 +27,8 @@ def register_quiz(request,qzid):
 
     if qz.reg_price==0:
         # Setup for other team member name registration
-        # Registration(leader = request.user, quiz_model = qz, registered = True).save()
-        # messages.success(request,"Registered Successfully")
+        Registration(leader = request.user, quiz_model = qz, registered = True).save()
+        messages.success(request,"Registered Successfully")
         return redirect('/medquiz/')
     else:
         # Payment & then save in registration

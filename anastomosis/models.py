@@ -13,6 +13,7 @@ class quiz(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     title = models.CharField(max_length=50)
     desc = models.TextField(max_length=500)
+    img = models.ImageField(upload_to='anastomosis/',null=True)
     reg_open = models.BooleanField(default=False)
     on_web = models.BooleanField(default=True)
     quiz_or_reg_link = models.URLField(null=True,blank=True)

@@ -1,4 +1,6 @@
-
+db.sqlite3
+Pipfile
+Pipfile.lock
 scisoc/.env
 django-to-gdrive-aacfba9eaec2.json
 google_drive/oauth-credentials.json

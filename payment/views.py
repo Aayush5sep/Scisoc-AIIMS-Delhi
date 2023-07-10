@@ -105,3 +105,13 @@ def callback(request):
         order.status = PaymentStatus.FAILURE
         order.save()
         return render(request, 'payment/callback.html', {"status": order.status})
+    
+
+def policy(request):
+    return render(request,'terms/Privacy.html')
+
+def terms(request):
+    return render(request,'terms/t&c.html')
+
+def refund(request):
+    return render(request,'terms/rr.html')
