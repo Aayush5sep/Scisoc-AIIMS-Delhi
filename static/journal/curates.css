@@ -41,3 +41,23 @@ border-radius: 10px;
     transform: scale(1.02);
     box-shadow: 0px 0px 10px 5px rgba(156,156,156,1);;
 }
+h3 {
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    text-align: center;
+}
+
+h4 {
+    font-family: 'Arvo', serif;
+    line-height: 2.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+}
+
+h6 {
+    font-family: 'Arvo', serif;
+    line-height: 2.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+}

@@ -39,6 +39,7 @@
           </div>
         </div>
     </section>
+    {% if quizzes|length > 0 %}
     <section class="section quiz">
       <h1 class="register is-size-1">Register Now</h1>
       <div class="flex">
@@ -84,6 +85,7 @@
         {% endfor %}
       </div>
     </section>
+    {% endif %}
 
 
         {% comment %} Medquiz Society
